@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "json": "json-server data.js -p 3500" 
+    "json": "json-server data.js -p 3500"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +17,7 @@
     "@angular/compiler": "^18.0.0",
     "@angular/core": "^18.0.0",
     "@angular/forms": "^18.0.0",
+    "@angular/google-maps": "^18.1.4",
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/platform-server": "^18.0.0",
