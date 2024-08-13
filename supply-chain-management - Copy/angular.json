@@ -34,15 +34,28 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/assets"
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
-
+              "assets/css/bootstrap.min.css",
+              "assets/css/animate.css",
+              "assets/css/dataTables.bootstrap4.min.css",
+              "assets/plugins/fontawesome/css/fontawesome.min.css",
+              "assets/plugins/fontawesome/css/all.min.css",
+              "assets/css/style.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "assets/js/jquery-3.6.0.min.js",
+              "assets/js/feather.min.js",
+              "assets/js/jquery.slimscroll.min.js",
+              "assets/js/jquery.dataTables.min.js",
+              "assets/js/dataTables.bootstrap4.min.js",
+              "assets/js/bootstrap.bundle.min.js",
+              "assets/plugins/apexchart/apexcharts.min.js",
+              "assets/plugins/apexchart/chart-data.js",
+              "assets/js/script.js"
             ],
             "server": "src/main.server.ts",
             "prerender": true,
