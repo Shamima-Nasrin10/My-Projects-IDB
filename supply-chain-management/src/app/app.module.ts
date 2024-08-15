@@ -5,21 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { InventoryModule } from './inventory/inventory-routing.module';
+import { RouterModule} from '@angular/router';
+import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
+import { InventoryDetailComponent } from './inventory/inventory-detail/inventory-detail.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InventoryListComponent,
+    InventoryDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule,
-    AppRoutingModule,
-    InventoryModule
+    RouterModule
   ],
   providers: [
     provideClientHydration(),

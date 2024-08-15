@@ -4,9 +4,10 @@ import { InventoryListComponent } from './inventory/inventory-list/inventory-lis
 import { InventoryDetailComponent } from './inventory/inventory-detail/inventory-detail.component';
 
 const routes: Routes = [
+  //{path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'inventory', component:InventoryListComponent },
-  { path: 'inventoryDetail/:id', component:InventoryDetailComponent}
-
+  { path: 'inventoryDetail/:id', component:InventoryDetailComponent},
+  // {path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({
