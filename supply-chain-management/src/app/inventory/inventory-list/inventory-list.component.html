@@ -1,1 +1,11 @@
-<p>inventory-list works!</p>
+<div *ngIf="inventories.length > 0; else noData">
+    <ul>
+      <li *ngFor="let inventory of inventories">
+        <a href="#" (click)="viewInventory(inventory.id)">{{ inventory.name }}</a>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noData>
+    <p>No inventory data available.</p>
+  </ng-template>
+  
