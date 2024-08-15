@@ -1,0 +1,8 @@
+{
+    "inventories": [
+      { "id": 1, "name": "Product A", "quantity": 100, "location": "Warehouse 1" },
+      { "id": 2, "name": "Product B", "quantity": 200, "location": "Warehouse 2" },
+      { "id": 3, "name": "Product C", "quantity": 300, "location": "Warehouse 3" }
+    ]
+  }
+  
