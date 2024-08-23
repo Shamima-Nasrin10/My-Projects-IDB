@@ -6,10 +6,18 @@ import { AppComponent } from './app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { RawMaterialCreateComponent } from './raw-materials/raw-material-create/raw-material-create.component';
+import { RawMaterialListComponent } from './raw-materials/raw-material-list/raw-material-list.component';
+import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
+import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-create.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RawMaterialCreateComponent,
+    RawMaterialListComponent,
+    SupplierListComponent,
+    SupplierCreateComponent
   ],
   imports: [
     BrowserModule,

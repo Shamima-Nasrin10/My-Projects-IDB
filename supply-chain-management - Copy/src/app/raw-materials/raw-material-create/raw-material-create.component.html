@@ -1,0 +1,29 @@
+
+<div class="container mt-5">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="rawMaterial.name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control" id="quantity" [(ngModel)]="rawMaterial.quantity" name="quantity">
+      </div>
+      <div class="form-group">
+        <label for="unit">Unit</label>
+        <input type="text" class="form-control" id="unit" [(ngModel)]="rawMaterial.unit" name="unit">
+      </div>
+      <div class="form-group">
+        <label for="supplier">Supplier</label>
+        <select class="form-control" id="supplier" [(ngModel)]="rawMaterial.supplier.id" name="supplier">
+          <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="unitPrice">Unit Price</label>
+        <input type="number" class="form-control" id="unitPrice" [(ngModel)]="rawMaterial.unitPrice" name="unitPrice">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  
