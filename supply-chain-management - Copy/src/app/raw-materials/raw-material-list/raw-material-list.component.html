@@ -1,1 +1,55 @@
-<p>raw-material-list works!</p>
+<div class="row">
+    <div class="col-md-12 mb-2">
+        <div class="pull-right">
+<button class="btn btn-success" [routerLink]="['/rawMaterial']">
+    <i class="fa fa-plus"></i>Add New RM
+</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="display table table-striped table-hover" id="add-row">
+              <thead>
+              <th class="col-md-1">SL</th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+              <th>Supplier</th>
+              <th>Unit Price</th>
+              <th class="text-center col-md-1">Action</th>
+              </thead>
+              <tbody>
+              <tr *ngFor="let rawmaterial of rawmaterials; let i = index;">
+                <td>{{ i + 1 }}</td>
+                <td>{{ rawmaterial.name || '-' }}</td>
+                <td>{{ rawmaterial.quantity || '-' }}</td>
+                <td>{{ rawmaterial.unit || '-' }}</td>
+                <select class="form-control" [(ngModel)]="rawmaterial.supplier.id" name="supplier-{{i}}">
+                    <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }}</option>
+                  </select>
+                <td>{{ rawmaterial.unitPrice || '-' }}</td>
+                <td>
+                  <div class="form-button-action">
+                    <button [routerLink]="['/rawmaterial-form', rawmaterial.id]" class="btn btn-link btn-primary btn-lg"
+                            title="Edit"
+                            type="button">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button (click)="deleteRawMaterial(rawmaterial.id)" class="btn btn-link btn-danger" title="Delete"
+                            type="button">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

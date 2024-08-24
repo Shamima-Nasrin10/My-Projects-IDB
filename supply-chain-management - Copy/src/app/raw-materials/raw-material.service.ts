@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawMaterial } from './model/raw-material.model';
 import { Observable } from 'rxjs';
+import { SupplierModel } from '../suppliers/supplier-list/model/supplier.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class RawMaterialService {
 
 
   private apiUrl = 'http://localhost:3000/rawMaterials';
+  private suppliersUrl = 'http://localhost:3000/suppliers';
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +33,9 @@ export class RawMaterialService {
 
   deleteRawMaterial(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+  getSuppliers(): Observable<SupplierModel[]> {
+    return this.http.get<SupplierModel[]>(this.suppliersUrl);
   }
 
 }
