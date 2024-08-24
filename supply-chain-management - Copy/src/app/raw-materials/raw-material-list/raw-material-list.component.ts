@@ -20,7 +20,7 @@ export class RawMaterialListComponent implements OnInit {
 
   constructor(
     private rawmaterialService: RawMaterialService,
-    private supplierService:SupplierService,
+    private supplierService: SupplierService,
     private router: Router,
     private alertService: AlertService
   ) { }
@@ -49,22 +49,36 @@ export class RawMaterialListComponent implements OnInit {
     });
   }
 
-  deleteRawMaterial(id?: number) {
+  // deleteRawMaterial(id?: number) {
 
-    if (id === undefined || id === null) {
-      this.alertService.error('Raw Material ID is required.');
-      return;
-    }
+  //   if (id === undefined || id === null) {
+  //     this.alertService.error('Raw Material ID is required.');
+  //     return;
+  //   }
 
+  //   this.rawmaterialService.deleteRawMaterial(id).subscribe({
+  //     next: response => {
+  //       this.alertService.success('Raw Material deleted successfully!');
+  //       this.loadRawMaterials();
+  //     },
+  //     error: error => {
+  //       this.alertService.error('Could not delete raw material');
+  //     }
+  //   })
+
+
+  deleteRawMaterial(id: number): void {
     this.rawmaterialService.deleteRawMaterial(id).subscribe({
-      next: response => {
-        this.alertService.success('Raw Material deleted successfully!');
-        this.loadRawMaterials();
+      next: () => {
+        // Optionally, provide user feedback or reload the list
+        this.rawmaterials = this.rawmaterials.filter(material => material.id !== id);
+        alert('Raw Material deleted successfully');
       },
-      error: error => {
-        this.alertService.error('Could not delete raw material');
+      error: (error) => {
+        console.error('Error deleting raw material:', error);
+        alert('Failed to delete raw material');
       }
-    })
+    });
   }
 
 }
