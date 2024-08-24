@@ -124,21 +124,8 @@
         "phone": "987654322"
       },
       "name": "Button",
-      "quantity": 100,
-      "unit": "Pcs",
-      "unitPrice": 5
-    },
-    {
-      "id": "5431",
-      "supplier": {
-        "id": "1",
-        "name": "Supplier A",
-        "email": "email@supplierA.com",
-        "phone": "123456789"
-      },
-      "name": "Thread",
       "quantity": 500,
-      "unit": "metre",
+      "unit": "Pcs",
       "unitPrice": 5
     }
   ],

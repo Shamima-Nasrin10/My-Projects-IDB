@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawMaterial } from './model/raw-material.model';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { SupplierModel } from '../suppliers/model/supplier.model';
 
 @Injectable({
@@ -36,6 +36,12 @@ export class RawMaterialService {
   }
   getSuppliers(): Observable<SupplierModel[]> {
     return this.http.get<SupplierModel[]>(this.suppliersUrl);
+  }
+
+  getRawMaterialByName(name: string): Observable<RawMaterial | undefined> {
+    return this.http.get<RawMaterial[]>(`${this.apiUrl}?name=${name}`).pipe(
+      map(rawMaterials => rawMaterials.length > 0 ? rawMaterials[0] : undefined)
+    );
   }
 
 }

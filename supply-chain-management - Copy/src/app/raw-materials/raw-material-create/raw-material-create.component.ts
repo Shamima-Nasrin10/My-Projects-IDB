@@ -18,6 +18,7 @@ export class RawMaterialCreateComponent implements OnInit {
   rawMaterial: RawMaterial = new RawMaterial();
   suppliers?: SupplierModel[];
   rawMaterialId?: number;
+  existingRawMaterial?: string;
 
   constructor(
     private supplierService: SupplierService,
@@ -39,7 +40,7 @@ export class RawMaterialCreateComponent implements OnInit {
         console.log(error);
       }
 
-    })
+    });
 
     this.rawMaterialId = this.route.snapshot.params['id'];
 
@@ -54,7 +55,7 @@ export class RawMaterialCreateComponent implements OnInit {
           console.log(error);
         }
 
-      })
+      });
     }
 
   }
@@ -76,37 +77,71 @@ export class RawMaterialCreateComponent implements OnInit {
       this.rawMaterial.supplier = selectedSupplier;
     }
 
-    if (this.rawMaterialId) {
-      this.rawmaterialService.updateRawMaterial(this.rawMaterialId, this.rawMaterial).subscribe({
+    
+    // else {
+    //   this.rawmaterialService.addRawMaterial(this.rawMaterial).subscribe({
 
-        next: response => {
-          this.rawMaterial = new RawMaterial();
-          alert('Update Successful');
+    //     next: response => {
+    //       this.rawMaterial = new RawMaterial();
+    //       alert('Save Successful');
 
-        },
-        error: error => {
-          console.log(error);
+    //     },
+    //     error: error => {
+    //       console.log(error);
+    //     }
+    //   })
+    // }
+
+     // Check if raw material already exists in stock
+     this.rawmaterialService.getRawMaterialByName(this.rawMaterial.name).subscribe({
+      next: existingRawMaterial => {
+        if (existingRawMaterial) {
+          // If it exists, update its quantity
+          existingRawMaterial.quantity += this.rawMaterial.quantity;
+          this.rawmaterialService.updateRawMaterial(existingRawMaterial.id, existingRawMaterial).subscribe({
+            next: response => {
+              this.rawMaterial = new RawMaterial();
+              alert('Quantity updated successfully');
+            },
+            error: error => {
+              console.log(error);
+            }
+          });
+        } 
+        else if (this.rawMaterialId) {
+          this.rawmaterialService.updateRawMaterial(this.rawMaterialId, this.rawMaterial).subscribe({
+    
+            next: response => {
+              this.rawMaterial = new RawMaterial();
+              alert('Update Successful');
+    
+            },
+            error: error => {
+              console.log(error);
+            }
+          })
+    
         }
-      })
-
-    }
-    else {
-      this.rawmaterialService.addRawMaterial(this.rawMaterial).subscribe({
-
-        next: response => {
-          this.rawMaterial = new RawMaterial();
-          alert('Save Successful');
-
-        },
-        error: error => {
-          console.log(error);
+        
+        else {
+          // If it does not exist, add as a new raw material
+          this.rawmaterialService.addRawMaterial(this.rawMaterial).subscribe({
+            next: response => {
+              this.rawMaterial = new RawMaterial();
+              alert('Save successful');
+            },
+            error: error => {
+              console.log(error);
+            }
+          });
         }
-      })
-    }
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
 
 
   }
 
-
-
-}
