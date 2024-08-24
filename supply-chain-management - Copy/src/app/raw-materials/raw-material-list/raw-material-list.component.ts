@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../util/alert.service';
 import { response } from 'express';
 import { error } from 'console';
-import { SupplierModel } from '../../suppliers/supplier-list/model/supplier.model';
+import { SupplierModel } from '../../suppliers/model/supplier.model';
 import { SupplierService } from '../../suppliers/supplier.service';
 
 @Component({

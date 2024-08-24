@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RawMaterial } from '../model/raw-material.model';
-import { SupplierModel } from '../../suppliers/supplier-list/model/supplier.model';
+import { SupplierModel } from '../../suppliers/model/supplier.model';
 import { SupplierService } from '../../suppliers/supplier.service';
 import { response } from 'express';
 import { error } from 'console';

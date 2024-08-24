@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawMaterial } from './model/raw-material.model';
 import { Observable } from 'rxjs';
-import { SupplierModel } from '../suppliers/supplier-list/model/supplier.model';
+import { SupplierModel } from '../suppliers/model/supplier.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { SupplierModel } from "../../suppliers/supplier-list/model/supplier.model"
+import { SupplierModel } from "../../suppliers/model/supplier.model"
 
 export class RawMaterial{
 
