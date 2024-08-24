@@ -1,1 +1,27 @@
-<p>supplier-create works!</p>
+<div class="container mt-5">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="supplier.name" name="name" required />
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact</label>
+            <input type="text" class="form-control" id="contact" [(ngModel)]="supplier.email" name="contact" required />
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" id="address" [(ngModel)]="supplier.phone" name="address" rows="3"
+                required></textarea>
+        </div>
+        <div class="card-action">
+            <button class="btn btn-success me-2">
+                <span *ngIf="supplierId; else save">
+                    Update
+                </span>
+                <ng-template #save>Save</ng-template>
+            </button>
+        </div>
+
+        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+    </form>
+</div>
