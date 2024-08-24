@@ -24,7 +24,7 @@ export class RawMaterialCreateComponent implements OnInit {
     private rawmaterialService: RawMaterialService,
     private route: ActivatedRoute
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //  let supplierModel: SupplierModel=new SupplierModel();
@@ -41,19 +41,19 @@ export class RawMaterialCreateComponent implements OnInit {
 
     })
 
-    this.rawMaterialId=this.route.snapshot.params['id'];
-    
-    if(this.rawMaterialId){
+    this.rawMaterialId = this.route.snapshot.params['id'];
+
+    if (this.rawMaterialId) {
       this.rawmaterialService.getRawMaterial(this.rawMaterialId).subscribe({
 
         next: response => {
           this.rawMaterial = response;
-  
+
         },
         error: error => {
           console.log(error);
         }
-  
+
       })
     }
 
@@ -61,19 +61,28 @@ export class RawMaterialCreateComponent implements OnInit {
 
   onSubmit() {
 
-    const selectedSupplier = this.suppliers?.find(supplier => supplier.id === +this.rawMaterial.supplier.id);
+    let selectedSupplier: SupplierModel | undefined = undefined;
+    
+    if (this.suppliers && this.suppliers.length > 0) {
+      for (let supplier of this.suppliers) {
+        if (supplier.id === this.rawMaterial.supplier.id) {
+          selectedSupplier = supplier;
+          break;
+        }
+      }
+    }
+
     if (selectedSupplier) {
       this.rawMaterial.supplier = selectedSupplier;
     }
-    
 
-    if(this.rawMaterialId){
+    if (this.rawMaterialId) {
       this.rawmaterialService.updateRawMaterial(this.rawMaterialId, this.rawMaterial).subscribe({
 
         next: response => {
           this.rawMaterial = new RawMaterial();
           alert('Update Successful');
-  
+
         },
         error: error => {
           console.log(error);
@@ -81,20 +90,20 @@ export class RawMaterialCreateComponent implements OnInit {
       })
 
     }
-    else{
+    else {
       this.rawmaterialService.addRawMaterial(this.rawMaterial).subscribe({
 
         next: response => {
           this.rawMaterial = new RawMaterial();
           alert('Save Successful');
-  
+
         },
         error: error => {
           console.log(error);
         }
       })
     }
-    
+
 
   }
 

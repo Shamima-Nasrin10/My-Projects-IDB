@@ -116,17 +116,30 @@
       "unitPrice": 105
     },
     {
-      "id": "84de",
+      "id": "eea5",
       "supplier": {
-        "id": 1,
+        "id": "3",
+        "name": "Supplier C",
+        "email": "email@supplierC.com",
+        "phone": "987654322"
+      },
+      "name": "Button",
+      "quantity": 100,
+      "unit": "Pcs",
+      "unitPrice": 5
+    },
+    {
+      "id": "5431",
+      "supplier": {
+        "id": "1",
         "name": "Supplier A",
         "email": "email@supplierA.com",
         "phone": "123456789"
       },
-      "name": "Shamima Nasrin",
-      "quantity": 123,
+      "name": "Thread",
+      "quantity": 500,
       "unit": "metre",
-      "unitPrice": 123
+      "unitPrice": 5
     }
   ],
   "suppliers": [
