@@ -10,6 +10,9 @@ import { RawMaterialCreateComponent } from './raw-materials/raw-material-create/
 import { RawMaterialListComponent } from './raw-materials/raw-material-list/raw-material-list.component';
 import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
 import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-create.component';
+import { HeaderComponent } from './template/header/header.component';
+import { SidebarComponent } from './template/sidebar/sidebar.component';
+import { FooterComponent } from './template/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-cr
     RawMaterialCreateComponent,
     RawMaterialListComponent,
     SupplierListComponent,
-    SupplierCreateComponent
+    SupplierCreateComponent,
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
