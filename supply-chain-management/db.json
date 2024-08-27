@@ -32,5 +32,45 @@
             "id": 3,
             "name": "Warehouse 3"
         }
-    ]
+    ],
+  "orders": [
+    {
+      "orderId": "1",
+      "customer": {
+        "customerId": "A123",
+        "name": "Customer A",
+        "contactInfo": "customer@example.com"
+      },
+      "products": [
+        {
+          "productId": "P001",
+          "name": "Shirt",
+          "description": "Cotton shirt",
+          "price": 29.99,
+          "stock": 100
+        }
+      ],
+      "status": "Pending"
+    },
+    {
+      "orderId": "2",
+      "customer": {
+        "customerId": "B456",
+        "name": "Customer B",
+        "contactInfo": "another@example.com"
+      },
+      "products": [
+        {
+          "productId": "P002",
+          "name": "Jeans",
+          "description": "Blue denim jeans",
+          "price": 49.99,
+          "stock": 50
+        }
+      ],
+      "status": "Approved"
+    }
+  ]
+
+
 }
