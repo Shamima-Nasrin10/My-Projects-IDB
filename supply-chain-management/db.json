@@ -70,7 +70,14 @@
       ],
       "status": "Approved"
     }
-  ]
+  ],
+  "customers": [
+    {
+      "customerId": "C123",
+      "name": "John Doe",
+      "contactInfo": "john.doe@example.com"
+    }
+    ]
 
 
 }
