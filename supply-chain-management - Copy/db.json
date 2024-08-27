@@ -152,69 +152,58 @@
   "orders": [
     {
       "id": 1,
-      "customerId": 1,
-      "productId": 1,
-      "quantity": 2,
+      "customer": {
+          "customerId": "C123",
+          "name": "John Doe",
+          "contactInfo": "john.doe@example.com"
+      },
+      "product": {
+          "productId": "P001",
+          "name": "Shirt",
+          "description": "Cotton shirt",
+          "price": 29.99,
+          "stock": 100
+      },
+      "quantity": 5,
+      "orderDate": "2023-05-11T18:00:00Z",
       "status": "Pending",
-      "orderDate": "2024-08-26",
-      "approvalDate": null,
-      "completionDate": null,
-      "currentStage": "",
-      "notificationStatus": ""
-    },
-    {
-      "id": "3ee7",
-      "customerId": "2",
-      "productId": "2",
-      "quantity": "200",
-      "orderDate": "2024-08-27",
-      "notificationStatus": "Notified",
-      "status": "Approved",
-      "approvalDate": "2024-08-27T09:16:28.482Z"
-    },
-    {
-      "id": "cda3",
-      "customerId": "3",
-      "productId": "1",
-      "quantity": "300",
-      "orderDate": "2024-08-27",
-      "notificationStatus": "Notified",
-      "status": "Approved",
-      "approvalDate": "2024-08-27T09:17:33.763Z"
-    }
+      "currentStage": "Sewing"
+  }
+  
   ],
   "notifications": [
+    
+  ],
+  "customers":[
     {
       "id": 1,
-      "orderId": 1,
-      "message": "New order placed by customer 1",
-      "status": "Unread",
-      "createdAt": "2024-08-26T00:00:00.000Z",
-      "order": {
-        "id": 1,
-        "customerId": 1,
-        "productId": 1,
-        "quantity": 2,
-        "status": "Pending",
-        "orderDate": "2024-08-26",
-        "approvalDate": null,
-        "completionDate": null,
-        "notificationStatus": "Pending Approval"
-      }
-    },
-    {
-      "id": 0,
-      "orderId": "3ee7",
-      "message": "New order placed by customer 2",
-      "status": "Unread",
-      "createdAt": "2024-08-27T09:16:16.026Z"
-    },
-    {
-      "id": 0,
-      "orderId": "cda3",
-      "message": "New order placed by customer 3",
-      "status": "Unread",
-      "createdAt": "2024-08-27T09:17:24.965Z"
-    }
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "123-456-7890",
+      "address": "123 Main St, City",
+      "password": "hashed_password_here",
+      "orders": [
+          {
+              "id": 101,
+              "customer": {
+                  "customerId": "C123",
+                  "name": "John Doe",
+                  "contactInfo": "john.doe@example.com"
+              },
+              "product": {
+                  "productId": "P001",
+                  "name": "Shirt",
+                  "description": "Cotton shirt",
+                  "price": 29.99,
+                  "stock": 100
+              },
+              "quantity": 5,
+              "orderDate": "2023-05-11T18:00:00Z",
+              "status": "Pending",
+              "currentStage": "Sewing"
+          }
+      ]
+  }
+  
   ]
 }

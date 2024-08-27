@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Order} from './model/order.model';
+import { Order } from '../model/order.model';
 import { OrderService } from '../order.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class OrderCreateComponent implements OnInit{
   addOrder(): void {
     this.orderService.addOrder(this.newOrder).subscribe(order => {
       this.orders.push(order);
-      this.newOrder = new Order();
+      // this.newOrder = new Order();
     });
   }
 

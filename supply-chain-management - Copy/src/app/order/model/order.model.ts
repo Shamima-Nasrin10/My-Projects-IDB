@@ -1,13 +1,23 @@
-import { Customer} from "../../user/customer/model/customer.model";
+import { Customer } from "../../customer/model/customer.model";
 import { Product } from "../../product/product/model/product.model";
+import { ManufacturingStage, OrderStage } from "./enum/enums";
 
 export class Order {
   id!: number;
   quantity!: number;
-  status!: string; // e.g., 'Pending', 'Approved', 'In Production', 'Completed'
+  status!: OrderStage; // e.g., 'Pending', 'Approved', 'In Production', 'Completed'
   orderDate!: Date;
   customer!: Customer;
   product!: Product;
-  currentStage!: string;
-  notificationStatus!: string
+  manufacturingStage!: ManufacturingStage;
+
+
+//   constructor(id: number, customer: Customer, product: Product, quantity: number, orderDate: Date, status: OrderStage, currentStage: ManufacturingStage) {
+//     this.id = id;
+//     this.customer = customer;
+//     this.product = product;
+//     this.quantity = quantity;
+//     this.orderDate = orderDate;
+//     this.status = status;
+// }
 }

@@ -16,8 +16,8 @@ import { FooterComponent } from './template/footer/footer.component';
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { AdminComponent } from './user/admin/admin.component';
-import { CustomerComponent } from './user/customer/customer.component';
 import { ProductComponent } from './product/product/product.component';
+import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { ProductComponent } from './product/product/product.component';
     NotificationComponent,
     OrderCreateComponent,
     AdminComponent,
-    CustomerComponent,
-    ProductComponent
+    ProductComponent,
+    CustomerListComponent
   ],
   imports: [
     BrowserModule,
