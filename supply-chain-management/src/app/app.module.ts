@@ -8,12 +8,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router';
 import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
 import { InventoryDetailComponent } from './inventory/inventory-detail/inventory-detail.component';
+import { OrderComponent } from './order/order/order.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InventoryListComponent,
-    InventoryDetailComponent
+    InventoryDetailComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
