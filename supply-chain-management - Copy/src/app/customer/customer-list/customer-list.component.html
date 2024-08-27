@@ -1,1 +1,32 @@
-<p>customer-list works!</p>
+<!-- customer-list.component.html -->
+
+<div class="customer-list">
+    <h2>Customer List</h2>
+    <ul>
+      <li *ngFor="let customer of customers">
+        {{ customer.name }}
+        <button (click)="selectCustomer(customer)">Edit</button>
+        <button (click)="deleteCustomer(customer)">Delete</button>
+      </li>
+    </ul>
+  
+    <!-- Add new customer button -->
+    <button (click)="addCustomer()">Add New Customer</button>
+  
+    <!-- Edit form -->
+    <div *ngIf="isEditing && selectedCustomer">
+      <input [(ngModel)]="selectedCustomer.name" placeholder="Customer Name">
+      <!-- Add other input fields for editing customer details -->
+      <button (click)="saveCustomer(selectedCustomer)">Save</button>
+      <button (click)="cancel()">Cancel</button>
+    </div>
+  
+    <!-- Add order to customer -->
+    <div *ngIf="selectedCustomer">
+      <h3>Add Order to {{ selectedCustomer.name }}</h3>
+      <input [(ngModel)]="newOrder?.product!.name" placeholder="Product Name">
+      <!-- Add other input fields for order details -->
+      <button (click)="addOrderToCustomer(selectedCustomer)">Add Order</button>
+    </div>
+  </div>
+  
