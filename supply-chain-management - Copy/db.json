@@ -148,5 +148,73 @@
       "email": "email@supplierC.com",
       "phone": "987654322"
     }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "customerId": 1,
+      "productId": 1,
+      "quantity": 2,
+      "status": "Pending",
+      "orderDate": "2024-08-26",
+      "approvalDate": null,
+      "completionDate": null,
+      "currentStage": "",
+      "notificationStatus": ""
+    },
+    {
+      "id": "3ee7",
+      "customerId": "2",
+      "productId": "2",
+      "quantity": "200",
+      "orderDate": "2024-08-27",
+      "notificationStatus": "Notified",
+      "status": "Approved",
+      "approvalDate": "2024-08-27T09:16:28.482Z"
+    },
+    {
+      "id": "cda3",
+      "customerId": "3",
+      "productId": "1",
+      "quantity": "300",
+      "orderDate": "2024-08-27",
+      "notificationStatus": "Notified",
+      "status": "Approved",
+      "approvalDate": "2024-08-27T09:17:33.763Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "message": "New order placed by customer 1",
+      "status": "Unread",
+      "createdAt": "2024-08-26T00:00:00.000Z",
+      "order": {
+        "id": 1,
+        "customerId": 1,
+        "productId": 1,
+        "quantity": 2,
+        "status": "Pending",
+        "orderDate": "2024-08-26",
+        "approvalDate": null,
+        "completionDate": null,
+        "notificationStatus": "Pending Approval"
+      }
+    },
+    {
+      "id": 0,
+      "orderId": "3ee7",
+      "message": "New order placed by customer 2",
+      "status": "Unread",
+      "createdAt": "2024-08-27T09:16:16.026Z"
+    },
+    {
+      "id": 0,
+      "orderId": "cda3",
+      "message": "New order placed by customer 3",
+      "status": "Unread",
+      "createdAt": "2024-08-27T09:17:24.965Z"
+    }
   ]
 }

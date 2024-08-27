@@ -13,6 +13,11 @@ import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-cr
 import { HeaderComponent } from './template/header/header.component';
 import { SidebarComponent } from './template/sidebar/sidebar.component';
 import { FooterComponent } from './template/footer/footer.component';
+import { NotificationComponent } from './notification/notification/notification.component';
+import { OrderCreateComponent } from './order/order-create/order-create.component';
+import { AdminComponent } from './user/admin/admin.component';
+import { CustomerComponent } from './user/customer/customer.component';
+import { ProductComponent } from './product/product/product.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,12 @@ import { FooterComponent } from './template/footer/footer.component';
     SupplierCreateComponent,
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    NotificationComponent,
+    OrderCreateComponent,
+    AdminComponent,
+    CustomerComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

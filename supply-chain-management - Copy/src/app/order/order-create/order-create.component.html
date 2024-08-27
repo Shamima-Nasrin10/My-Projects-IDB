@@ -1,0 +1,71 @@
+<div class="order-container">
+    <h2>Orders</h2>
+    <ul class="order-list">
+      <li *ngFor="let order of orders" (click)="selectOrder(order)" class="order-item">
+        Order #{{ order.id }} - {{ order.status }} - {{ order.notificationStatus }}
+      </li>
+    </ul>
+  
+    <div *ngIf="selectedOrder" class="edit-order-section">
+      <h3>Edit Order</h3>
+      <form (ngSubmit)="updateOrder()" class="edit-order-form form-group form-control">
+        <label>Customer ID:
+          <input [(ngModel)]="selectedOrder.customerId" name="customerId">
+        </label>
+        <label>Product ID:
+          <input [(ngModel)]="selectedOrder.productId" name="productId">
+        </label>
+        <label>Quantity:
+          <input [(ngModel)]="selectedOrder.quantity" name="quantity">
+        </label>
+        <label>Status:
+          <input [(ngModel)]="selectedOrder.status" name="status">
+        </label>
+        <label>Order Date:
+          <input [(ngModel)]="selectedOrder.orderDate" name="orderDate" type="date">
+        </label>
+        <label>Approval Date:
+          <input [(ngModel)]="selectedOrder.approvalDate" name="approvalDate" type="date">
+        </label>
+        <label>Completion Date:
+          <input [(ngModel)]="selectedOrder.completionDate" name="completionDate" type="date">
+        </label>
+        <label>Rejection Reason:
+          <input [(ngModel)]="selectedOrder.rejectionReason" name="rejectionReason">
+        </label>
+        <button class="btn btn-info" type="submit">Update</button>
+      </form>
+      <button (click)="approveOrder(selectedOrder)" class="btn btn-success m-1">Approve</button>
+      <button (click)="refuseOrder(selectedOrder)" class="btn btn-warning m-1">Refuse</button>
+      <button (click)="deleteOrder(selectedOrder)" class="btn btn-danger m-1">Delete</button>
+    </div>
+  
+    <div class="add-order-section">
+      <h3>Add New Order</h3>
+      <form (ngSubmit)="addOrder()" class="form-group form-control add-order-form">
+        <label>Customer ID:
+          <input [(ngModel)]="newOrder.customerId" name="customerId">
+        </label>
+        <label>Product ID:
+          <input [(ngModel)]="newOrder.productId" name="productId">
+        </label>
+        <label>Quantity:
+          <input [(ngModel)]="newOrder.quantity" name="quantity">
+        </label>
+        <label>Status:
+          <input [(ngModel)]="newOrder.status" name="status">
+        </label>
+        <label>Order Date:
+          <input [(ngModel)]="newOrder.orderDate" name="orderDate" type="date">
+        </label>
+        <label>Approval Date:
+          <input [(ngModel)]="newOrder.approvalDate" name="approvalDate" type="date">
+        </label>
+        <label>Completion Date:
+          <input [(ngModel)]="newOrder.completionDate" name="completionDate" type="date">
+        </label>
+        <button class="btn btn-success" type="submit">Add</button>
+      </form>
+    </div>
+  </div>
+  

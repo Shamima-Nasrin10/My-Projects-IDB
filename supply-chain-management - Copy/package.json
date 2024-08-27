@@ -21,6 +21,7 @@
     "@angular/platform-server": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.7",
+    "@auth0/angular-jwt": "^5.2.0",
     "@types/chart.js": "^2.9.41",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
