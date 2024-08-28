@@ -24,11 +24,11 @@
         <input [(ngModel)]="selectedOrder.quantity" name="quantity"
           [disabled]="selectedOrder.status === status.APPROVED">
       </label>
-      <label>Status:
+      <!-- <label>Status:
         
         <input [(ngModel)]="selectedOrder.status" name="status"
           [disabled]="!isAdmin || selectedOrder.status === status.APPROVED">
-      </label>
+      </label> -->
       <label>Order Date:
        
         <input [(ngModel)]="selectedOrder.orderDate" name="orderDate" type="date"
@@ -40,10 +40,10 @@
     </form>
 
     
-    <button (click)="approveOrder(selectedOrder)" class="btn btn-success m-1"
+    <!-- <button (click)="approveOrder(selectedOrder)" class="btn btn-success m-1"
       *ngIf="isAdmin && selectedOrder.status !== status.APPROVED">Approve</button>
     <button (click)="refuseOrder(selectedOrder)" class="btn btn-warning m-1" *ngIf="isAdmin">Refuse</button>
-    <button (click)="deleteOrder(selectedOrder)" class="btn btn-danger m-1" *ngIf="isAdmin">Delete</button>
+    <button (click)="deleteOrder(selectedOrder)" class="btn btn-danger m-1" *ngIf="isAdmin">Delete</button> -->
   </div>
 
   <!-- Section to add a new order -->
@@ -62,10 +62,12 @@
         <!-- Input for new order quantity -->
         <input [(ngModel)]="newOrder.quantity" name="quantity">
       </label>
-      <label>Status:
-        <!-- Input for new order status, disabled if not admin -->
+
+      <!-- <label>Status:
+        Input for new order status, disabled if not admin
         <input [(ngModel)]="newOrder.status" name="status" [disabled]="!isAdmin">
-      </label>
+      </label> -->
+      
       <label>Order Date:
         <!-- Input for new order date -->
         <input [(ngModel)]="newOrder.orderDate" name="orderDate" type="date">
