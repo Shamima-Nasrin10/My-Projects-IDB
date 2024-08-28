@@ -154,10 +154,10 @@
       "id": "1",
       "customer": {
         "id": "b96d",
-      "name": "Shamima Nasrin",
-      "photo":"",
-      "email": "customerA@gmail.com",
-      "phone":"98764534"
+        "name": "Shamima Nasrin",
+        "photo": "",
+        "email": "customerA@gmail.com",
+        "phone": "98764534"
       },
       "product": {
         "productId": "P001",
@@ -170,6 +170,14 @@
       "orderDate": "2023-05-11T18:00:00Z",
       "status": "Pending",
       "currentStage": "Sewing"
+    },
+    {
+      "id": "8cf6",
+      "customer": "2",
+      "product": "2",
+      "quantity": "200",
+      "orderDate": "2024-08-28",
+      "status": "Approved"
     }
   ],
   "notifications": [],
@@ -177,9 +185,9 @@
     {
       "id": "b96d",
       "name": "Shamima Nasrin",
-      "photo":"",
+      "photo": "",
       "email": "customerA@gmail.com",
-      "phone":"98764534"
+      "phone": "98764534"
     }
   ]
 }

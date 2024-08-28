@@ -15,9 +15,12 @@
           <img [src]="customer.photo" alt="{{ customer.name }}" class="customer-photo">
         </td>
         <td>
-          <button (click)="viewCustomer(customer)" title="View" type="button" class="btn btn-link btn-primary btn-lg m-3"><i class="fa fa-eye"></i></button>
-          <button (click)="selectCustomer(customer)" title="Edit" type="button" class="btn btn-link btn-primary m-3"><i class="fa fa-edit"></i></button>
-          <button (click)="deleteCustomer(customer)" title="Delete" type="button" class="btn btn-link btn-danger m-3"><i class="fa fa-times"></i></button>
+          <button (click)="viewCustomer(customer)" title="View" type="button"
+            class="btn btn-link btn-primary btn-lg m-3"><i class="fa fa-eye"></i></button>
+          <button (click)="selectCustomer(customer)" title="Edit" type="button"
+            class="btn btn-link btn-primary btn-lg m-3"><i class="fa fa-edit"></i></button>
+          <button (click)="deleteCustomer(customer)" title="Delete" type="button"
+            class="btn btn-link btn-danger btn-lg m-3"><i class="fa fa-times"></i></button>
         </td>
       </tr>
     </tbody>
@@ -35,7 +38,8 @@
         Order ID: {{ order.id }}, Quantity: {{ order.quantity }}, Status: {{ order.status }}
       </li>
     </ul>
-    <button (click)="cancel()" title="Close" type="button" class="btn btn-link btn-primary m-3"><i class="fa fa-close"></i></button>
+    <button (click)="cancel()" title="Close" type="button" class="btn btn-link btn-primary m-3"><i
+        class="fa fa-close"></i></button>
   </div>
 
   <!-- Edit customer form -->
@@ -44,9 +48,10 @@
     <input [(ngModel)]="selectedCustomer!.name" placeholder="Customer Name">
     <input [(ngModel)]="selectedCustomer!.address">
     <input [(ngModel)]="selectedCustomer!.email" placeholder="Customer Email">
-    <input [(ngModel)]="selectedCustomer!.phone" >
+    <input [(ngModel)]="selectedCustomer!.phone">
     <!-- Add other input fields for editing customer details -->
-    <button (click)="saveCustomer(selectedCustomer!)" title="Save" type="button" class="btn btn-link btn-info m-3"><i class="fa fa-save"></i></button>
+    <button (click)="saveCustomer(selectedCustomer!)" title="Save" type="button" class="btn btn-link btn-info m-3"><i
+        class="fa fa-save"></i></button>
     <button (click)="cancel()">Cancel</button>
   </div>
 </div>
