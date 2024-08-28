@@ -16,10 +16,11 @@ export class OrderCreateComponent implements OnInit{
   orders: Order[] = [];
   selectedOrder: Order | null = null;
   newOrder: Order = new Order();
-  customers: Customer[] = []; // List of customers for dropdown or selection
-  products: Product[] = []; // List of products for dropdown or selection
-  orderStages = Object.values(OrderStage); // List of order stages for dropdown or selection
-  manufacturingStages = Object.values(ManufacturingStage); // List of manufacturing stages for dropdown or selection
+  customers: Customer[] = []; 
+  products: Product[] = []; 
+  status = OrderStage; 
+  manufacturingStages = ManufacturingStage; 
+  isAdmin: boolean = true;
 
   constructor(
     private orderService: OrderService,
@@ -29,8 +30,7 @@ export class OrderCreateComponent implements OnInit{
 
   ngOnInit(): void {
     this.getOrders();
-    this.getCustomers(); // Fetch customers to populate the customer dropdown
-    // this.getProducts(); // Fetch products to populate the product dropdown
+    this.getCustomers(); 
   }
 
   getOrders(): void {
@@ -38,19 +38,15 @@ export class OrderCreateComponent implements OnInit{
   }
 
   getCustomers(): void {
-    // Assuming you have a CustomerService to fetch customers
+    
     this.customerService.getCustomers().subscribe(customers => this.customers = customers);
-    // Placeholder code since CustomerService is not provided:
+    
     
   }
 
   // getProducts(): void {
   //   // Assuming you have a ProductService to fetch products
   //   // this.productService.getProducts().subscribe(products => this.products = products);
-  //   // Placeholder code since ProductService is not provided:
-  //   this.products = [
-  //     { id: 1, name: 'Product A', price: 100 },
-  //     { id: 2, name: 'Product B', price: 200 }
   //   ];
   // }
 
@@ -61,7 +57,7 @@ export class OrderCreateComponent implements OnInit{
   addOrder(): void {
     this.orderService.createOrder(this.newOrder).subscribe(order => {
       this.orders.push(order);
-      this.newOrder = new Order(); // Reset the form after adding an order
+      this.newOrder = new Order(); 
     });
   }
 
@@ -69,20 +65,20 @@ export class OrderCreateComponent implements OnInit{
     if (this.selectedOrder) {
       this.orderService.updateOrder(this.selectedOrder).subscribe(() => {
         this.selectedOrder = null;
-        this.getOrders(); // Refresh the list after updating
+        this.getOrders(); 
       });
     }
   }
 
   approveOrder(order: Order): void {
     this.orderService.updateOrderStatus(order.id, OrderStage.APPROVED).subscribe(() => {
-      this.getOrders(); // Refresh the list after approval
+      this.getOrders(); 
     });
   }
 
   refuseOrder(order: Order): void {
     this.orderService.updateOrderStatus(order.id, OrderStage.REJECTED).subscribe(() => {
-      this.getOrders(); // Refresh the list after refusal
+      this.getOrders(); 
       
     });
   }
@@ -95,6 +91,11 @@ export class OrderCreateComponent implements OnInit{
       }
     });
   }
+
+  // getCustomerName(customerId: number): string {
+  //   const customer = this.customers.find(c => c.id === customerId);
+  //   return customer ? customer.name : 'Unknown';
+  // }
 
 
 

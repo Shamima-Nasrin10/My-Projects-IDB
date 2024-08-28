@@ -153,11 +153,11 @@
     {
       "id": "1",
       "customer": {
-        "id": "b96d",
-        "name": "Shamima Nasrin",
-        "photo": "",
-        "email": "customerA@gmail.com",
-        "phone": "98764534"
+       "id": "b96d",
+      "name": "Shamima Nasrin",
+      "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
+      "email": "customerA@gmail.com",
+      "phone": "98764534"
       },
       "product": {
         "productId": "P001",
@@ -173,11 +173,20 @@
     },
     {
       "id": "8cf6",
-      "customer": "2",
+      "customer": {
+        "id": "2",
+      "name": "Shamima Nasrin",
+      "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
+      "email": "customerA@gmail.com",
+      "phone": "98764555"
+      },
       "product": "2",
       "quantity": "200",
       "orderDate": "2024-08-28",
       "status": "Approved"
+    },
+    {
+      "id": "8823"
     }
   ],
   "notifications": [],
@@ -185,9 +194,23 @@
     {
       "id": "b96d",
       "name": "Shamima Nasrin",
-      "photo": "",
+      "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
       "email": "customerA@gmail.com",
       "phone": "98764534"
+    },
+    {
+      "id": "2",
+      "name": "Shamima Nasrin",
+      "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
+      "email": "customerA@gmail.com",
+      "phone": "98764555"
+    },
+    {
+      "id": "3",
+      "name": "Shamima Nasrin",
+      "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
+      "email": "customerA@gmail.com",
+      "phone": "98764555"
     }
   ]
 }

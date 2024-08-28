@@ -1,30 +1,24 @@
 <div class="customer-list">
-  <h2>Customer List</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Photo</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let customer of customers">
-        <td>{{ customer.name }}</td>
-        <td>
-          <img [src]="customer.photo" alt="{{ customer.name }}" class="customer-photo">
-        </td>
-        <td>
-          <button (click)="viewCustomer(customer)" title="View" type="button"
-            class="btn btn-link btn-primary btn-lg m-3"><i class="fa fa-eye"></i></button>
-          <button (click)="selectCustomer(customer)" title="Edit" type="button"
-            class="btn btn-link btn-primary btn-lg m-3"><i class="fa fa-edit"></i></button>
-          <button (click)="deleteCustomer(customer)" title="Delete" type="button"
-            class="btn btn-link btn-danger btn-lg m-3"><i class="fa fa-times"></i></button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <h2>List of Customers</h2>
+  <div class="customer-cards">
+    <div class="customer-card" *ngFor="let customer of customers">
+      <img [src]="customer.photo" alt="{{ customer.name }}" class="customer-photo">
+      <div class="customer-info">
+        <h4>{{ customer.name }}</h4>
+        <div class="customer-actions">
+          <button (click)="viewCustomer(customer)" title="View" type="button" class="btn btn-link btn-primary btn-sm">
+            <i class="fa fa-eye"></i> View
+          </button>
+          <button (click)="selectCustomer(customer)" title="Edit" type="button" class="btn btn-link btn-primary btn-sm">
+            <i class="fa fa-edit"></i> Edit
+          </button>
+          <button (click)="deleteCustomer(customer)" title="Delete" type="button" class="btn btn-link btn-danger btn-sm">
+            <i class="fa fa-times"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Customer details view -->
   <div *ngIf="selectedCustomer && !isEditing" class="customer-details">

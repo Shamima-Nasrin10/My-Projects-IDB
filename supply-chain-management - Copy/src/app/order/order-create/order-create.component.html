@@ -1,58 +1,78 @@
 <div class="order-container">
-    <h2>Orders</h2>
-    <ul class="order-list">
-      <li *ngFor="let order of orders" (click)="selectOrder(order)" class="order-item">
-        Order #{{ order.id }} - {{ order.status }}
-      </li>
-    </ul>
-  
-    <div *ngIf="selectedOrder" class="edit-order-section">
-      <h3>Edit Order</h3>
-      <form (ngSubmit)="updateOrder()" class="edit-order-form form-group form-control">
-        <label>Customer ID:
-          <input [(ngModel)]="selectedOrder.customer" name="customerId">
-        </label>
-        <label>Product ID:
-          <input [(ngModel)]="selectedOrder.product" name="productId">
-        </label>
-        <label>Quantity:
-          <input [(ngModel)]="selectedOrder.quantity" name="quantity">
-        </label>
-        <label>Status:
-          <input [(ngModel)]="selectedOrder.status" name="status">
-        </label>
-        <label>Order Date:
-          <input [(ngModel)]="selectedOrder.orderDate" name="orderDate" type="date">
-        </label>
-        <
-        <button class="btn btn-info" type="submit">Update</button>
-      </form>
-      <button (click)="approveOrder(selectedOrder)" class="btn btn-success m-1">Approve</button>
-      <button (click)="refuseOrder(selectedOrder)" class="btn btn-warning m-1">Refuse</button>
-      <button (click)="deleteOrder(selectedOrder)" class="btn btn-danger m-1">Delete</button>
-    </div>
-  
-    <div class="add-order-section">
-      <h3>Add New Order</h3>
-      <form (ngSubmit)="addOrder()" class="form-group form-control add-order-form">
-        <label>Customer ID:
-          <input [(ngModel)]="newOrder.customer" name="customerId">
-        </label>
-        <label>Product ID:
-          <input [(ngModel)]="newOrder.product" name="productId">
-        </label>
-        <label>Quantity:
-          <input [(ngModel)]="newOrder.quantity" name="quantity">
-        </label>
-        <label>Status:
-          <input [(ngModel)]="newOrder.status" name="status">
-        </label>
-        <label>Order Date:
-          <input [(ngModel)]="newOrder.orderDate" name="orderDate" type="date">
-        </label>
+  <h2>Orders</h2>
+  <ul class="order-list">
+    <li *ngFor="let order of orders" (click)="selectOrder(order)" class="order-item">
+      Order #{{ order.id }} - {{ order.customer.name }} - {{ order.status }}
+    </li>
+  </ul>
+
+  <div *ngIf="selectedOrder" class="edit-order-section">
+    <h3>Edit Order</h3>
+    <form (ngSubmit)="updateOrder()" class="edit-order-form form-group form-control">
+      <label>Customer ID:
+        
+        <input [(ngModel)]="selectedOrder.customer" name="customerId"
+          [disabled]="selectedOrder.status === status.APPROVED">
+      </label>
+      <label>Product ID:
+        
+        <input [(ngModel)]="selectedOrder.product" name="productId"
+          [disabled]="selectedOrder.status === status.APPROVED">
+      </label>
+      <label>Quantity:
+       
+        <input [(ngModel)]="selectedOrder.quantity" name="quantity"
+          [disabled]="selectedOrder.status === status.APPROVED">
+      </label>
+      <label>Status:
+        
+        <input [(ngModel)]="selectedOrder.status" name="status"
+          [disabled]="!isAdmin || selectedOrder.status === status.APPROVED">
+      </label>
+      <label>Order Date:
+       
+        <input [(ngModel)]="selectedOrder.orderDate" name="orderDate" type="date"
+          [disabled]="selectedOrder.status === status.APPROVED">
+      </label>
+
       
-        <button class="btn btn-success" type="submit">Add</button>
-      </form>
-    </div>
+      <button class="btn btn-info" type="submit" [disabled]="selectedOrder.status === status.APPROVED">Update</button>
+    </form>
+
+    
+    <button (click)="approveOrder(selectedOrder)" class="btn btn-success m-1"
+      *ngIf="isAdmin && selectedOrder.status !== status.APPROVED">Approve</button>
+    <button (click)="refuseOrder(selectedOrder)" class="btn btn-warning m-1" *ngIf="isAdmin">Refuse</button>
+    <button (click)="deleteOrder(selectedOrder)" class="btn btn-danger m-1" *ngIf="isAdmin">Delete</button>
   </div>
-  
+
+  <!-- Section to add a new order -->
+  <div class="add-order-section">
+    <h3>Add New Order</h3>
+    <form (ngSubmit)="addOrder()" class="form-group form-control add-order-form">
+      <label>Customer ID:
+        <!-- Input for new order customer ID -->
+        <input [(ngModel)]="newOrder.customer" name="customerId">
+      </label>
+      <label>Product ID:
+        <!-- Input for new order product ID -->
+        <input [(ngModel)]="newOrder.product" name="productId">
+      </label>
+      <label>Quantity:
+        <!-- Input for new order quantity -->
+        <input [(ngModel)]="newOrder.quantity" name="quantity">
+      </label>
+      <label>Status:
+        <!-- Input for new order status, disabled if not admin -->
+        <input [(ngModel)]="newOrder.status" name="status" [disabled]="!isAdmin">
+      </label>
+      <label>Order Date:
+        <!-- Input for new order date -->
+        <input [(ngModel)]="newOrder.orderDate" name="orderDate" type="date">
+      </label>
+
+      <!-- Button to add the new order -->
+      <button class="btn btn-success" type="submit">Add</button>
+    </form>
+  </div>
+</div>
