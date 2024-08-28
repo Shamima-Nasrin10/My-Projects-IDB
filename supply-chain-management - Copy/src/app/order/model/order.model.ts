@@ -10,14 +10,4 @@ export class Order {
   customer!: Customer;
   product!: Product;
   manufacturingStage!: ManufacturingStage;
-
-
-//   constructor(id: number, customer: Customer, product: Product, quantity: number, orderDate: Date, status: OrderStage, currentStage: ManufacturingStage) {
-//     this.id = id;
-//     this.customer = customer;
-//     this.product = product;
-//     this.quantity = quantity;
-//     this.orderDate = orderDate;
-//     this.status = status;
-// }
 }

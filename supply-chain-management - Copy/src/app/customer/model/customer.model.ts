@@ -6,6 +6,7 @@ export class Customer {
     email!: string;
     phone!: string;
     address!: string;
+    photo!: string
     password!: string; // For login purposes
     orders!: Order[];  // Array to hold orders of this customer
 

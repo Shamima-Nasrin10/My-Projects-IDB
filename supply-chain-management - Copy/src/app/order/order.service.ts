@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Order } from './order-create/model/order.model';
+import { Order } from './model/order.model';
 import { NotificationService } from '../notification/notification.service';
 import { Notification } from '../notification/model/noification.model';
 
@@ -11,58 +11,52 @@ import { Notification } from '../notification/model/noification.model';
 export class OrderService {
   private apiUrl = 'http://localhost:3000/orders'; // URL to JSON server
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient, private notificationService: NotificationService) {}
-
+  // Get all orders
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.apiUrl);
   }
 
-  getOrder(id: number): Observable<Order> {
+  // Get order by ID
+  getOrderById(id: number): Observable<Order> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Order>(url);
   }
 
-  addOrder(order: Order): Observable<Order> {
-    order.notificationStatus = 'Pending Approval';
-    return this.http.post<Order>(this.apiUrl, order, this.httpOptions).pipe(
-      tap((newOrder: Order) => {
-        const notification: Notification = {
-          id: 0,
-          orderId: newOrder.id,
-          message: `New order placed by customer ${newOrder.customerId}`,
-          status: 'Unread',
-          createdAt: new Date()
-        };
-        this.notificationService.addNotification(notification).subscribe();
+  // Create a new order
+  createOrder(order: Order): Observable<Order> {
+    return this.http.post<Order>(this.apiUrl, order, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
       })
-    );
+    });
   }
 
+  // Update an existing order
   updateOrder(order: Order): Observable<Order> {
     const url = `${this.apiUrl}/${order.id}`;
-    return this.http.put<Order>(url, order, this.httpOptions);
+    return this.http.put<Order>(url, order, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 
-  approveOrder(order: Order): Observable<Order> {
-    order.status = 'Approved';
-    order.notificationStatus = 'Notified';
-    order.approvalDate = new Date();
-    return this.updateOrder(order);
-  }
-
-  deleteOrder(id: number): Observable<Order> {
+  // Delete an order
+  deleteOrder(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<Order>(url, this.httpOptions);
+    return this.http.delete<void>(url);
   }
 
-  refuseOrder(order: Order, reason: string): Observable<Order> {
-    order.status = 'Refused';
-    order.notificationStatus = 'Notified';
-    order.rejectionReason = reason;
-    return this.updateOrder(order);
+  // Other business logic methods related to orders can be added here
+  // For example, to update the status of an order:
+  updateOrderStatus(id: number, status: string): Observable<Order> {
+    const url = `${this.apiUrl}/${id}/status`;
+    return this.http.patch<Order>(url, { status }, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 }

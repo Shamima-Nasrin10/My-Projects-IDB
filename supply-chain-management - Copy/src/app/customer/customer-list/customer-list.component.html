@@ -1,32 +1,52 @@
-<!-- customer-list.component.html -->
-
 <div class="customer-list">
-    <h2>Customer List</h2>
+  <h2>Customer List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Photo</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.name }}</td>
+        <td>
+          <img [src]="customer.photo" alt="{{ customer.name }}" class="customer-photo">
+        </td>
+        <td>
+          <button (click)="viewCustomer(customer)" title="View" type="button" class="btn btn-link btn-primary btn-lg m-3"><i class="fa fa-eye"></i></button>
+          <button (click)="selectCustomer(customer)" title="Edit" type="button" class="btn btn-link btn-primary m-3"><i class="fa fa-edit"></i></button>
+          <button (click)="deleteCustomer(customer)" title="Delete" type="button" class="btn btn-link btn-danger m-3"><i class="fa fa-times"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Customer details view -->
+  <div *ngIf="selectedCustomer && !isEditing" class="customer-details">
+    <h3>Details of {{ selectedCustomer.name }}</h3>
+    <p><strong>Name:</strong> {{ selectedCustomer.name }}</p>
+    <p><strong>Address:</strong> {{ selectedCustomer.address }}</p>
+    <p><strong>Email:</strong> {{ selectedCustomer.email }}</p>
+    <h4>Orders:</h4>
     <ul>
-      <li *ngFor="let customer of customers">
-        {{ customer.name }}
-        <button (click)="selectCustomer(customer)">Edit</button>
-        <button (click)="deleteCustomer(customer)">Delete</button>
+      <li *ngFor="let order of selectedCustomer.orders">
+        Order ID: {{ order.id }}, Quantity: {{ order.quantity }}, Status: {{ order.status }}
       </li>
     </ul>
-  
-    <!-- Add new customer button -->
-    <button (click)="addCustomer()">Add New Customer</button>
-  
-    <!-- Edit form -->
-    <div *ngIf="isEditing && selectedCustomer">
-      <input [(ngModel)]="selectedCustomer.name" placeholder="Customer Name">
-      <!-- Add other input fields for editing customer details -->
-      <button (click)="saveCustomer(selectedCustomer)">Save</button>
-      <button (click)="cancel()">Cancel</button>
-    </div>
-  
-    <!-- Add order to customer -->
-    <div *ngIf="selectedCustomer">
-      <h3>Add Order to {{ selectedCustomer.name }}</h3>
-      <input [(ngModel)]="newOrder?.product!.name" placeholder="Product Name">
-      <!-- Add other input fields for order details -->
-      <button (click)="addOrderToCustomer(selectedCustomer)">Add Order</button>
-    </div>
+    <button (click)="cancel()" title="Close" type="button" class="btn btn-link btn-primary m-3"><i class="fa fa-close"></i></button>
   </div>
-  
+
+  <!-- Edit customer form -->
+  <div *ngIf="isEditing" class="edit-form">
+    <h3>Edit Customer</h3>
+    <input [(ngModel)]="selectedCustomer!.name" placeholder="Customer Name">
+    <input [(ngModel)]="selectedCustomer!.address">
+    <input [(ngModel)]="selectedCustomer!.email" placeholder="Customer Email">
+    <input [(ngModel)]="selectedCustomer!.phone" >
+    <!-- Add other input fields for editing customer details -->
+    <button (click)="saveCustomer(selectedCustomer!)" title="Save" type="button" class="btn btn-link btn-info m-3"><i class="fa fa-save"></i></button>
+    <button (click)="cancel()">Cancel</button>
+  </div>
+</div>

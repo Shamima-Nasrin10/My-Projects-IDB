@@ -9,47 +9,44 @@ import { Customer } from './model/customer.model';
 })
 export class CustomerService {
 
-  private apiUrl = 'http://localhost:3000/customers'; // Replace with actual API endpoint
+  private apiUrl = 'http://localhost:3000/customers'; 
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-    // Create a new customer
-    createCustomer(customer: Customer): Observable<Customer> {
-        return this.http.post<Customer>(this.apiUrl, customer, {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        });
-    }
+  getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.apiUrl);
+  }
 
-    // Get all customers
-    getCustomers(): Observable<Customer[]> {
-        return this.http.get<Customer[]>(this.apiUrl);
-    }
+  getCustomerById(id: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/${id}`);
+  }
 
-    // Get a customer by ID, including their orders
-    getCustomerById(id: number): Observable<Customer> {
-        const url = `${this.apiUrl}/${id}`;
-        return this.http.get<Customer>(url);
-    }
+  createCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.apiUrl, customer, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 
-    // Update a customer, including their orders
-    updateCustomer(customer: Customer): Observable<Customer> {
-        const url = `${this.apiUrl}/${customer.id}`;
-        return this.http.put<Customer>(url, customer, {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        });
-    }
+  updateCustomer(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.apiUrl}/${customer.id}`, customer, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 
-    // Delete a customer
-    deleteCustomer(id: number): Observable<{}> {
-        const url = `${this.apiUrl}/${id}`;
-        return this.http.delete(url);
-    }
+  deleteCustomer(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 
-    // Add an order for a customer
-    addOrderToCustomer(customerId: number, order: Order): Observable<Customer> {
-        const url = `${this.apiUrl}/${customerId}/orders`;
-        return this.http.post<Customer>(url, order, {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-        });
-    }
+  addOrderToCustomer(customerId: number, order: Order): Observable<Customer> {
+    // This method should be updated according to your specific backend implementation
+    return this.http.post<Customer>(`${this.apiUrl}/${customerId}/orders`, order, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
 }

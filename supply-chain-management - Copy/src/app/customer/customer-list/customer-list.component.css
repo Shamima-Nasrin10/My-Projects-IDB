@@ -1,0 +1,89 @@
+.customer-list {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customer-list h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .customer-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .customer-list ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .customer-list ul li:last-child {
+    border-bottom: none;
+  }
+  
+  /* .customer-list button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  } */
+  
+  .customer-list button:hover {
+    background-color: #0056b3;
+  }
+  
+  .customer-list input {
+    padding: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    width: calc(100% - 22px); /* Adjusted to account for padding */
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  .customer-list .edit-form,
+  .customer-list .add-order {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customer-list .edit-form input,
+  .customer-list .add-order input {
+    width: calc(100% - 20px); /* Adjusted to account for padding */
+    margin-bottom: 10px;
+  }
+  
+  .customer-list .edit-form,
+  .customer-list .add-order {
+    padding: 8px 15px;
+    margin-right: 10px;
+  }
+  
+  .customer-list h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  

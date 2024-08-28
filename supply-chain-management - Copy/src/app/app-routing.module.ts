@@ -5,6 +5,7 @@ import { RawMaterialListComponent } from './raw-materials/raw-material-list/raw-
 import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-create.component';
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
+import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
   {
     path:"orderCreate", component:OrderCreateComponent
   },
+  {
+    path:"customerList", component:CustomerListComponent
+  }
 ];
 
 @NgModule({
