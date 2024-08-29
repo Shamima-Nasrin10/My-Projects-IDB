@@ -6,8 +6,12 @@ import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-cr
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
+import { RegistrationComponent } from './access/registration/registration/registration.component';
 
 const routes: Routes = [
+  {
+    path:"registration", component:RegistrationComponent
+  },
   {
     path:"rawMaterial",component:RawMaterialCreateComponent
   },
