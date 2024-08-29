@@ -20,7 +20,10 @@ import { CustomerListComponent } from './customer/customer-list/customer-list.co
 import { LoginComponent } from './access/login/login/login.component';
 import { LogoutComponent } from './access/logout/logout/logout.component';
 import { RegistrationComponent } from './access/registration/registration/registration.component';
-import { ProductComponent } from './product/product/product.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductCreateComponent } from './product/product-create/product-create.component';
+import { ProductUpdateComponent } from './product/product-update/product-update.component';
+import { ProductViewComponent } from './product/product-view/product-view.component';
 
 
 @NgModule({
@@ -40,7 +43,11 @@ import { ProductComponent } from './product/product/product.component';
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
-    ProductComponent,
+    ProductListComponent,
+    ProductCreateComponent,
+    ProductUpdateComponent,
+    ProductViewComponent,
+
 
   ],
   imports: [
