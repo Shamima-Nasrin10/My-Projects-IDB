@@ -16,11 +16,11 @@ import { FooterComponent } from './template/footer/footer.component';
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { AdminComponent } from './user/admin/admin.component';
-import { ProductComponent } from './product/product/product.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { LoginComponent } from './access/login/login/login.component';
 import { LogoutComponent } from './access/logout/logout/logout.component';
 import { RegistrationComponent } from './access/registration/registration/registration.component';
+import { ProductComponent } from './product/product/product.component';
 
 
 @NgModule({
@@ -36,12 +36,12 @@ import { RegistrationComponent } from './access/registration/registration/regist
     NotificationComponent,
     OrderCreateComponent,
     AdminComponent,
-    ProductComponent,
     CustomerListComponent,
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
- 
+    ProductComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -56,7 +56,7 @@ import { RegistrationComponent } from './access/registration/registration/regist
     provideHttpClient(
       withFetch()
     )
-    
+
   ],
   bootstrap: [AppComponent]
 })

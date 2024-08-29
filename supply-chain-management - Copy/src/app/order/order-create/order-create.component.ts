@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from '../model/order.model';
 import { OrderService } from '../order.service';
 import { Customer} from '../../customer/model/customer.model';
-import { Product } from '../../product/product/model/product.model';
 import { OrderStage } from '../model/enum/enums';
 import { ManufacturingStage } from '../model/enum/enums';
 import { CustomerService } from '../../customer/customer.service';
+import {ProductModel} from "../../product/model/product.model";
 
 @Component({
   selector: 'app-order-create',
@@ -16,10 +16,10 @@ export class OrderCreateComponent implements OnInit{
   orders: Order[] = [];
   selectedOrder: Order | null = null;
   newOrder: Order = new Order();
-  customers: Customer[] = []; 
-  products: Product[] = []; 
-  status = OrderStage; 
-  manufacturingStages = ManufacturingStage; 
+  customers: Customer[] = [];
+  products: ProductModel[] = [];
+  status = OrderStage;
+  manufacturingStages = ManufacturingStage;
   isAdmin: boolean = true;
 
   constructor(
@@ -30,7 +30,7 @@ export class OrderCreateComponent implements OnInit{
 
   ngOnInit(): void {
     this.getOrders();
-    this.getCustomers(); 
+    this.getCustomers();
   }
 
   getOrders(): void {
@@ -38,10 +38,10 @@ export class OrderCreateComponent implements OnInit{
   }
 
   getCustomers(): void {
-    
+
     this.customerService.getCustomers().subscribe(customers => this.customers = customers);
-    
-    
+
+
   }
 
   // getProducts(): void {
@@ -57,7 +57,7 @@ export class OrderCreateComponent implements OnInit{
   addOrder(): void {
     this.orderService.createOrder(this.newOrder).subscribe(order => {
       this.orders.push(order);
-      this.newOrder = new Order(); 
+      this.newOrder = new Order();
     });
   }
 
@@ -65,21 +65,21 @@ export class OrderCreateComponent implements OnInit{
     if (this.selectedOrder) {
       this.orderService.updateOrder(this.selectedOrder).subscribe(() => {
         this.selectedOrder = null;
-        this.getOrders(); 
+        this.getOrders();
       });
     }
   }
 
   approveOrder(order: Order): void {
     this.orderService.updateOrderStatus(order.id, OrderStage.APPROVED).subscribe(() => {
-      this.getOrders(); 
+      this.getOrders();
     });
   }
 
   refuseOrder(order: Order): void {
     this.orderService.updateOrderStatus(order.id, OrderStage.REJECTED).subscribe(() => {
-      this.getOrders(); 
-      
+      this.getOrders();
+
     });
   }
 
