@@ -24,6 +24,7 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
+import { UserProfileComponent } from './access/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { ProductViewComponent } from './product/product-view/product-view.compon
     ProductCreateComponent,
     ProductUpdateComponent,
     ProductViewComponent,
+    UserProfileComponent,
 
 
   ],
