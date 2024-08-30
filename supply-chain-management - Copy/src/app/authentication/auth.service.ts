@@ -100,6 +100,9 @@ export class AuthService {
   getToken(): string | null {
     return this.isBrowser() ? localStorage.getItem('token') : null;
   }
+  getAllUsers(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.baseUrl}`);
+  }
 
   getUserRole(): any {
     return this.currentUserValue?.role;
@@ -130,6 +133,15 @@ export class AuthService {
     if (this.isBrowser()) {
       localStorage.clear();
     }
+  }
+
+  updateUserRole(userId: string, newRole: string):Observable<UserModel>{
+    return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, {role: newRole});
+
+  }
+
+  deleteUser(userId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${userId}`);
   }
 
 }

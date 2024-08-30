@@ -9,10 +9,16 @@ import { CustomerListComponent } from './customer/customer-list/customer-list.co
 import { RegistrationComponent } from './access/registration/registration/registration.component';
 import {LoginComponent} from "./access/login/login/login.component";
 import {LogoutComponent} from "./access/logout/logout/logout.component";
+import { AdminComponent } from './user/admin/admin.component';
+import { AuthGuard } from './access/auth.guard';
+import { RoleGuard } from './access/role.guard';
 
 const routes: Routes = [
   {
     path:"registration", component:RegistrationComponent
+  },
+  {
+    path:'admin', component:AdminComponent, canActivate: [AuthGuard,RoleGuard], data:{expectedRole:'admin'}
   },
   {
     path:"login", component:LoginComponent
