@@ -23,7 +23,7 @@ export class AuthService {
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
-  // Check if email exists
+ 
   checkEmailExists(email: string): Observable<boolean> {
     let params = new HttpParams().append('email', email);
     return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
@@ -35,12 +35,12 @@ export class AuthService {
     );
   }
 
-  // Check if the platform is browser
+  
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
 
-  // Register a new user
+ 
   registration(user: UserModel): Observable<AuthResponse> {
     return this.http.post<UserModel>(this.baseUrl, user).pipe(
       map((newUser: UserModel) => {
@@ -54,7 +54,7 @@ export class AuthService {
     );
   }
 
-  // User login
+  
   login(credentials: { email: string; password: string }): Observable<AuthResponse> {
     let params = new HttpParams().append('email', credentials.email);
 
@@ -85,12 +85,12 @@ export class AuthService {
     );
   }
 
-  // Get current user
+  
   public get currentUserValue(): UserModel | null {
     return this.currentUserSubject.value;
   }
 
-  // Logout user
+ 
   logout(): void {
     this.clearCurrentUser();
     if (this.isBrowser()) {
@@ -98,7 +98,7 @@ export class AuthService {
     }
   }
 
-  // Set current user
+ 
   private setCurrentUser(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
@@ -106,7 +106,7 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
-  // Clear current user
+ 
   private clearCurrentUser(): void {
     if (this.isBrowser()) {
       localStorage.removeItem('currentUser');
@@ -114,41 +114,41 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  // Check if the user is authenticated
+
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
 
-  // Get stored token
+
   getToken(): string | null {
     return this.isBrowser() ? localStorage.getItem('token') : null;
   }
 
-  // Get all users (for admin use)
+
   getAllUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(`${this.baseUrl}`);
   }
 
-  // Get user role
+ 
   getUserRole(): string | null {
     return this.currentUserValue?.role || null;
   }
 
-  // Store token in localStorage
+ 
   storeToken(token: string): void {
     if (this.isBrowser()) {
       localStorage.setItem('token', token);
     }
   }
 
-  // Store user profile
+ 
   storeUserProfile(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
     }
   }
 
-  // Get user profile from storage
+ 
   getUserProfileFromStorage(): UserModel | null {
     if (this.isBrowser()) {
       const userProfile = localStorage.getItem('currentUser');
@@ -157,24 +157,24 @@ export class AuthService {
     return null;
   }
 
-  // Remove user details
+  
   removeUserDetails(): void {
     if (this.isBrowser()) {
       localStorage.clear();
     }
   }
 
-  // Update user details (e.g., for approving user)
+ 
   updateUser(userId: string, userData: Partial<UserModel>): Observable<UserModel> {
     return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, userData);
   }
 
-  // Update user role
+ 
   updateUserRole(userId: string, newRole: string): Observable<UserModel> {
     return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, { role: newRole });
   }
 
-  // Delete user
+ 
   deleteUser(userId: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${userId}`);
   }

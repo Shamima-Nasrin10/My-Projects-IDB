@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Order } from './model/order.model';
-import { NotificationService } from '../notification/notification.service';
-import { Notification } from '../notification/model/noification.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,20 +41,39 @@ export class OrderService {
     });
   }
 
-  // Delete an order
-  deleteOrder(id: number): Observable<void> {
+  // Approve an order
+  approveOrder(id: number): Observable<Order> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
-  }
-
-  // Other business logic methods related to orders can be added here
-  // For example, to update the status of an order:
-  updateOrderStatus(id: number, status: string): Observable<Order> {
-    const url = `${this.apiUrl}/${id}/status`;
-    return this.http.patch<Order>(url, { status }, {
+    return this.http.patch<Order>(url, { status: 'Approved' }, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     });
+  }
+
+  // Reject an order
+  rejectOrder(id: number): Observable<Order> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.patch<Order>(url, { status: 'Rejected' }, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  // Update the manufacturing stage of an order
+  updateManufacturingStage(id: number, manufacturingStage: string): Observable<Order> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.patch<Order>(url, { manufacturingStage }, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  // Delete an order
+  deleteOrder(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url);
   }
 }

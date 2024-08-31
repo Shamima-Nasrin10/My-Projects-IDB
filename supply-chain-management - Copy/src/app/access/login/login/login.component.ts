@@ -35,7 +35,7 @@ export class LoginComponent {
           const role = this.authService.getUserRole();
           if (role === 'admin') {
             this.router.navigate(['/admin']); // Redirect to admin dashboard or page
-          } else if (role === 'user') {
+          } else if (role === 'customer') {
             this.router.navigate(['/userprofile']); // Redirect to user profile or dashboard
           } else {
             this.errorMessage = 'Your account is pending approval. Please contact an admin.';

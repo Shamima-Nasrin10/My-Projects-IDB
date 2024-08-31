@@ -1,44 +1,42 @@
-import { Component } from '@angular/core';
-import {UserModel} from "../userModel/user.model";
-import {UserprofileService} from "../user-profile.service";
-import {Router} from "@angular/router";
+// src/app/components/user-profile/user-profile.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { UserModel } from "../userModel/user.model";
+import { AuthService } from "../../authentication/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.css'
+  styleUrls: ['./user-profile.component.css'] // Corrected from 'styleUrl' to 'styleUrls'
 })
-export class UserProfileComponent {
-
+export class UserProfileComponent implements OnInit {
   user!: UserModel;
+  errorMessage: string = ''; // Property to store error messages
 
-  constructor(private userprofileService: UserprofileService,
-              private router: Router
-
+  constructor(
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadUserProfile();
-
   }
 
+  // Method to load user profile data
   loadUserProfile(): void {
-
-    this.userprofileService.getUserProfile()
-      .subscribe({
-        next:(user)=>{
-          if(user){
-            this.user=user;
-
-
-          }
-        },
-        error:error=>{
-          console.log('error user profile',error);
-        }
-
-      });
-
+    const storedUser = this.authService.getUserProfileFromStorage();
+    if (storedUser) {
+      this.user = storedUser; // Assign user details if available
+    } else {
+      this.errorMessage = 'No user profile found. Please log in again.';
+      console.log('Error: User profile not found in storage.');
+    }
   }
 
+  // Optional method to handle logout
+  // logout(): void {
+  //   this.authService.logout();
+  //   this.router.navigate(['/login']); // Redirect to login page
+  //}
 }

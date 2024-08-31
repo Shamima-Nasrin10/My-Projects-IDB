@@ -1,51 +1,65 @@
-<div class="customer-list">
-  <h2>List of Customers</h2>
-  <div class="customer-cards">
-    <div class="customer-card" *ngFor="let customer of customers">
-      <img [src]="customer.photo" alt="{{ customer.name }}" class="customer-photo">
-      <div class="customer-info">
-        <h4>{{ customer.name }}</h4>
-        <div class="customer-actions">
-          <button (click)="viewCustomer(customer)" title="View" type="button" class="btn btn-link btn-primary btn-sm">
-            <i class="fa fa-eye"></i> View
-          </button>
-          <button (click)="selectCustomer(customer)" title="Edit" type="button" class="btn btn-link btn-primary btn-sm">
-            <i class="fa fa-edit"></i> Edit
-          </button>
-          <button (click)="deleteCustomer(customer)" title="Delete" type="button" class="btn btn-link btn-danger btn-sm">
-            <i class="fa fa-times"></i> Delete
-          </button>
-        </div>
+
+
+<div class="container">
+  <h2>Customer List</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>
+          <!-- Only non-admin users can see the edit button -->
+          <button *ngIf="!isAdmin" class="btn btn-warning" (click)="selectCustomer(customer)">Edit</button>
+          
+          <!-- Only non-admin users can see the delete button -->
+          <button *ngIf="!isAdmin" class="btn btn-danger" (click)="deleteCustomer(customer)">Delete</button>
+          
+          <!-- Both admin and non-admin users can see the view button -->
+          <button class="btn btn-info" (click)="viewCustomer(customer)">View</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Form for editing/adding customer details -->
+  <div *ngIf="isEditing">
+    <h3 *ngIf="selectedCustomer?.id">Edit Customer</h3>
+    <h3 *ngIf="!selectedCustomer?.id">Add Customer</h3>
+    <form (ngSubmit)="saveCustomer(selectedCustomer!)">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" [(ngModel)]="selectedCustomer!.name" name="name" class="form-control" required>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" type="email" [(ngModel)]="selectedCustomer!.email" name="email" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input id="phone" [(ngModel)]="selectedCustomer!.phone" name="phone" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Save</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
   </div>
 
-  <!-- Customer details view -->
-  <div *ngIf="selectedCustomer && !isEditing" class="customer-details">
-    <h3>Details of {{ selectedCustomer.name }}</h3>
+  <!-- View customer details -->
+  <div *ngIf="!isEditing && selectedCustomer">
+    <h3>Customer Details</h3>
     <p><strong>Name:</strong> {{ selectedCustomer.name }}</p>
-    <p><strong>Address:</strong> {{ selectedCustomer.address }}</p>
     <p><strong>Email:</strong> {{ selectedCustomer.email }}</p>
-    <h4>Orders:</h4>
-    <ul>
-      <li *ngFor="let order of selectedCustomer.orders">
-        Order ID: {{ order.id }}, Quantity: {{ order.quantity }}, Status: {{ order.status }}
-      </li>
-    </ul>
-    <button (click)="cancel()" title="Close" type="button" class="btn btn-link btn-primary m-3"><i
-        class="fa fa-close"></i></button>
-  </div>
-
-  <!-- Edit customer form -->
-  <div *ngIf="isEditing" class="edit-form">
-    <h3>Edit Customer</h3>
-    <input [(ngModel)]="selectedCustomer!.name" placeholder="Customer Name">
-    <input [(ngModel)]="selectedCustomer!.address">
-    <input [(ngModel)]="selectedCustomer!.email" placeholder="Customer Email">
-    <input [(ngModel)]="selectedCustomer!.phone">
-    <!-- Add other input fields for editing customer details -->
-    <button (click)="saveCustomer(selectedCustomer!)" title="Save" type="button" class="btn btn-link btn-info m-3"><i
-        class="fa fa-save"></i></button>
-    <button (click)="cancel()">Cancel</button>
+    <p><strong>Phone:</strong> {{ selectedCustomer.phone }}</p>
+    <button class="btn btn-secondary" (click)="cancel()">Close</button>
   </div>
 </div>

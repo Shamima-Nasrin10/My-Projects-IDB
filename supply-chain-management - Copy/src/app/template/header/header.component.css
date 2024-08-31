@@ -1,0 +1,35 @@
+
+
+/* Common styles for both buttons */
+.btn.logout {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .btn.logout img {
+    margin-right: 10px;
+  }
+  
+  /* Specific styles for the login button */
+  .login-btn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border-color: #007bff;
+  }
+  
+  .login-btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  /* Specific styles for the registration button */
+  .reg-btn {
+    background-color: #6c757d; /* Bootstrap secondary color */
+    border-color: #6c757d;
+  }
+  
+  .reg-btn:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+  

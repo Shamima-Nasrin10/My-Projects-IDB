@@ -1,80 +1,34 @@
-<div class="order-container">
-  <h2>Orders</h2>
-  <ul class="order-list">
-    <li *ngFor="let order of orders" (click)="selectOrder(order)" class="order-item">
-      Order #{{ order.id }} - {{ order.customer.name }} - {{ order.status }}
-    </li>
-  </ul>
+<!-- src/app/components/order-create/order-create.component.html -->
 
-  <div *ngIf="selectedOrder" class="edit-order-section">
-    <h3>Edit Order</h3>
-    <form (ngSubmit)="updateOrder()" class="edit-order-form form-group form-control">
-      <label>Customer ID:
-        
-        <input [(ngModel)]="selectedOrder.customer" name="customerId"
-          [disabled]="selectedOrder.status === status.APPROVED">
-      </label>
-      <label>Product ID:
-        
-        <input [(ngModel)]="selectedOrder.product" name="productId"
-          [disabled]="selectedOrder.status === status.APPROVED">
-      </label>
-      <label>Quantity:
-       
-        <input [(ngModel)]="selectedOrder.quantity" name="quantity"
-          [disabled]="selectedOrder.status === status.APPROVED">
-      </label>
-      <!-- <label>Status:
-        
-        <input [(ngModel)]="selectedOrder.status" name="status"
-          [disabled]="!isAdmin || selectedOrder.status === status.APPROVED">
-      </label> -->
-      <label>Order Date:
-       
-        <input [(ngModel)]="selectedOrder.orderDate" name="orderDate" type="date"
-          [disabled]="selectedOrder.status === status.APPROVED">
-      </label>
-
-      
-      <button class="btn btn-info" type="submit" [disabled]="selectedOrder.status === status.APPROVED">Update</button>
-    </form>
-
-    
-    <!-- <button (click)="approveOrder(selectedOrder)" class="btn btn-success m-1"
-      *ngIf="isAdmin && selectedOrder.status !== status.APPROVED">Approve</button>
-    <button (click)="refuseOrder(selectedOrder)" class="btn btn-warning m-1" *ngIf="isAdmin">Refuse</button>
-    <button (click)="deleteOrder(selectedOrder)" class="btn btn-danger m-1" *ngIf="isAdmin">Delete</button> -->
+<h2>Create Order</h2>
+<form (ngSubmit)="addOrder()">
+  <div>
+    <label for="customerName">Customer Name:</label>
+    <input id="customerName" [(ngModel)]="newOrder.customer.name" name="customerName" readonly>
   </div>
 
-  <!-- Section to add a new order -->
-  <div class="add-order-section">
-    <h3>Add New Order</h3>
-    <form (ngSubmit)="addOrder()" class="form-group form-control add-order-form">
-      <label>Customer ID:
-        <!-- Input for new order customer ID -->
-        <input [(ngModel)]="newOrder.customer" name="customerId">
-      </label>
-      <label>Product ID:
-        <!-- Input for new order product ID -->
-        <input [(ngModel)]="newOrder.product" name="productId">
-      </label>
-      <label>Quantity:
-        <!-- Input for new order quantity -->
-        <input [(ngModel)]="newOrder.quantity" name="quantity">
-      </label>
-
-      <!-- <label>Status:
-        Input for new order status, disabled if not admin
-        <input [(ngModel)]="newOrder.status" name="status" [disabled]="!isAdmin">
-      </label> -->
-      
-      <label>Order Date:
-        <!-- Input for new order date -->
-        <input [(ngModel)]="newOrder.orderDate" name="orderDate" type="date">
-      </label>
-
-      <!-- Button to add the new order -->
-      <button class="btn btn-success" type="submit">Add</button>
-    </form>
+  <div>
+    <label for="product">Product:</label>
+    <select id="product" [(ngModel)]="newOrder.product" name="product" (change)="updatePrice()" required>
+      <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
+    </select>
   </div>
-</div>
+
+  <div>
+    <label for="quantity">Quantity:</label>
+    <input id="quantity" type="number" [(ngModel)]="newOrder.quantity" name="quantity" (input)="updatePrice()" required>
+    <div *ngIf="stockError" class="error">Quantity exceeds available stock!</div>
+  </div>
+
+  <div>
+    <label for="requiredDeliveryDate">Required Delivery Date:</label>
+    <input id="requiredDeliveryDate" type="date" [(ngModel)]="newOrder.requiredDeliveryDate" name="requiredDeliveryDate" required>
+  </div>
+
+  <div>
+    <label for="totalPrice">Total Price:</label>
+    <input id="totalPrice" [value]="totalPrice | currency" readonly>
+  </div>
+
+  <button type="submit" [disabled]="stockError || !newOrder.product || !newOrder.quantity">Create Order</button>
+</form>

@@ -17,6 +17,8 @@ import { ProductCreateComponent } from './product/product-create/product-create.
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
+import { CustomerCreateComponent } from './customer/customer-create/customer-create.component';
+import { UserProfileComponent } from './access/user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -73,10 +75,19 @@ const routes: Routes = [
     path:"notification", component:NotificationComponent
   },
   {
-    path:"orderCreate", component:OrderCreateComponent
+    path:"order-create", component:OrderCreateComponent
   },
   {
     path:"customerList", component:CustomerListComponent
+  },
+  {
+    path:"customer-create", component:CustomerCreateComponent
+  },
+  {
+    path:"order-list", component:CustomerListComponent
+  },
+  {
+    path:'userprofile', component:UserProfileComponent
   }
 ];
 

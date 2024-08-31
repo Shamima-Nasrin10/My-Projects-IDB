@@ -1,0 +1,25 @@
+<!-- src/app/components/customer-create/customer-create.component.html -->
+
+<div class="container">
+    <h2>Create Customer</h2>
+    <form (ngSubmit)="createCustomer()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" [(ngModel)]="newCustomer.name" name="name" class="form-control" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" type="email" [(ngModel)]="newCustomer.email" name="email" class="form-control" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input id="phone" [(ngModel)]="newCustomer.phone" name="phone" class="form-control">
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Create Customer</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+  

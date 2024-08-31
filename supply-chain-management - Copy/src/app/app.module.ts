@@ -26,6 +26,8 @@ import { ProductUpdateComponent } from './product/product-update/product-update.
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
+import { OrderListComponent } from './order/order-list/order-list.component';
+import { CustomerCreateComponent } from './customer/customer-create/customer-create.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { ProductViewComponent } from './product/product-view/product-view.compon
     UserProfileComponent,
     UnauthorizedComponent,
     ProductViewComponent,
+    OrderListComponent,
+    CustomerCreateComponent,
 
 
   ],

@@ -1,17 +1,16 @@
+<!-- src/app/components/user-profile/user-profile.component.html -->
+
 <div class="container">
-  <h2 class="text-center"> User Profile</h2>
-
-  <div *ngIf="user">
-    <p><i class="fa-solid fa-circle-user"></i> <strong>Name: </strong>{{user.name}}</p>
-    <p><i class="fa fa-envelope" aria-hidden="true"></i><strong>Email: </strong>{{user.email}}</p>
-
-    <p><i class="fas fa-tag"></i>
-      <strong>Role: </strong>{{user.role}}</p>
+  <h2>User Profile</h2>
+  <div *ngIf="user; else noUser">
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Role:</strong> {{ user.role }}</p>
+   
+  
   </div>
-
-  <div *ngIf="!user">
-    <p><i class="fas fa-spinner fa-spin"></i>
-      Loading user profile ....</p>
-  </div>
+  
+  <ng-template #noUser>
+    <p>{{ errorMessage }}</p>
+  </ng-template>
 </div>
-

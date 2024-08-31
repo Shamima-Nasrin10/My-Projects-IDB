@@ -1,0 +1,41 @@
+
+
+<div class="container">
+    <h2>Order List</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Manufacturing Stage</th>
+          <th>Required Delivery Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.customer.name }}</td>
+          <td>{{ order.product.name }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.status }}</td>
+          <td>
+            <select *ngIf="isAdmin" [(ngModel)]="order.manufacturingStage" (change)="updateManufacturingStage(order)">
+              <option *ngFor="let stage of manufacturingStages" [value]="stage">{{ stage }}</option>
+            </select>
+            <span *ngIf="!isAdmin">{{ order.manufacturingStage }}</span>
+          </td>
+          <td>{{ order.requiredDeliveryDate | date }}</td>
+          <td>
+            <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-success" (click)="approveOrder(order)">Approve</button>
+            <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-danger" (click)="rejectOrder(order)">Reject</button>
+            <!-- Other actions can be added here -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

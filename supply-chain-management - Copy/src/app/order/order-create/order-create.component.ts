@@ -1,102 +1,87 @@
+// src/app/components/order-create/order-create.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../model/order.model';
 import { OrderService } from '../order.service';
-import { Customer} from '../../customer/model/customer.model';
-import { OrderStage } from '../model/enum/enums';
-import { ManufacturingStage } from '../model/enum/enums';
 import { CustomerService } from '../../customer/customer.service';
-import {ProductModel} from "../../product/model/product.model";
+import { ProductService } from '../../product/product.service';
+import { Customer } from '../../customer/model/customer.model';
+import { ProductModel } from '../../product/model/product.model';
+import { OrderStage } from '../model/enum/enums';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-create',
   templateUrl: './order-create.component.html',
-  styleUrl: './order-create.component.css'
+  styleUrls: ['./order-create.component.css']
 })
-export class OrderCreateComponent implements OnInit{
-  orders: Order[] = [];
-  selectedOrder: Order | null = null;
+export class OrderCreateComponent implements OnInit {
   newOrder: Order = new Order();
   customers: Customer[] = [];
   products: ProductModel[] = [];
-  status = OrderStage;
-  manufacturingStages = ManufacturingStage;
-  isAdmin: boolean = true;
+  totalPrice: number = 0;
+  stockError: boolean = false;
+  hasCustomerProfile: boolean = false;
 
   constructor(
     private orderService: OrderService,
-    private customerService:CustomerService
-
+    private customerService: CustomerService,
+    private productService: ProductService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getOrders();
-    this.getCustomers();
+    this.checkCustomerProfile();
+    this.getProducts();
+    this.newOrder.status = OrderStage.PENDING; // Set default status to Pending
   }
 
-  getOrders(): void {
-    this.orderService.getOrders().subscribe(orders => this.orders = orders);
-  }
-
-  getCustomers(): void {
-
-    this.customerService.getCustomers().subscribe(customers => this.customers = customers);
-
-
-  }
-
-  // getProducts(): void {
-  //   // Assuming you have a ProductService to fetch products
-  //   // this.productService.getProducts().subscribe(products => this.products = products);
-  //   ];
-  // }
-
-  selectOrder(order: Order): void {
-    this.selectedOrder = order;
-  }
-
-  addOrder(): void {
-    this.orderService.createOrder(this.newOrder).subscribe(order => {
-      this.orders.push(order);
-      this.newOrder = new Order();
-    });
-  }
-
-  updateOrder(): void {
-    if (this.selectedOrder) {
-      this.orderService.updateOrder(this.selectedOrder).subscribe(() => {
-        this.selectedOrder = null;
-        this.getOrders();
-      });
-    }
-  }
-
-  approveOrder(order: Order): void {
-    this.orderService.updateOrderStatus(order.id, OrderStage.APPROVED).subscribe(() => {
-      this.getOrders();
-    });
-  }
-
-  refuseOrder(order: Order): void {
-    this.orderService.updateOrderStatus(order.id, OrderStage.REJECTED).subscribe(() => {
-      this.getOrders();
-
-    });
-  }
-
-  deleteOrder(order: Order): void {
-    this.orderService.deleteOrder(order.id).subscribe(() => {
-      this.orders = this.orders.filter(o => o !== order);
-      if (this.selectedOrder === order) {
-        this.selectedOrder = null;
+  // Check if customer profile exists
+  checkCustomerProfile(): void {
+    this.customerService.getCustomers().subscribe(customers => {
+      this.customers = customers;
+      if (this.customers.length > 0) {
+        this.hasCustomerProfile = true;
+        this.newOrder.customer = this.customers[0]; // Assign the first customer (or logic to select)
+      } else {
+        this.hasCustomerProfile = false;
+        // Redirect to customer creation if no profile exists
+        this.router.navigate(['/customer-create']);
       }
     });
   }
 
-  // getCustomerName(customerId: number): string {
-  //   const customer = this.customers.find(c => c.id === customerId);
-  //   return customer ? customer.name : 'Unknown';
-  // }
+  getProducts(): void {
+    this.productService.getProducts().subscribe(products => this.products = products);
+  }
 
+  updatePrice(): void {
+    if (this.newOrder.product && this.newOrder.quantity) {
+      this.stockError = this.newOrder.quantity > this.newOrder.product.stock;
+      if (!this.stockError) {
+        this.totalPrice = this.newOrder.product.price * this.newOrder.quantity;
+      } else {
+        this.totalPrice = 0; // Reset total price if there's a stock error
+      }
+    }
+  }
 
+  addOrder(): void {
+    if (!this.hasCustomerProfile) {
+      // If no customer profile exists, redirect to customer creation
+      window.alert("Please create a customer profile before placing an order.");
+      this.router.navigate(['/customer-create']);
+      return;
+    }
 
+    if (!this.stockError) {
+      this.newOrder.orderDate = new Date(); 
+      this.newOrder.totalPrice = this.totalPrice; 
+      this.orderService.createOrder(this.newOrder).subscribe(order => {
+        console.log('Order created successfully:', order);
+        this.newOrder = new Order(); // Reset form
+        this.totalPrice = 0; // Reset total price
+      });
+    }
+  }
 }
