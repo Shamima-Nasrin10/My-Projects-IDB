@@ -5,28 +5,28 @@
       "name": "admin",
       "email": "admin@example.com",
       "password": "admin123",
-      "role": "Admin"
+      "role": "admin"
     },
     {
       "id": "2",
       "name": "customer1",
       "email": "customer1@example.com",
       "password": "customer123",
-      "role": "Customer"
+      "role": "user"
     },
     {
       "id": "4b39",
       "name": "Anika Sultana",
       "email": "anika@gmail.com",
       "password": "123456",
-      "role": "Customer"
+      "role": "user"
     },
     {
       "id": "103e",
       "name": "Rifa Tasfia",
       "email": "rifa@gmail.com",
       "password": "rifa123",
-      "role": "Customer"
+      "role": "user"
     }
   ],
   "rawMaterials": [
@@ -93,7 +93,7 @@
           "price": 1000,
           "imageUrl": "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
           "availableQuantity": 50
-        
+
       },
       "quantity": 5,
       "orderDate": "2023-05-11T18:00:00Z",
