@@ -1,4 +1,3 @@
-// product-view.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +19,7 @@ export class ProductViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+
     const productId = +this.route.snapshot.paramMap.get('id')! ?? null;
 
     if (productId) {
