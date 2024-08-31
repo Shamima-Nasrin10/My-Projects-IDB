@@ -1,10 +1,13 @@
-import { Customer } from "../../customer/model/customer.model";
+
 import {ProductModel} from "../../product/model/product.model";
 import { ManufacturingStage, OrderStage } from "./enum/enums";
 
 export class Order {
   id!: number;                       
-  customer!: Customer;              
+  userId!: number; // ID of the user placing the order
+  userName!: string; // Name of the user placing the order
+  phoneNumber!: string; // User's phone number for contact
+  address!: string;              
   product!: ProductModel;             
   quantity!: number;                  
   totalPrice!: number;               

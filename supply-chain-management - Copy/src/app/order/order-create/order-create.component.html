@@ -2,10 +2,10 @@
 
 <h2>Create Order</h2>
 <form (ngSubmit)="addOrder()">
-  <div>
+  <!-- <div>
     <label for="customerName">Customer Name:</label>
     <input id="customerName" [(ngModel)]="newOrder.customer.name" name="customerName" readonly>
-  </div>
+  </div> -->
 
   <div>
     <label for="product">Product:</label>
@@ -30,5 +30,5 @@
     <input id="totalPrice" [value]="totalPrice | currency" readonly>
   </div>
 
-  <button type="submit" [disabled]="stockError || !newOrder.product || !newOrder.quantity">Create Order</button>
+  <button type="submit" [disabled]="stockError || !newOrder.product || !newOrder.quantity">Place Order</button>
 </form>

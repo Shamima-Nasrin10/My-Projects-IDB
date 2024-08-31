@@ -5,10 +5,10 @@ import { Order } from '../model/order.model';
 import { OrderService } from '../order.service';
 import { CustomerService } from '../../customer/customer.service';
 import { ProductService } from '../../product/product.service';
-import { Customer } from '../../customer/model/customer.model';
 import { ProductModel } from '../../product/model/product.model';
 import { OrderStage } from '../model/enum/enums';
 import { Router } from '@angular/router';
+import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-order-create',
@@ -17,39 +17,42 @@ import { Router } from '@angular/router';
 })
 export class OrderCreateComponent implements OnInit {
   newOrder: Order = new Order();
-  customers: Customer[] = [];
   products: ProductModel[] = [];
   totalPrice: number = 0;
   stockError: boolean = false;
-  hasCustomerProfile: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor(
     private orderService: OrderService,
-    private customerService: CustomerService,
+    private authService: AuthService,
     private productService: ProductService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.checkCustomerProfile();
+    this.checkAuthenticationAndSetUserProfile();
     this.getProducts();
     this.newOrder.status = OrderStage.PENDING; // Set default status to Pending
   }
 
   // Check if customer profile exists
-  checkCustomerProfile(): void {
-    this.customerService.getCustomers().subscribe(customers => {
-      this.customers = customers;
-      if (this.customers.length > 0) {
-        this.hasCustomerProfile = true;
-        this.newOrder.customer = this.customers[0]; // Assign the first customer (or logic to select)
-      } else {
-        this.hasCustomerProfile = false;
-        // Redirect to customer creation if no profile exists
-        this.router.navigate(['/customer-create']);
+  checkAuthenticationAndSetUserProfile(): void {
+    this.isLoggedIn = this.authService.isAuthenticated();
+    if (this.isLoggedIn) {
+      const currentUser = this.authService.getUserProfileFromStorage();
+      if (currentUser) {
+        this.newOrder.userId = +currentUser.id; // Set userId from user profile
+        this.newOrder.userName = currentUser.name; // Set userName from user profile
       }
-    });
+    } else {
+      this.redirectToLogin();
+    }
   }
+
+  redirectToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
 
   getProducts(): void {
     this.productService.getProducts().subscribe(products => this.products = products);
@@ -67,11 +70,18 @@ export class OrderCreateComponent implements OnInit {
   }
 
   addOrder(): void {
-    if (!this.hasCustomerProfile) {
-      // If no customer profile exists, redirect to customer creation
-      window.alert("Please create a customer profile before placing an order.");
-      this.router.navigate(['/customer-create']);
-      return;
+    if (!this.stockError) {
+      this.newOrder.orderDate = new Date(); 
+      this.newOrder.totalPrice = this.totalPrice; 
+      this.orderService.createOrder(this.newOrder).subscribe({
+        next: (order) => {
+          console.log('Order created successfully:', order);
+          this.resetForm();
+        },
+        error: (error) => {
+          console.error('Error creating order:', error);
+        }
+      });
     }
 
     if (!this.stockError) {
@@ -83,5 +93,9 @@ export class OrderCreateComponent implements OnInit {
         this.totalPrice = 0; // Reset total price
       });
     }
+  }
+  resetForm(): void {
+    this.newOrder = {} as Order; // Reset form
+    this.totalPrice = 0; // Reset total price
   }
 }
