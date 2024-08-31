@@ -5,28 +5,28 @@
       "name": "admin",
       "email": "admin@example.com",
       "password": "admin123",
-      "role": "admin"
+      "role": "Admin"
     },
     {
       "id": "2",
       "name": "customer1",
       "email": "customer1@example.com",
       "password": "customer123",
-      "role": "user"
+      "role": "Customer"
     },
     {
       "id": "4b39",
       "name": "Anika Sultana",
       "email": "anika@gmail.com",
       "password": "123456",
-      "role": "user"
+      "role": "Customer"
     },
     {
       "id": "103e",
       "name": "Rifa Tasfia",
       "email": "rifa@gmail.com",
       "password": "rifa123",
-      "role": "user"
+      "role": "Customer"
     }
   ],
   "rawMaterials": [
@@ -88,33 +88,17 @@
         "phone": "98764534"
       },
       "product": {
-        "productId": "P001",
-        "name": "Shirt",
-        "description": "Cotton shirt",
-        "price": 29.99,
-        "stock": 100
+          "id": "2",
+          "name": "Jeans Pants",
+          "price": 1000,
+          "imageUrl": "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
+          "availableQuantity": 50
+        
       },
       "quantity": 5,
       "orderDate": "2023-05-11T18:00:00Z",
       "status": "Pending",
       "currentStage": "Sewing"
-    },
-    {
-      "id": "8cf6",
-      "customer": {
-        "id": "2",
-        "name": "Shamima Nasrin",
-        "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
-        "email": "customerA@gmail.com",
-        "phone": "98764555"
-      },
-      "product": "2",
-      "quantity": "200",
-      "orderDate": "2024-08-28",
-      "status": "Approved"
-    },
-    {
-      "id": "8823"
     }
   ],
   "notifications": [],
