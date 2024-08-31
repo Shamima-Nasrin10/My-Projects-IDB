@@ -17,13 +17,13 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
-
   ) {
     const storedUser = this.isBrowser() ? JSON.parse(localStorage.getItem('currentUser') || 'null') : null;
     this.currentUserSubject = new BehaviorSubject<UserModel | null>(storedUser);
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
+  // Check if email exists
   checkEmailExists(email: string): Observable<boolean> {
     let params = new HttpParams().append('email', email);
     return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
@@ -35,10 +35,12 @@ export class AuthService {
     );
   }
 
+  // Check if the platform is browser
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
 
+  // Register a new user
   registration(user: UserModel): Observable<AuthResponse> {
     return this.http.post<UserModel>(this.baseUrl, user).pipe(
       map((newUser: UserModel) => {
@@ -52,41 +54,43 @@ export class AuthService {
     );
   }
 
+  // User login
   login(credentials: { email: string; password: string }): Observable<AuthResponse> {
     let params = new HttpParams().append('email', credentials.email);
 
     return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
-        map(users => {
-            if (users.length > 0) {
-                const user = users[0];
-                if (user.password === credentials.password) {
-                    if (user.role !== 'pending') {  // Check user role
-                        const token = btoa(`${user.email}:${user.password}`);
-                        this.storeToken(token);
-                        this.setCurrentUser(user);
-                        return { token, user } as AuthResponse;
-                    } else {
-                        throw new Error('Your account is pending approval. Please contact an admin.');
-                    }
-                } else {
-                    throw new Error('Invalid password');
-                }
+      map(users => {
+        if (users.length > 0) {
+          const user = users[0];
+          if (user.password === credentials.password) {
+            if (user.role !== 'pending') {  // Check user role
+              const token = btoa(`${user.email}:${user.password}`);
+              this.storeToken(token);
+              this.setCurrentUser(user);
+              return { token, user } as AuthResponse;
             } else {
-                throw new Error('User not found');
+              throw new Error('Your account is pending approval. Please contact an admin.');
             }
-        }),
-        catchError(error => {
-            console.error('Login error:', error);
-            throw error;
-        })
+          } else {
+            throw new Error('Invalid password');
+          }
+        } else {
+          throw new Error('User not found');
+        }
+      }),
+      catchError(error => {
+        console.error('Login error:', error);
+        throw error;
+      })
     );
-}
+  }
 
-
+  // Get current user
   public get currentUserValue(): UserModel | null {
     return this.currentUserSubject.value;
   }
 
+  // Logout user
   logout(): void {
     this.clearCurrentUser();
     if (this.isBrowser()) {
@@ -94,6 +98,7 @@ export class AuthService {
     }
   }
 
+  // Set current user
   private setCurrentUser(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
@@ -101,6 +106,7 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
+  // Clear current user
   private clearCurrentUser(): void {
     if (this.isBrowser()) {
       localStorage.removeItem('currentUser');
@@ -108,62 +114,68 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
+  // Check if the user is authenticated
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
 
+  // Get stored token
   getToken(): string | null {
     return this.isBrowser() ? localStorage.getItem('token') : null;
   }
+
+  // Get all users (for admin use)
   getAllUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(`${this.baseUrl}`);
   }
 
-  getUserRole(): any {
-    return this.currentUserValue?.role;
+  // Get user role
+  getUserRole(): string | null {
+    return this.currentUserValue?.role || null;
   }
 
+  // Store token in localStorage
   storeToken(token: string): void {
     if (this.isBrowser()) {
       localStorage.setItem('token', token);
     }
   }
 
+  // Store user profile
   storeUserProfile(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
     }
   }
 
+  // Get user profile from storage
   getUserProfileFromStorage(): UserModel | null {
     if (this.isBrowser()) {
       const userProfile = localStorage.getItem('currentUser');
-      console.log('User Profile is: ', userProfile);
       return userProfile ? JSON.parse(userProfile) : null;
     }
     return null;
   }
 
+  // Remove user details
   removeUserDetails(): void {
     if (this.isBrowser()) {
       localStorage.clear();
     }
   }
 
-  // auth.service.ts
-
-updateUser(userId: string, userData: Partial<UserModel>): Observable<UserModel> {
-  return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, userData);
-}
-
-
-  updateUserRole(userId: string, newRole: string):Observable<UserModel>{
-    return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, {role: newRole});
-
+  // Update user details (e.g., for approving user)
+  updateUser(userId: string, userData: Partial<UserModel>): Observable<UserModel> {
+    return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, userData);
   }
 
+  // Update user role
+  updateUserRole(userId: string, newRole: string): Observable<UserModel> {
+    return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, { role: newRole });
+  }
+
+  // Delete user
   deleteUser(userId: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${userId}`);
   }
-
 }

@@ -127,18 +127,22 @@
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Cotton Shirts",
-      "price": 100,
-      "imageUrl": "https://dyn.media.forbiddenplanet.com/wzFN-mnOknDe89Jy_vsQw0bwq5o=/fit-in/252x0/filters:fill(white)/https://media.forbiddenplanet.com/products/96/84/e2a1a87b78fce792db168748c5db7b6a2896.jpg",
-      "availableQuantity": 50
+      "id": 1,
+      "name": "Sample Product",
+      "photo":  "https://dyn.media.forbiddenplanet.com/wzFN-mnOknDe89Jy_vsQw0bwq5o=/fit-in/252x0/filters:fill(white)/https://media.forbiddenplanet.com/products/96/84/e2a1a87b78fce792db168748c5db7b6a2896.jpg",
+      "price": 99.99,
+      "stock": 50,
+      "features": "Feature 1, Feature 2",
+      "benefits": "Benefit 1, Benefit 2"
     },
     {
-      "id": "2",
-      "name": "Jeans Pants",
-      "price": 1000,
-      "imageUrl": "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
-      "availableQuantity": 50
+      "id": 1,
+      "name": "Sample Product",
+      "photo":  "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
+      "price": 99.99,
+      "stock": 50,
+      "features": "Feature 1, Feature 2",
+      "benefits": "Benefit 1, Benefit 2"
     }
   ]
 }

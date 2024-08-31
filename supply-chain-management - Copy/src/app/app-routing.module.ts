@@ -13,6 +13,10 @@ import { AdminComponent } from './user/admin/admin.component';
 import { AuthGuard } from './access/auth.guard';
 import { RoleGuard } from './access/role.guard';
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
+import { ProductCreateComponent } from './product/product-create/product-create.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductUpdateComponent } from './product/product-update/product-update.component';
+import { ProductViewComponent } from './product/product-view/product-view.component';
 
 const routes: Routes = [
   {
@@ -32,6 +36,26 @@ const routes: Routes = [
   },
   {
     path:"logout",component:LogoutComponent
+  },
+  {
+    path: 'products',
+    component: ProductListComponent
+  },
+  {
+    path: 'products/view/:id',
+    component: ProductViewComponent
+  },
+  {
+    path: 'products/create',
+    component: ProductCreateComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'admin' }
+  },
+  {
+    path: 'products/update/:id',
+    component: ProductUpdateComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'admin' }
   },
   {
     path:"rawMaterial",component:RawMaterialCreateComponent

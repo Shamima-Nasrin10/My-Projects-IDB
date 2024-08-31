@@ -1,1 +1,31 @@
-<p>product-list works!</p>
+
+<div class="container">
+    <h2>Product List</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Photo</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td><img [src]="product.photo" alt="{{ product.name }}" style="width: 50px;"></td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.stock }}</td>
+          <td>
+            <button class="btn btn-info" (click)="viewProductDetails(product)">View</button>
+            <button *ngIf="isAdmin" class="btn btn-warning" (click)="editProduct(product)">Edit</button>
+            <button *ngIf="isAdmin" class="btn btn-danger" (click)="deleteProduct(product)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,1 +1,58 @@
-<p>product-create works!</p>
+
+<div class="container">
+    <h2 class="text-center">Add New Product</h2>
+  
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Product Name</label>
+        <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter product name">
+      </div>
+  
+      <div class="form-group">
+        <label for="photoUrl">Product Photo URL</label>
+        <input type="text" id="photoUrl" formControlName="photoUrl" class="form-control" placeholder="Enter photo URL">
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" formControlName="price" class="form-control" placeholder="Enter product price">
+      </div>
+  
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" id="stock" formControlName="stock" class="form-control" placeholder="Enter stock quantity">
+      </div>
+  
+      <div class="form-group">
+        <label>Features</label>
+        <div formArrayName="features" *ngFor="let feature of features.controls; let i=index">
+          <div [formGroupName]="i" class="input-group mb-2">
+            <input type="text" formControlName="feature" class="form-control" placeholder="Enter feature">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-danger" (click)="removeFeature(i)" *ngIf="features.length > 1">Remove</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="addFeature()">Add Feature</button>
+      </div>
+  
+      <div class="form-group">
+        <label>Benefits</label>
+        <div formArrayName="benefits" *ngFor="let benefit of benefits.controls; let i=index">
+          <div [formGroupName]="i" class="input-group mb-2">
+            <input type="text" formControlName="benefit" class="form-control" placeholder="Enter benefit">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-danger" (click)="removeBenefit(i)" *ngIf="benefits.length > 1">Remove</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="addBenefit()">Add Benefit</button>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+  </div>
+  

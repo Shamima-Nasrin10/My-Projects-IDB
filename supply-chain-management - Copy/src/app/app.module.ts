@@ -23,9 +23,9 @@ import { RegistrationComponent } from './access/registration/registration/regist
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
-import { ProductViewComponent } from './product/product-view/product-view.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
+import { ProductViewComponent } from './product/product-view/product-view.component';
 
 
 @NgModule({
@@ -48,9 +48,9 @@ import { UnauthorizedComponent } from './authentication/unauthorized/unauthorize
     ProductListComponent,
     ProductCreateComponent,
     ProductUpdateComponent,
-    ProductViewComponent,
     UserProfileComponent,
     UnauthorizedComponent,
+    ProductViewComponent,
 
 
   ],
