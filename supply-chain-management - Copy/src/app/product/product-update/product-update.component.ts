@@ -2,8 +2,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {ProductService} from "../product.service";
-import {ProductModel} from "../model/product.model";
+import { ProductService } from '../product.service';
+import { ProductModel } from '../model/product.model';
 
 @Component({
   selector: 'app-product-update',
@@ -21,9 +21,7 @@ export class ProductUpdateComponent implements OnInit {
     features: [],
     benefits: []
   };
-  productId: number = 0; // Default value of 0
-  // Allowing null as a possible value
-
+  productId!: number;
 
   constructor(
     private productService: ProductService,
@@ -33,26 +31,41 @@ export class ProductUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.productId = +this.route.snapshot.paramMap.get('id')!;
-    this.productService.getProductById(this.productId).subscribe(
-      (product: ProductModel) => {
+    this.productService.getProductById(this.productId).subscribe({
+      next: (product: ProductModel) => {
         this.product = product;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching product details:', error);
       }
-    );
+    });
   }
 
   updateProduct(): void {
-    this.productService.updateProduct(this.productId, this.product).subscribe(
-      (response: ProductModel) => {
+    this.productService.updateProduct(this.productId, this.product).subscribe({
+      next: (response: ProductModel) => {
         console.log('Product updated successfully:', response);
-        this.router.navigate(['/products']); // Redirect to the product list page after successful update
+        this.router.navigate(['/products']); 
       },
-      (error) => {
+      error: (error) => {
         console.error('Error updating product:', error);
       }
-    );
+    });
+  }
+
+  addFeature(): void {
+    this.product.features.push(''); 
+  }
+
+  removeFeature(index: number): void {
+    this.product.features.splice(index, 1); 
+  }
+
+  addBenefit(): void {
+    this.product.benefits.push(''); 
+  }
+
+  removeBenefit(index: number): void {
+    this.product.benefits.splice(index, 1); 
   }
 }
-

@@ -1,1 +1,46 @@
-<p>product-update works!</p>
+<!-- src/app/components/product-update/product-update.component.html -->
+
+<h2>Update Product</h2>
+
+<form (ngSubmit)="updateProduct()">
+  <div>
+    <label for="name">Product Name:</label>
+    <input id="name" [(ngModel)]="product.name" name="name" required>
+  </div>
+
+  <div>
+    <label for="photo">Photo URL:</label>
+    <input id="photo" [(ngModel)]="product.photo" name="photo">
+  </div>
+
+  <div>
+    <label for="price">Price:</label>
+    <input id="price" type="number" [(ngModel)]="product.price" name="price" required>
+  </div>
+
+  <div>
+    <label for="stock">Stock:</label>
+    <input id="stock" type="number" [(ngModel)]="product.stock" name="stock" required>
+  </div>
+
+  <div>
+    <label>Features:</label>
+    <div *ngFor="let feature of product.features; let i = index">
+      <input [(ngModel)]="product.features[i]" name="feature-{{i}}">
+      <button type="button" (click)="removeFeature(i)">Remove</button>
+    </div>
+    <button type="button" (click)="addFeature()">Add Feature</button>
+  </div>
+
+  <div>
+    <label>Benefits:</label>
+    <div *ngFor="let benefit of product.benefits; let i = index">
+      <input [(ngModel)]="product.benefits[i]" name="benefit-{{i}}">
+      <button type="button" (click)="removeBenefit(i)">Remove</button>
+    </div>
+    <button type="button" (click)="addBenefit()">Add Benefit</button>
+  </div>
+
+  <button type="submit">Update Product</button>
+</form>
+

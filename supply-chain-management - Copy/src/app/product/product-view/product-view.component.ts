@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { ProductModel } from '../model/product.model';
 
@@ -15,18 +15,38 @@ export class ProductViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
-  ) {}
+    private productService: ProductService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
-    const productId = +this.route.snapshot.paramMap.get('id')! ?? null;
+    const idParam = this.route.snapshot.paramMap.get('id');
 
-    if (productId) {
-      this.loadProductDetails(productId);
-    } else {
-      this.errorMessage = 'Invalid product ID.';
-    }
+if (idParam !== null) {
+  const productId = +idParam; // Convert to number
+
+  if (isNaN(productId)) {
+    // Handle invalid ID (NaN) case
+    console.error('Invalid product ID:', idParam);
+    this.router.navigate(['/products']); // Redirect or show an error message
+  } else {
+    // Valid productId, proceed with your logic
+    this.productService.getProductById(productId).subscribe({
+      next: (product: ProductModel) => {
+        this.product = product;
+      },
+      error: (error) => {
+        console.error('Error fetching product details:', error);
+      }
+    });
+  }
+} else {
+  // Handle the case where the 'id' parameter is missing
+  console.error('Product ID parameter is missing');
+  this.router.navigate(['/products']); // Redirect or show an error message
+}
+
   }
 
   loadProductDetails(productId: number): void {

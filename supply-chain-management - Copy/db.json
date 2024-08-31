@@ -27,6 +27,20 @@
       "email": "rifa@gmail.com",
       "password": "rifa123",
       "role": "user"
+    },
+    {
+      "id": "f3aa",
+      "name": "Adiba",
+      "email": "adiba@gmail.com",
+      "password": "adiba1234",
+      "role": "pending"
+    },
+    {
+      "id": "8b66",
+      "name": "Shamima",
+      "email": "fine@gmail.com",
+      "password": "123456",
+      "role": "pending"
     }
   ],
   "rawMaterials": [
@@ -88,12 +102,11 @@
         "phone": "98764534"
       },
       "product": {
-          "id": "2",
-          "name": "Jeans Pants",
-          "price": 1000,
-          "imageUrl": "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
-          "availableQuantity": 50
-
+        "id": "2",
+        "name": "Jeans Pants",
+        "price": 1000,
+        "imageUrl": "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
+        "availableQuantity": 50
       },
       "quantity": 5,
       "orderDate": "2023-05-11T18:00:00Z",
@@ -127,18 +140,18 @@
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Sample Product",
-      "photo":  "",
+      "photo": "",
       "price": 99.99,
       "stock": 50,
       "features": "Feature 1, Feature 2",
       "benefits": "Benefit 1, Benefit 2"
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Sample Product",
-      "photo":  "",
+      "photo": "",
       "price": 99.99,
       "stock": 50,
       "features": "Feature 1, Feature 2",
