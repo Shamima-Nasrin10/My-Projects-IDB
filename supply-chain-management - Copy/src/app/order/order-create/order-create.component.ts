@@ -1,14 +1,12 @@
-// src/app/components/order-create/order-create.component.ts
-
+// order-create.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Order } from '../model/order.model';
-import { OrderService } from '../order.service';
-import { CustomerService } from '../../customer/customer.service';
-import { ProductService } from '../../product/product.service';
-import { ProductModel } from '../../product/model/product.model';
-import { OrderStage } from '../model/enum/enums';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../authentication/auth.service';
+import { OrderService } from '../order.service';
+import { ProductService } from '../../product/product.service';
+import { OrderModel } from '../model/order.model';
+import { UserModel } from '../../access/userModel/user.model';
+import { ProductModel } from '../../product/model/product.model';
 
 @Component({
   selector: 'app-order-create',
@@ -16,86 +14,93 @@ import { AuthService } from '../../authentication/auth.service';
   styleUrls: ['./order-create.component.css']
 })
 export class OrderCreateComponent implements OnInit {
-  newOrder: Order = new Order();
+  orderForm!: FormGroup;
+  currentUser: UserModel | null = null;
   products: ProductModel[] = [];
-  totalPrice: number = 0;
-  stockError: boolean = false;
-  isLoggedIn: boolean = false;
+  errorMessage: string = '';
 
   constructor(
-    private orderService: OrderService,
     private authService: AuthService,
+    private orderService: OrderService,
     private productService: ProductService,
-    private router: Router
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.checkAuthenticationAndSetUserProfile();
-    this.getProducts();
-    this.newOrder.status = OrderStage.PENDING; // Set default status to Pending
-  }
+    this.currentUser = this.authService.getUserProfileFromStorage();
 
-  // Check if customer profile exists
-  checkAuthenticationAndSetUserProfile(): void {
-    this.isLoggedIn = this.authService.isAuthenticated();
-    if (this.isLoggedIn) {
-      const currentUser = this.authService.getUserProfileFromStorage();
-      if (currentUser) {
-        this.newOrder.userId = +currentUser.id; // Set userId from user profile
-        this.newOrder.userName = currentUser.name; // Set userName from user profile
-      }
-    } else {
-      this.redirectToLogin();
+    if (!this.currentUser || this.currentUser.role !== 'customer') {
+      this.errorMessage = 'You must be logged in as a customer to place an order.';
+      return;
     }
-  }
 
-  redirectToLogin(): void {
-    this.router.navigate(['/login']);
-  }
+    // Initialize the order form
+    this.orderForm = this.fb.group({
+      userId: [this.currentUser.id, Validators.required],
+      userName: [this.currentUser.name, Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Only allow numbers
+      address: ['', Validators.required],
+      product: [null, Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      totalPrice: [{ value: 0, disabled: true }],
+      orderDate: [new Date(), Validators.required],
+      requiredDeliveryDate: [null]
+    });
 
-
-  getProducts(): void {
-    this.productService.getProducts().subscribe(products => this.products = products);
-  }
-
-  updatePrice(): void {
-    if (this.newOrder.product && this.newOrder.quantity) {
-      this.stockError = this.newOrder.quantity > this.newOrder.product.stock;
-      if (!this.stockError) {
-        this.totalPrice = this.newOrder.product.price * this.newOrder.quantity;
-      } else {
-        this.totalPrice = 0; // Reset total price if there's a stock error
+    // Fetch available products
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+        this.errorMessage = 'Failed to load products. Please try again later.';
       }
-    }
+    });
+
+    // Calculate total price when quantity or product changes
+    this.orderForm.get('quantity')?.valueChanges.subscribe(() => this.calculateTotalPrice());
+    this.orderForm.get('product')?.valueChanges.subscribe(() => this.calculateTotalPrice());
   }
 
-  addOrder(): void {
-    if (!this.stockError) {
-      this.newOrder.orderDate = new Date(); 
-      this.newOrder.totalPrice = this.totalPrice; 
-      this.orderService.createOrder(this.newOrder).subscribe({
-        next: (order) => {
-          console.log('Order created successfully:', order);
-          this.resetForm();
+  calculateTotalPrice(): void {
+    const selectedProduct = this.orderForm.get('product')?.value as ProductModel;
+    const quantity = this.orderForm.get('quantity')?.value;
+    const totalPrice = selectedProduct ? selectedProduct.price * quantity : 0;
+    this.orderForm.patchValue({ totalPrice });
+  }
+
+  placeOrder(): void {
+    if (this.orderForm.valid) {
+      const order: OrderModel = {
+        ...this.orderForm.value,
+        status: 'pending' // Default status on order creation
+      };
+
+      this.orderService.placeOrder(order).subscribe({
+        next: (res) => {
+          console.log('Order placed successfully:', res);
+          this.errorMessage = '';
+          // Optionally reset the form or redirect
+          this.orderForm.reset({
+            userId: this.currentUser?.id,
+            userName: this.currentUser?.name,
+            phoneNumber: '',
+            address: '',
+            product: null,
+            quantity: 1,
+            totalPrice: 0,
+            orderDate: new Date(),
+            requiredDeliveryDate: null
+          });
         },
-        error: (error) => {
-          console.error('Error creating order:', error);
+        error: (err) => {
+          console.error('Error placing order:', err);
+          this.errorMessage = 'Failed to place order. Please try again.';
         }
       });
+    } else {
+      this.errorMessage = 'Please fill out all required fields correctly.';
     }
-
-    if (!this.stockError) {
-      this.newOrder.orderDate = new Date(); 
-      this.newOrder.totalPrice = this.totalPrice; 
-      this.orderService.createOrder(this.newOrder).subscribe(order => {
-        console.log('Order created successfully:', order);
-        this.newOrder = new Order(); // Reset form
-        this.totalPrice = 0; // Reset total price
-      });
-    }
-  }
-  resetForm(): void {
-    this.newOrder = {} as Order; // Reset form
-    this.totalPrice = 0; // Reset total price
   }
 }

@@ -72,7 +72,7 @@ export class AdminComponent implements OnInit {
   }
 
   deleteUser(user: UserModel): void {
-    this.authService.deleteUser(user.id).subscribe({
+    this.authService.deleteUser(user).subscribe({
       next: () => {
         this.successMessage = `User ${user.name} deleted successfully.`;
         this.loadUsers();

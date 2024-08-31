@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Order } from './model/order.model';
+import { catchError, Observable, throwError } from 'rxjs';
+import { OrderModel } from './model/order.model'; 
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +12,19 @@ export class OrderService {
   constructor(private http: HttpClient) {}
 
   // Get all orders
-  getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.apiUrl);
+  getOrders(): Observable<OrderModel[]> {
+    return this.http.get<OrderModel[]>(this.apiUrl);
   }
 
   // Get order by ID
-  getOrderById(id: number): Observable<Order> {
+  getOrderById(id: number): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Order>(url);
+    return this.http.get<OrderModel>(url);
   }
 
   // Create a new order
-  createOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.apiUrl, order, {
+  createOrder(order: OrderModel): Observable<OrderModel> {
+    return this.http.post<OrderModel>(this.apiUrl, order, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -32,9 +32,9 @@ export class OrderService {
   }
 
   // Update an existing order
-  updateOrder(order: Order): Observable<Order> {
+  updateOrder(order: OrderModel): Observable<OrderModel> {
     const url = `${this.apiUrl}/${order.id}`;
-    return this.http.put<Order>(url, order, {
+    return this.http.put<OrderModel>(url, order, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -42,9 +42,9 @@ export class OrderService {
   }
 
   // Approve an order
-  approveOrder(id: number): Observable<Order> {
+  approveOrder(id: number): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.patch<Order>(url, { status: 'Approved' }, {
+    return this.http.patch<OrderModel>(url, { status: 'Approved' }, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -52,9 +52,9 @@ export class OrderService {
   }
 
   // Reject an order
-  rejectOrder(id: number): Observable<Order> {
+  rejectOrder(id: number): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.patch<Order>(url, { status: 'Rejected' }, {
+    return this.http.patch<OrderModel>(url, { status: 'Rejected' }, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -62,9 +62,9 @@ export class OrderService {
   }
 
   // Update the manufacturing stage of an order
-  updateManufacturingStage(id: number, manufacturingStage: string): Observable<Order> {
+  updateManufacturingStage(id: number, manufacturingStage: string): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.patch<Order>(url, { manufacturingStage }, {
+    return this.http.patch<OrderModel>(url, { manufacturingStage }, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -76,4 +76,20 @@ export class OrderService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
   }
+
+  placeOrder(order: OrderModel): Observable<OrderModel> {
+    // Create a copy of the order to avoid modifying the original object
+    const orderToSubmit = {
+        ...order,
+        id: undefined, // Ensure ID is not set if backend auto-generates it
+        status: 'pending' // Set the default status to 'pending'
+    };
+
+    return this.http.post<OrderModel>(this.apiUrl, orderToSubmit).pipe(
+        catchError((error) => {
+            console.error('Error placing order:', error);
+            return throwError(() => new Error('Failed to place order. Please try again.'));
+        })
+    );
+}
 }

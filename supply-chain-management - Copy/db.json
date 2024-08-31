@@ -93,52 +93,45 @@
   ],
   "orders": [
     {
-      "id": "1",
-      "customer": {
-        "id": "b96d",
-        "name": "Shamima Nasrin",
-        "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
-        "email": "customerA@gmail.com",
-        "phone": "98764534"
-      },
-      "product": {
-        "id": "2",
-        "name": "Jeans Pants",
-        "price": 1000,
-        "imageUrl": "https://toptenmartltd.com/wp-content/uploads/2023/04/5a-3.jpg",
-        "availableQuantity": 50
-      },
-      "quantity": 5,
-      "orderDate": "2023-05-11T18:00:00Z",
-      "status": "Pending",
-      "currentStage": "Sewing"
-    },
-    {
-      "id": "c3b2",
-      "customer": {
-        "id": "b96d",
-        "name": "Shamima Nasrin",
-        "photo": "https://e7.pngegg.com/pngimages/694/639/png-clipart-computer-icons-user-profile-female-symbol-miscellaneous-purple.png",
-        "email": "customerA@gmail.com",
-        "phone": "98764534"
-      },
+      "id": "aa86",
+      "userId": null,
+      "userName": "Anika Sultana",
       "status": "Pending",
       "product": {
-        "id": "2",
+        "id": "1",
         "name": "Sample Product",
-        "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
         "price": 99.99,
         "stock": 50,
         "features": "Feature 1, Feature 2",
         "benefits": "Benefit 1, Benefit 2"
       },
-      "quantity": 4,
-      "orderDate": "2024-08-31T11:13:16.440Z",
-      "totalPrice": 399.96
+      "quantity": 50,
+      "requiredDeliveryDate": "2024-09-29",
+      "orderDate": "2024-08-31T22:27:27.304Z",
+      "totalPrice": 4999.5
+    },
+    {
+      "id": "8854",
+      "userId": null,
+      "userName": "Anika Sultana",
+      "status": "Pending",
+      "product": {
+        "id": "1",
+        "name": "Sample Product",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 50,
+      "requiredDeliveryDate": "2024-09-29",
+      "orderDate": "2024-08-31T22:27:27.310Z",
+      "totalPrice": 4999.5
     }
   ],
   "notifications": [],
-  
   "products": [
     {
       "id": "1",

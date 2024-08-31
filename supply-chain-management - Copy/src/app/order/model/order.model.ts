@@ -1,8 +1,9 @@
 
+import { UserModel } from "../../access/userModel/user.model";
 import {ProductModel} from "../../product/model/product.model";
 import { ManufacturingStage, OrderStage } from "./enum/enums";
 
-export class Order {
+export class OrderModel {
   id!: number;                       
   userId!: number; // ID of the user placing the order
   userName!: string; // Name of the user placing the order
