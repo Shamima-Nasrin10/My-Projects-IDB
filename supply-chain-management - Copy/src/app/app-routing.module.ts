@@ -12,6 +12,7 @@ import {LogoutComponent} from "./access/logout/logout/logout.component";
 import { AdminComponent } from './user/admin/admin.component';
 import { AuthGuard } from './access/auth.guard';
 import { RoleGuard } from './access/role.guard';
+import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
   },
   {
     path:'admin', component:AdminComponent, canActivate: [AuthGuard,RoleGuard], data:{expectedRole:'admin'}
+  },
+  {
+    path:'unathorized', component:UnauthorizedComponent
   },
   {
     path:"login", component:LoginComponent

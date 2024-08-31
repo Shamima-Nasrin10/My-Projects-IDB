@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { UserModel } from '../access/userModel/user.model';
-import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { AuthResponse } from './auth-reponse';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -24,6 +24,16 @@ export class AuthService {
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
+  checkEmailExists(email: string): Observable<boolean> {
+    let params = new HttpParams().append('email', email);
+    return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
+      map(users => users.length > 0),
+      catchError(err => {
+        console.error('Error checking email existence:', err);
+        return of(false);
+      })
+    );
+  }
 
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
@@ -46,27 +56,32 @@ export class AuthService {
     let params = new HttpParams().append('email', credentials.email);
 
     return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
-      map(users => {
-        if (users.length > 0) {
-          const user = users[0];
-          if (user.password === credentials.password) {
-            const token = btoa(`${user.email}:${user.password}`);
-            this.storeToken(token);
-            this.setCurrentUser(user);
-            return { token, user } as AuthResponse;
-          } else {
-            throw new Error('Invalid password');
-          }
-        } else {
-          throw new Error('User not found');
-        }
-      }),
-      catchError(error => {
-        console.error('Login error:', error);
-        throw error;
-      })
+        map(users => {
+            if (users.length > 0) {
+                const user = users[0];
+                if (user.password === credentials.password) {
+                    if (user.role !== 'pending') {  // Check user role
+                        const token = btoa(`${user.email}:${user.password}`);
+                        this.storeToken(token);
+                        this.setCurrentUser(user);
+                        return { token, user } as AuthResponse;
+                    } else {
+                        throw new Error('Your account is pending approval. Please contact an admin.');
+                    }
+                } else {
+                    throw new Error('Invalid password');
+                }
+            } else {
+                throw new Error('User not found');
+            }
+        }),
+        catchError(error => {
+            console.error('Login error:', error);
+            throw error;
+        })
     );
-  }
+}
+
 
   public get currentUserValue(): UserModel | null {
     return this.currentUserSubject.value;
@@ -134,6 +149,13 @@ export class AuthService {
       localStorage.clear();
     }
   }
+
+  // auth.service.ts
+
+updateUser(userId: string, userData: Partial<UserModel>): Observable<UserModel> {
+  return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, userData);
+}
+
 
   updateUserRole(userId: string, newRole: string):Observable<UserModel>{
     return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, {role: newRole});

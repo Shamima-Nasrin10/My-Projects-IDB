@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from '../../access/userModel/user.model';
 import { AuthService } from '../../authentication/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -10,39 +11,78 @@ import { AuthService } from '../../authentication/auth.service';
 export class AdminComponent implements OnInit {
 
   users: UserModel[] = [];
+  selectedUser: UserModel | null = null;
+  editForm: FormGroup;
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
-    private authService: AuthService
-  ) { }
-
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {
+    // Initialize the form
+    this.editForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: ['', Validators.required]
+    });
+  }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.loadUsers();
   }
 
   loadUsers(): void {
     this.authService.getAllUsers()
-      .subscribe((users) => {
-
-        this.users = users;
-
+      .subscribe({
+        next: (users) => {
+          this.users = users;
+        },
+        error: (error) => {
+          this.errorMessage = 'Error loading users. Please try again later.';
+          console.error('Error loading users:', error);
+        }
       });
   }
 
-approveUser(user: UserModel): void{
+  editUser(user: UserModel): void {
+    this.selectedUser = user;
+    this.editForm.patchValue(user); 
+  }
 
-this.authService.updateUserRole(user.id, 'user').subscribe(()=>{
-  this.loadUsers();
-})
+  updateUser(): void {
+    if (this.editForm.valid && this.selectedUser) {
+      const updatedUser = { ...this.selectedUser, ...this.editForm.value };
+      this.authService.updateUserRole(updatedUser.id, updatedUser.role).subscribe({
+        next: () => {
+          this.successMessage = `User ${updatedUser.name} updated and approved successfully.`;
+          this.loadUsers(); // Refresh user list
+          this.cancelEdit(); // Reset edit form
+        },
+        error: (error) => {
+          this.errorMessage = `Error updating user ${updatedUser.name}. Please try again.`;
+          console.error('Error updating user:', error);
+        }
+      });
+    }
+  }
 
-}
+  cancelEdit(): void {
+    this.selectedUser = null; 
+    this.editForm.reset();
+  }
 
-deleteUser(user: UserModel): void{
-
-this.authService.deleteUser(user.id).subscribe(()=>{
-  this.loadUsers();
-})
-
-}
+  deleteUser(user: UserModel): void {
+    this.authService.deleteUser(user.id).subscribe({
+      next: () => {
+        this.successMessage = `User ${user.name} deleted successfully.`;
+        this.loadUsers();
+      },
+      error: (error) => {
+        this.errorMessage = `Error deleting user ${user.name}. Please try again.`;
+        console.error('Error deleting user:', error);
+      }
+    });
+  }
 
 
 }

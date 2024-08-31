@@ -12,6 +12,7 @@ import { UserModel } from '../../userModel/user.model';
 export class RegistrationComponent {
 
   regForm!: FormGroup;
+  errorMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -19,29 +20,44 @@ export class RegistrationComponent {
     private formBuilder: FormBuilder
   ) {
     this.regForm = this.formBuilder.group({
-
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
-    })
+    });
   }
+  get f(){return this.regForm.controls;}
 
   onSubmit(): void {
     if (this.regForm.valid) {
       const user: UserModel = this.regForm.value;
-      this.authService.registration(user).subscribe({
-        next: (res) => {
-          console.log('User registered successfully:', res);
-          this.authService.storeToken(res.token);
-          this.router.navigate(['/']); // Navigate to a protected route after registration
+
+      // Check if email already exists
+      this.authService.checkEmailExists(user.email).subscribe({
+        next: (exists) => {
+          if (exists) {
+            this.errorMessage = 'Email is already registered. Please use a different email.';
+          } else {
+            user.role = 'pending'; // Set default role to 'pending'
+            this.authService.registration(user).subscribe({
+              next: (res) => {
+                console.log('User registered successfully:', res);
+                // No immediate login; redirect to login page or show success message
+                this.router.navigate(['/login']);
+              },
+              error: (err) => {
+                console.error('Error registering user:', err);
+                this.errorMessage = 'Registration failed. Please try again later.';
+              }
+            });
+          }
         },
-        error: (err) => {
-          console.error('Error registering user:', err);
+        error: (error) => {
+          console.error('Error checking email:', error);
+          this.errorMessage = 'Unable to check email. Please try again later.';
         }
       });
-    }
-    else{
-      alert("Complte mandatory Field");
+    } else {
+      this.errorMessage = 'Complete all mandatory fields.';
     }
   }
 

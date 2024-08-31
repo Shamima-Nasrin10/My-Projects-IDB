@@ -13,6 +13,20 @@
       "email": "customer1@example.com",
       "password": "customer123",
       "role": "user"
+    },
+    {
+      "id": "4b39",
+      "name": "Anika Sultana",
+      "email": "anika@gmail.com",
+      "password": "123456",
+      "role": "user"
+    },
+    {
+      "id": "103e",
+      "name": "Rifa Tasfia",
+      "email": "rifa@gmail.com",
+      "password": "rifa123",
+      "role": "user"
     }
   ],
   "rawMaterials": [
