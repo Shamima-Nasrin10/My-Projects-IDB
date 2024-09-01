@@ -5,7 +5,7 @@ import { RawMaterialListComponent } from './raw-materials/raw-material-list/raw-
 import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-create.component';
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { CustomerListComponent } from './customer/customer-list/customer-list.component';
+
 import { RegistrationComponent } from './access/registration/registration/registration.component';
 import {LoginComponent} from "./access/login/login/login.component";
 import {LogoutComponent} from "./access/logout/logout/logout.component";
@@ -17,7 +17,6 @@ import { ProductCreateComponent } from './product/product-create/product-create.
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
-import { CustomerCreateComponent } from './customer/customer-create/customer-create.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
 
 const routes: Routes = [
@@ -76,15 +75,6 @@ const routes: Routes = [
   },
   {
     path:"order-create", component:OrderCreateComponent
-  },
-  {
-    path:"customerList", component:CustomerListComponent
-  },
-  {
-    path:"customer-create", component:CustomerCreateComponent
-  },
-  {
-    path:"order-list", component:CustomerListComponent
   },
   {
     path:'userprofile', component:UserProfileComponent

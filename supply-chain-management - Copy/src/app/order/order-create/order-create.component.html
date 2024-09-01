@@ -1,34 +1,38 @@
 <!-- src/app/components/order-create/order-create.component.html -->
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-<h2>Create Order</h2>
-<form (ngSubmit)="addOrder()">
-  <!-- <div>
-    <label for="customerName">Customer Name:</label>
-    <input id="customerName" [(ngModel)]="newOrder.customer.name" name="customerName" readonly>
-  </div> -->
-
-  <div>
-    <label for="product">Product:</label>
-    <select id="product" [(ngModel)]="newOrder.product" name="product" (change)="updatePrice()" required>
-      <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
-    </select>
-  </div>
-
-  <div>
-    <label for="quantity">Quantity:</label>
-    <input id="quantity" type="number" [(ngModel)]="newOrder.quantity" name="quantity" (input)="updatePrice()" required>
-    <div *ngIf="stockError" class="error">Quantity exceeds available stock!</div>
-  </div>
-
-  <div>
-    <label for="requiredDeliveryDate">Required Delivery Date:</label>
-    <input id="requiredDeliveryDate" type="date" [(ngModel)]="newOrder.requiredDeliveryDate" name="requiredDeliveryDate" required>
-  </div>
-
-  <div>
-    <label for="totalPrice">Total Price:</label>
-    <input id="totalPrice" [value]="totalPrice | currency" readonly>
-  </div>
-
-  <button type="submit" [disabled]="stockError || !newOrder.product || !newOrder.quantity">Place Order</button>
+<form [formGroup]="orderForm" (ngSubmit)="placeOrder()">
+    <div class="form-group">
+        <label for="userName">Customer Name</label>
+        <input id="userName" formControlName="userName" class="form-control" [disabled]="orderForm.invalid">
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input id="phoneNumber" formControlName="phoneNumber" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input id="address" formControlName="address" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="product">Product</label>
+        <select id="product" formControlName="product" class="form-control">
+            <option *ngFor="let product of products" [ngValue]="product">
+                {{ product.name }} - ${{ product.price }}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" formControlName="quantity" class="form-control" type="number" min="1">
+    </div>
+    <div class="form-group">
+        <label for="totalPrice">Total Price</label>
+        <input id="totalPrice" formControlName="totalPrice" class="form-control" [disabled]="orderForm.invalid">
+    </div>
+    <div class="form-group">
+        <label for="requiredDeliveryDate">Required Delivery Date</label>
+        <input id="requiredDeliveryDate" formControlName="requiredDeliveryDate" class="form-control" type="date">
+    </div>
+    <button type="submit" [disabled]="orderForm.invalid" class="btn btn-primary">Place Order</button>
 </form>

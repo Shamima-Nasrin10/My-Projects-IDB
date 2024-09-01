@@ -16,7 +16,6 @@ import { FooterComponent } from './template/footer/footer.component';
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { AdminComponent } from './user/admin/admin.component';
-import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { LoginComponent } from './access/login/login/login.component';
 import { LogoutComponent } from './access/logout/logout/logout.component';
 import { RegistrationComponent } from './access/registration/registration/registration.component';
@@ -27,7 +26,6 @@ import { UserProfileComponent } from './access/user-profile/user-profile.compone
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
-import { CustomerCreateComponent } from './customer/customer-create/customer-create.component';
 
 
 @NgModule({
@@ -43,7 +41,6 @@ import { CustomerCreateComponent } from './customer/customer-create/customer-cre
     NotificationComponent,
     OrderCreateComponent,
     AdminComponent,
-    CustomerListComponent,
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
@@ -54,8 +51,6 @@ import { CustomerCreateComponent } from './customer/customer-create/customer-cre
     UnauthorizedComponent,
     ProductViewComponent,
     OrderListComponent,
-    CustomerCreateComponent,
-
 
   ],
   imports: [

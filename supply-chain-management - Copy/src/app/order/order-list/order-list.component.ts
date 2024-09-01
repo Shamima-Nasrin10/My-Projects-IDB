@@ -1,7 +1,7 @@
 // src/app/components/order-list/order-list.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { Order } from '../model/order.model';
+import { OrderModel } from '../model/order.model';
 import { OrderService } from '../order.service';
 import { OrderStage, ManufacturingStage } from '../model/enum/enums';
 
@@ -11,7 +11,7 @@ import { OrderStage, ManufacturingStage } from '../model/enum/enums';
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
-  orders: Order[] = [];
+  orders: OrderModel[] = [];
   isAdmin: boolean = true; // Assume admin for this example
   status = OrderStage;
   manufacturingStages = Object.values(ManufacturingStage); // Get all enum values
@@ -26,19 +26,19 @@ export class OrderListComponent implements OnInit {
     this.orderService.getOrders().subscribe(orders => this.orders = orders);
   }
 
-  approveOrder(order: Order): void {
+  approveOrder(order: OrderModel): void {
     this.orderService.approveOrder(order.id).subscribe(updatedOrder => {
       order.status = updatedOrder.status;
     });
   }
 
-  rejectOrder(order: Order): void {
+  rejectOrder(order: OrderModel): void {
     this.orderService.rejectOrder(order.id).subscribe(updatedOrder => {
       order.status = updatedOrder.status;
     });
   }
 
-  updateManufacturingStage(order: Order): void {
+  updateManufacturingStage(order: OrderModel): void {
     if (this.isAdmin) {
       this.orderService.updateManufacturingStage(order.id, order.manufacturingStage!).subscribe(updatedOrder => {
         order.manufacturingStage = updatedOrder.manufacturingStage;
