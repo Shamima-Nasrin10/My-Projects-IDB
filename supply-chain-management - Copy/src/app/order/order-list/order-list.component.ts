@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderModel } from '../model/order.model';
 import { OrderService } from '../order.service';
 import { OrderStage, ManufacturingStage } from '../model/enum/enums';
+import { AuthService } from '../../authentication/auth.service';
 
 @Component({
   selector: 'app-order-list',
@@ -12,37 +13,99 @@ import { OrderStage, ManufacturingStage } from '../model/enum/enums';
 })
 export class OrderListComponent implements OnInit {
   orders: OrderModel[] = [];
-  isAdmin: boolean = true; // Assume admin for this example
+  isAdmin: boolean = false; // Assume admin for this example
   status = OrderStage;
   manufacturingStages = Object.values(ManufacturingStage); // Get all enum values
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private authService:AuthService
+
+  ) {}
 
   ngOnInit(): void {
+    this.checkAdminRole(); // Check if the current user is an admin
     this.getOrders();
   }
 
+  checkAdminRole(): void {
+    const currentUser = this.authService.getUserProfileFromStorage();
+    if (currentUser && currentUser.role === 'admin') {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
+  }
+
   getOrders(): void {
-    this.orderService.getOrders().subscribe(orders => this.orders = orders);
+    this.orderService.getOrders().subscribe({
+      next: (orders) => {
+        if (this.isAdmin) {
+          this.orders = orders; // Admin can see all orders
+        } else {
+          // Non-admin users only see their orders
+          const currentUser = this.authService.getUserProfileFromStorage();
+          this.orders = orders.filter(order => order.userId === currentUser?.id);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching orders:', err);
+        // Handle error: show error message to the user
+      }
+    });
   }
 
   approveOrder(order: OrderModel): void {
-    this.orderService.approveOrder(order.id).subscribe(updatedOrder => {
-      order.status = updatedOrder.status;
-    });
+    if (this.isAdmin) {
+      this.orderService.approveOrder(order.id).subscribe({
+        next: (updatedOrder) => {
+          order.status = updatedOrder.status;
+          // Optionally show a success message
+        },
+        error: (err) => {
+          console.error('Error approving order:', err);
+          // Handle error: show error message to the user
+        }
+      });
+    } else {
+      // Show a message indicating the user does not have permission to approve orders
+      console.warn('Only admins can approve orders.');
+    }
   }
 
   rejectOrder(order: OrderModel): void {
-    this.orderService.rejectOrder(order.id).subscribe(updatedOrder => {
-      order.status = updatedOrder.status;
-    });
+    if (this.isAdmin) {
+      this.orderService.rejectOrder(order.id).subscribe({
+        next: (updatedOrder) => {
+          order.status = updatedOrder.status;
+          // Optionally show a success message
+        },
+        error: (err) => {
+          console.error('Error rejecting order:', err);
+          // Handle error: show error message to the user
+        }
+      });
+    } else {
+      // Show a message indicating the user does not have permission to reject orders
+      console.warn('Only admins can reject orders.');
+    }
   }
 
   updateManufacturingStage(order: OrderModel): void {
     if (this.isAdmin) {
-      this.orderService.updateManufacturingStage(order.id, order.manufacturingStage!).subscribe(updatedOrder => {
-        order.manufacturingStage = updatedOrder.manufacturingStage;
+      this.orderService.updateManufacturingStage(order.id, order.manufacturingStage!).subscribe({
+        next: (updatedOrder) => {
+          order.manufacturingStage = updatedOrder.manufacturingStage;
+          // Optionally show a success message
+        },
+        error: (err) => {
+          console.error('Error updating manufacturing stage:', err);
+          // Handle error: show error message to the user
+        }
       });
+    } else {
+      // Show a message indicating the user does not have permission to update manufacturing stage
+      console.warn('Only admins can update the manufacturing stage.');
     }
   }
 }
