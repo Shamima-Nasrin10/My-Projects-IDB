@@ -18,6 +18,7 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
+import { OrderListComponent } from './order/order-list/order-list.component';
 
 const routes: Routes = [
   {
@@ -76,6 +77,8 @@ const routes: Routes = [
   {
     path:"order-create", component:OrderCreateComponent
   },
+  { path: 'order-list', component: OrderListComponent, canActivate: [AuthGuard] },
+
   {
     path:'userprofile', component:UserProfileComponent
   }
