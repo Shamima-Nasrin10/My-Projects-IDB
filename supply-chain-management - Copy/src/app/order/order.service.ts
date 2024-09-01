@@ -82,7 +82,7 @@ export class OrderService {
     const orderToSubmit = {
         ...order,
         id: undefined, // Ensure ID is not set if backend auto-generates it
-        status: 'pending' // Set the default status to 'pending'
+        status: 'Pending' // Set the default status to 'pending'
     };
 
     return this.http.post<OrderModel>(this.apiUrl, orderToSubmit).pipe(

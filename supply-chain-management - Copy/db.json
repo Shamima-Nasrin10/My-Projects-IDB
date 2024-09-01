@@ -40,7 +40,7 @@
       "name": "Shamima",
       "email": "fine@gmail.com",
       "password": "123456",
-      "role": "pending"
+      "role": "Pending"
     }
   ],
   "rawMaterials": [
@@ -110,7 +110,7 @@
       "requiredDeliveryDate": "2024-09-29",
       "orderDate": "2024-08-31T22:27:27.304Z",
       "totalPrice": 4999.5,
-      "manufacturingStage": "Cutting"
+      "manufacturingStage": "Sewing"
     },
     {
       "id": "8854",
@@ -130,7 +130,7 @@
       "requiredDeliveryDate": "2024-09-29",
       "orderDate": "2024-08-31T22:27:27.310Z",
       "totalPrice": 4999.5,
-      "manufacturingStage": "Sewing"
+      "manufacturingStage": "Washing"
     },
     {
       "id": "e3c8",
@@ -150,8 +150,8 @@
       "quantity": 5,
       "orderDate": "2024-09-01T09:28:48.322Z",
       "requiredDeliveryDate": "2024-10-12",
-      "status": "pending",
-      "manufacturingStage": "Ironing"
+      "status": "Approved",
+      "manufacturingStage": "Quality Control"
     },
     {
       "id": "29d9",
@@ -171,14 +171,81 @@
       "quantity": 1,
       "orderDate": "2024-09-01T09:38:48.728Z",
       "requiredDeliveryDate": "2024-09-18",
-      "status": "pending"
+      "status": "Rejected",
+      "manufacturingStage": "Sewing"
+    },
+    {
+      "id": "7927",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "phoneNumber": "0181454545",
+      "address": "Mirpur",
+      "product": {
+        "id": "76d5",
+        "name": "T-Shirt",
+        "photo": "https://dictionary.cambridge.org/images/thumb/Tshirt_noun_001_18267_2.jpg?version=6.0.31",
+        "price": 450,
+        "stock": 1000,
+        "features": [
+          "Color"
+        ],
+        "benefits": [
+          "Currently available in four colors: White, Black, Grey and Blue"
+        ]
+      },
+      "quantity": 100,
+      "orderDate": "2024-09-01T11:39:46.543Z",
+      "requiredDeliveryDate": "2024-10-12",
+      "status": "Approved",
+      "manufacturingStage": "Cutting"
+    },
+    {
+      "id": "f4be",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "phoneNumber": "0181454545",
+      "address": "Dhaka",
+      "product": {
+        "id": "2",
+        "name": "Jeans",
+        "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 33,
+      "orderDate": "2024-09-01T11:51:42.307Z",
+      "requiredDeliveryDate": "2024-09-03",
+      "status": "Approved",
+      "manufacturingStage": "Cutting"
+    },
+    {
+      "id": "31e6",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "phoneNumber": "0181454545",
+      "address": "Sandwip",
+      "product": {
+        "id": "1",
+        "name": "Cotton Shirt",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 12,
+      "orderDate": "2024-09-01T12:29:59.450Z",
+      "requiredDeliveryDate": "2024-09-03",
+      "status": "Pending"
     }
   ],
   "notifications": [],
   "products": [
     {
       "id": "1",
-      "name": "Sample Product",
+      "name": "Cotton Shirt",
       "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
       "price": 99.99,
       "stock": 50,
@@ -187,7 +254,7 @@
     },
     {
       "id": "2",
-      "name": "Sample Product",
+      "name": "Jeans",
       "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
       "price": 99.99,
       "stock": 50,

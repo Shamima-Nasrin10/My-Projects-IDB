@@ -9,6 +9,7 @@
           <th>Customer</th>
           <th>Product</th>
           <th>Quantity</th>
+          <th>Total Price</th>
           <th>Status</th>
           <th>Manufacturing Stage</th>
           <th>Required Delivery Date</th>
@@ -21,6 +22,7 @@
           <td>{{ order.userName }}</td>
           <td>{{ order.product.name }}</td>
           <td>{{ order.quantity }}</td>
+          <td>{{ order.totalPrice | currency}}</td>
           <td>{{ order.status }}</td>
           <td>
             <select *ngIf="isAdmin" [(ngModel)]="order.manufacturingStage" (change)="updateManufacturingStage(order)">

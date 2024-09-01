@@ -7,6 +7,7 @@ import { ProductService } from '../../product/product.service';
 import { OrderModel } from '../model/order.model';
 import { UserModel } from '../../access/userModel/user.model';
 import { ProductModel } from '../../product/model/product.model';
+import { OrderStage } from '../model/enum/enums';
 
 @Component({
   selector: 'app-order-create',
@@ -73,9 +74,13 @@ export class OrderCreateComponent implements OnInit {
   placeOrder(): void {
     if (this.orderForm.valid) {
       const order: OrderModel = {
+      
         ...this.orderForm.value,
-        status: 'pending' // Default status on order creation
+        
+        status: OrderStage.PENDING // Default status on order creation
       };
+ 
+      console.log("Order is "+order)
 
       this.orderService.placeOrder(order).subscribe({
         next: (res) => {

@@ -23,7 +23,7 @@ export class AuthService {
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
- 
+
   checkEmailExists(email: string): Observable<boolean> {
     let params = new HttpParams().append('email', email);
     return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
@@ -35,12 +35,12 @@ export class AuthService {
     );
   }
 
-  
+
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
 
- 
+
   registration(user: UserModel): Observable<AuthResponse> {
     return this.http.post<UserModel>(this.baseUrl, user).pipe(
       map((newUser: UserModel) => {
@@ -54,7 +54,7 @@ export class AuthService {
     );
   }
 
-  
+
   login(credentials: { email: string; password: string }): Observable<AuthResponse> {
     let params = new HttpParams().append('email', credentials.email);
 
@@ -63,12 +63,16 @@ export class AuthService {
         if (users.length > 0) {
           const user = users[0];
           if (user.password === credentials.password) {
-            if (user.role !== 'pending') {  // Check user role
+            if (user.role !== 'Pending') {  // Check user role
               const token = btoa(`${user.email}:${user.password}`);
               this.storeToken(token);
               this.setCurrentUser(user);
+
+              this.currentUserSubject.next(user);
               return { token, user } as AuthResponse;
             } else {
+
+              this.currentUserSubject.next(null);
               throw new Error('Your account is pending approval. Please contact an admin.');
             }
           } else {
@@ -85,12 +89,12 @@ export class AuthService {
     );
   }
 
-  
+
   public get currentUserValue(): UserModel | null {
     return this.currentUserSubject.value;
   }
 
- 
+
   logout(): void {
     this.clearCurrentUser();
     if (this.isBrowser()) {
@@ -98,7 +102,7 @@ export class AuthService {
     }
   }
 
- 
+
   private setCurrentUser(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
@@ -106,7 +110,7 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
- 
+
   private clearCurrentUser(): void {
     if (this.isBrowser()) {
       localStorage.removeItem('currentUser');
@@ -129,26 +133,26 @@ export class AuthService {
     return this.http.get<UserModel[]>(`${this.baseUrl}`);
   }
 
- 
+
   getUserRole(): string | null {
     return this.currentUserValue?.role || null;
   }
 
- 
+
   storeToken(token: string): void {
     if (this.isBrowser()) {
       localStorage.setItem('token', token);
     }
   }
 
- 
+
   storeUserProfile(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
     }
   }
 
- 
+
   getUserProfileFromStorage(): UserModel | null {
     if (this.isBrowser()) {
       const userProfile = localStorage.getItem('currentUser');
@@ -157,24 +161,24 @@ export class AuthService {
     return null;
   }
 
-  
+
   removeUserDetails(): void {
     if (this.isBrowser()) {
       localStorage.clear();
     }
   }
 
- 
+
   updateUser(userId: string, userData: Partial<UserModel>): Observable<UserModel> {
     return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, userData);
   }
 
- 
+
   updateUserRole(userId: string, newRole: string): Observable<UserModel> {
     return this.http.patch<UserModel>(`${this.baseUrl}/${userId}`, { role: newRole });
   }
 
- 
+
   deleteUser(userId: UserModel): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${userId}`);
   }

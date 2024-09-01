@@ -38,7 +38,7 @@ export class RegistrationComponent {
             this.errorMessage = 'Email is already registered. Please log in.';
             //this.router.navigate(['/login']); // Redirect to login page if email exists
           } else {
-            user.role = 'pending'; // Set default role to 'pending'
+            user.role = 'Pending'; // Set default role to 'pending'
             this.authService.registration(user).subscribe({
               next: (res) => {
                 console.log('User registered successfully:', res);

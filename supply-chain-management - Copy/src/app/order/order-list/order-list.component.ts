@@ -41,8 +41,8 @@ export class OrderListComponent implements OnInit {
       next: (orders) => {
         if (this.isAdmin) {
           this.orders = orders; 
+          console.log(this.orders)
         } else {
-          
           const currentUser = this.authService.getUserProfileFromStorage();
           this.orders = orders.filter(order => order.userId === currentUser?.id);
         }
