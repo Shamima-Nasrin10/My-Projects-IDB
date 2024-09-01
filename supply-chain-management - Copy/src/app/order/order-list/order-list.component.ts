@@ -1,4 +1,3 @@
-// src/app/components/order-list/order-list.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { OrderModel } from '../model/order.model';
@@ -13,9 +12,9 @@ import { AuthService } from '../../authentication/auth.service';
 })
 export class OrderListComponent implements OnInit {
   orders: OrderModel[] = [];
-  isAdmin: boolean = false; // Assume admin for this example
+  isAdmin: boolean = false; 
   status = OrderStage;
-  manufacturingStages = Object.values(ManufacturingStage); // Get all enum values
+  manufacturingStages = Object.values(ManufacturingStage); 
 
   constructor(
     private orderService: OrderService,
@@ -24,7 +23,7 @@ export class OrderListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.checkAdminRole(); // Check if the current user is an admin
+    this.checkAdminRole(); 
     this.getOrders();
   }
 
@@ -41,16 +40,16 @@ export class OrderListComponent implements OnInit {
     this.orderService.getOrders().subscribe({
       next: (orders) => {
         if (this.isAdmin) {
-          this.orders = orders; // Admin can see all orders
+          this.orders = orders; 
         } else {
-          // Non-admin users only see their orders
+          
           const currentUser = this.authService.getUserProfileFromStorage();
           this.orders = orders.filter(order => order.userId === currentUser?.id);
         }
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
-        // Handle error: show error message to the user
+       
       }
     });
   }
@@ -78,15 +77,15 @@ export class OrderListComponent implements OnInit {
       this.orderService.rejectOrder(order.id).subscribe({
         next: (updatedOrder) => {
           order.status = updatedOrder.status;
-          // Optionally show a success message
+         
         },
         error: (err) => {
           console.error('Error rejecting order:', err);
-          // Handle error: show error message to the user
+         
         }
       });
     } else {
-      // Show a message indicating the user does not have permission to reject orders
+     
       console.warn('Only admins can reject orders.');
     }
   }
@@ -96,15 +95,15 @@ export class OrderListComponent implements OnInit {
       this.orderService.updateManufacturingStage(order.id, order.manufacturingStage!).subscribe({
         next: (updatedOrder) => {
           order.manufacturingStage = updatedOrder.manufacturingStage;
-          // Optionally show a success message
+         
         },
         error: (err) => {
           console.error('Error updating manufacturing stage:', err);
-          // Handle error: show error message to the user
+          
         }
       });
     } else {
-      // Show a message indicating the user does not have permission to update manufacturing stage
+      
       console.warn('Only admins can update the manufacturing stage.');
     }
   }
