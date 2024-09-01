@@ -48,7 +48,7 @@ const routes: Routes = [
     component: ProductViewComponent
   },
   {
-    path: 'products/create',
+    path: 'product-create',
     component: ProductCreateComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'admin' }

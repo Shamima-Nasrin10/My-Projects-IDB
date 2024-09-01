@@ -27,5 +27,10 @@
         </tr>
       </tbody>
     </table>
+
+    <button *ngIf="isAdmin" class="btn btn-success" [routerLink]="['/product-create']">
+      <i class="fa fa-plus"></i>Add New Product
+    </button>
+    
   </div>
   

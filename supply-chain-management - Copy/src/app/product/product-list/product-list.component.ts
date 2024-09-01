@@ -54,4 +54,9 @@ export class ProductListComponent implements OnInit {
   viewProductDetails(product: ProductModel): void {
     this.router.navigate(['/products/view', product.id]);
   }
+
+  addProduct(): void {
+    // Redirect to the product creation page
+    this.router.navigate(['/product-create']);
+  }
 }

@@ -19,7 +19,7 @@
       "name": "Anika Sultana",
       "email": "anika@gmail.com",
       "password": "123456",
-      "role": "user"
+      "role": "customer"
     },
     {
       "id": "103e",
@@ -33,7 +33,7 @@
       "name": "Adiba",
       "email": "adiba@gmail.com",
       "password": "adiba1234",
-      "role": "user"
+      "role": "customer"
     },
     {
       "id": "8b66",
@@ -96,7 +96,7 @@
       "id": "aa86",
       "userId": null,
       "userName": "Anika Sultana",
-      "status": "Pending",
+      "status": "Approved",
       "product": {
         "id": "1",
         "name": "Sample Product",
@@ -109,13 +109,14 @@
       "quantity": 50,
       "requiredDeliveryDate": "2024-09-29",
       "orderDate": "2024-08-31T22:27:27.304Z",
-      "totalPrice": 4999.5
+      "totalPrice": 4999.5,
+      "manufacturingStage": "Cutting"
     },
     {
       "id": "8854",
       "userId": null,
       "userName": "Anika Sultana",
-      "status": "Pending",
+      "status": "Approved",
       "product": {
         "id": "1",
         "name": "Sample Product",
@@ -128,7 +129,49 @@
       "quantity": 50,
       "requiredDeliveryDate": "2024-09-29",
       "orderDate": "2024-08-31T22:27:27.310Z",
-      "totalPrice": 4999.5
+      "totalPrice": 4999.5,
+      "manufacturingStage": "Sewing"
+    },
+    {
+      "id": "e3c8",
+      "userId": "f3aa",
+      "userName": "Adiba",
+      "phoneNumber": "0181454545",
+      "address": "Dhaka",
+      "product": {
+        "id": "2",
+        "name": "Sample Product",
+        "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 5,
+      "orderDate": "2024-09-01T09:28:48.322Z",
+      "requiredDeliveryDate": "2024-10-12",
+      "status": "pending",
+      "manufacturingStage": "Ironing"
+    },
+    {
+      "id": "29d9",
+      "userId": "f3aa",
+      "userName": "Adiba",
+      "phoneNumber": "0181454545",
+      "address": "Dhaka",
+      "product": {
+        "id": "1",
+        "name": "Sample Product",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 1,
+      "orderDate": "2024-09-01T09:38:48.728Z",
+      "requiredDeliveryDate": "2024-09-18",
+      "status": "pending"
     }
   ],
   "notifications": [],
@@ -150,6 +193,19 @@
       "stock": 50,
       "features": "Feature 1, Feature 2",
       "benefits": "Benefit 1, Benefit 2"
+    },
+    {
+      "id": "76d5",
+      "name": "T-Shirt",
+      "photo": "https://dictionary.cambridge.org/images/thumb/Tshirt_noun_001_18267_2.jpg?version=6.0.31",
+      "price": 450,
+      "stock": 1000,
+      "features": [
+        "Color"
+      ],
+      "benefits": [
+        "Currently available in four colors: White, Black, Grey and Blue"
+      ]
     }
   ]
 }
