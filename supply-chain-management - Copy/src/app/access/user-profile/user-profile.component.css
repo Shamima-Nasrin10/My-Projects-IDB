@@ -30,17 +30,15 @@
   
   /* Button style for the logout button */
   .btn {
-    padding: 10px 20px; 
-    background-color: #007bff; 
-    color: #fff; 
+    padding: 10px 20px;
+    background-color: #be423b;
+    color: #cbfefa; 
     border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    font-size: 16px; 
+    font-weight: bold;
     transition: background-color 0.3s ease; 
-    display: block; 
-    width: 100%; 
-    text-align: center; 
-    margin-top: 20px; 
   }
   
   /* Button hover effect */

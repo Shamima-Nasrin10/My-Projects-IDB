@@ -30,8 +30,8 @@ export class OrderCreateComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getUserProfileFromStorage();
 
-    if (!this.currentUser || this.currentUser.role !== 'customer') {
-      this.errorMessage = 'You must be logged in as a customer to place an order.';
+    if (!this.currentUser || this.currentUser.role !== 'user') {
+      this.errorMessage = 'You must be logged in as a user to place an order.';
       return;
     }
 
@@ -76,11 +76,11 @@ export class OrderCreateComponent implements OnInit {
       const order: OrderModel = {
       
         ...this.orderForm.value,
-        
+        totalPrice: this.orderForm.get('totalPrice')?.value,
         status: OrderStage.PENDING // Default status on order creation
       };
  
-      console.log("Order is "+order)
+      console.log("Order to be placed:", order); 
 
       this.orderService.placeOrder(order).subscribe({
         next: (res) => {

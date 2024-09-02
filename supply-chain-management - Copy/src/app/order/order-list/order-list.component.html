@@ -1,6 +1,42 @@
 
 
+<!-- order-list.component.html -->
 <div class="container">
+  <h2 class="order-title">List of orders</h2>
+  <div class="row">
+      <!-- Loop through orders and create a card for each one -->
+      <div class="col-md-4 mb-3" *ngFor="let order of orders">
+          <div class="card h-100">
+              <div class="card-body">
+                  <h5 class="card-title">Order ID: {{ order.id }}</h5>
+                  <p class="card-text"><strong>Customer:</strong> {{ order.userName }}</p>
+                  <p class="card-text"><strong>Product:</strong> {{ order.product.name }}</p>
+                  <p class="card-text"><strong>Quantity:</strong> {{ order.quantity }}</p>
+                  <p class="card-text"><strong>Total Price:</strong> {{ order.totalPrice | currency }}</p>
+                  <p class="card-text"><strong>Status:</strong> {{ order.status }}</p>
+                  <p class="card-text"><strong>Manufacturing Stage:</strong> 
+                      <span *ngIf="isAdmin">
+                          <select [(ngModel)]="order.manufacturingStage" (change)="updateManufacturingStage(order)">
+                              <option *ngFor="let stage of manufacturingStages" [value]="stage">{{ stage }}</option>
+                          </select>
+                      </span>
+                      <span *ngIf="!isAdmin">{{ order.manufacturingStage }}</span>
+                  </p>
+                  <p class="card-text"><strong>Required Delivery Date:</strong> {{ order.requiredDeliveryDate | date }}</p>
+              </div>
+              <div class="card-footer">
+                  <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-success btn-sm mr-2" (click)="approveOrder(order)">Approve</button>
+                  <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-danger btn-sm" (click)="rejectOrder(order)">Reject</button>
+                  <!-- Additional actions can be added here -->
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="container">
     <h2>Order List</h2>
     <table class="table table-bordered">
       <thead>
@@ -34,10 +70,10 @@
           <td>
             <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-success" (click)="approveOrder(order)">Approve</button>
             <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-danger" (click)="rejectOrder(order)">Reject</button>
-            <!-- Other actions can be added here -->
-          </td>
+             Other actions can be added here -->
+          <!-- </td>
         </tr>
       </tbody>
     </table>
-  </div>
-  
+  </div> -->
+   

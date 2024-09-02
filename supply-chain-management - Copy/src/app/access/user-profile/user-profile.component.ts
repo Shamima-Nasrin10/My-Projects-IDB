@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserModel } from "../userModel/user.model";
 import { AuthService } from "../../authentication/auth.service";
 import { Router } from "@angular/router";
+import { privateDecrypt } from 'crypto';
+import { UserprofileService } from '../user-profile.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,22 +18,30 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userprofileService: UserprofileService
+
   ) { }
 
   ngOnInit(): void {
     this.loadUserProfile();
   }
 
-  // Method to load user profile data
   loadUserProfile(): void {
-    const storedUser = this.authService.getUserProfileFromStorage();
-    if (storedUser) {
-      this.user = storedUser; // Assign user details if available
-    } else {
-      this.errorMessage = 'No user profile found. Please log in again.';
-      console.log('Error: User profile not found in storage.');
-    }
+    this.userprofileService.getUserProfile()
+      .subscribe({
+        next: (user) => {
+          if (user) {
+            this.user = user;
+
+
+          }
+        },
+        error: error => {
+          console.log('error user profile', error);
+        }
+
+      });
   }
 
   // Optional method to handle logout

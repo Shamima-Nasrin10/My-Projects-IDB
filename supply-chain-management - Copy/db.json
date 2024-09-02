@@ -221,23 +221,28 @@
       "manufacturingStage": "Cutting"
     },
     {
-      "id": "31e6",
+      "id": "7b45",
       "userId": "4b39",
       "userName": "Anika Sultana",
-      "phoneNumber": "0181454545",
-      "address": "Sandwip",
+      "phoneNumber": "01838020680",
+      "address": "Rajshahi",
       "product": {
-        "id": "1",
-        "name": "Cotton Shirt",
-        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
-        "price": 99.99,
-        "stock": 50,
-        "features": "Feature 1, Feature 2",
-        "benefits": "Benefit 1, Benefit 2"
+        "id": "76d5",
+        "name": "T-Shirt",
+        "photo": "https://dictionary.cambridge.org/images/thumb/Tshirt_noun_001_18267_2.jpg?version=6.0.31",
+        "price": 450,
+        "stock": 1000,
+        "features": [
+          "Color"
+        ],
+        "benefits": [
+          "Currently available in four colors: White, Black, Grey and Blue"
+        ]
       },
-      "quantity": 12,
-      "orderDate": "2024-09-01T12:29:59.450Z",
-      "requiredDeliveryDate": "2024-09-03",
+      "quantity": 1,
+      "orderDate": "2024-09-02T00:38:11.440Z",
+      "requiredDeliveryDate": "2024-10-06",
+      "totalPrice": 450,
       "status": "Pending"
     }
   ],
