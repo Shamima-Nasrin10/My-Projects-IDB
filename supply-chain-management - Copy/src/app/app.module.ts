@@ -60,7 +60,7 @@ import { OrderListComponent } from './order/order-list/order-list.component';
     FormsModule,
     RouterModule,
     AppRoutingModule,
-  
+
   ],
   providers: [
     provideClientHydration(),
