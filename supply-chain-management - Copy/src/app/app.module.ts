@@ -59,7 +59,8 @@ import { OrderListComponent } from './order/order-list/order-list.component';
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    
   ],
   providers: [
     provideClientHydration(),
