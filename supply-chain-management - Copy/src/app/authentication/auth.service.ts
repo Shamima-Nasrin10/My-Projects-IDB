@@ -58,6 +58,8 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<AuthResponse> {
     let params = new HttpParams().append('email', credentials.email);
 
+    console.log(credentials.email);
+
     return this.http.get<UserModel[]>(`${this.baseUrl}`, { params }).pipe(
       map(users => {
         if (users.length > 0) {
@@ -67,6 +69,7 @@ export class AuthService {
               const token = btoa(`${user.email}:${user.password}`);
               this.storeToken(token);
               this.setCurrentUser(user);
+             
 
               this.currentUserSubject.next(user);
               return { token, user } as AuthResponse;
@@ -106,6 +109,7 @@ export class AuthService {
   private setCurrentUser(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
+      console.log("From Local Storage"+ localStorage.getItem('currentUser'));
     }
     this.currentUserSubject.next(user);
   }
@@ -134,8 +138,8 @@ export class AuthService {
   }
 
 
-  getUserRole(): string | null {
-    return this.currentUserValue?.role || null;
+  getUserRole(): any   {
+    return this.currentUserValue?.role ;
   }
 
 
@@ -149,6 +153,7 @@ export class AuthService {
   storeUserProfile(user: UserModel): void {
     if (this.isBrowser()) {
       localStorage.setItem('currentUser', JSON.stringify(user));
+      console.log("User Details "+user);
     }
   }
 
@@ -157,6 +162,8 @@ export class AuthService {
     if (this.isBrowser()) {
       const userProfile = localStorage.getItem('currentUser');
       return userProfile ? JSON.parse(userProfile) : null;
+
+      console.log("userProfile Details "+userProfile);
     }
     return null;
   }

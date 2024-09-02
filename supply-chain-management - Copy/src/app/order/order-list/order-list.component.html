@@ -27,7 +27,7 @@
               <div class="card-footer">
                   <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-success btn-sm m-2" (click)="approveOrder(order)">Approve</button>
                   <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-danger btn-sm m-2" (click)="rejectOrder(order)">Reject</button>
-                  <!-- Additional actions can be added here -->
+                  
               </div>
           </div>
       </div>

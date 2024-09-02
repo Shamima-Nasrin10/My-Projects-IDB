@@ -14,6 +14,35 @@ export class RoleGuard implements CanActivate {
     private router: Router
   ) { }
 
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    return this.authService.currentUser$.pipe(
+      map(user => {
+        if (!user || !user['role']) {  // Ensure 'role' is defined
+          this.router.navigate(['/login']);
+          return false;
+        }
+
+        const userRole = user['role'];  // Get the user's role
+        const requiredRoles: string[] = route.data['roles'];  // Expected roles from route data
+
+        if (!requiredRoles || requiredRoles.length === 0) {
+          return true; // If no specific roles are required, allow access
+        }
+
+        // Check if the user's role is among the required roles
+        if (requiredRoles.includes(userRole)) {
+          return true;
+        } else {
+          this.router.navigate(['/access-denied']); // Redirect to an access denied page or some other handling
+          return false;
+        }
+      })
+    );
+  }
+
 
 //   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
@@ -41,19 +70,19 @@ export class RoleGuard implements CanActivate {
 //   }
 // }
 
-canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-  const expectedRole = route.data['role'] as Array<string> ;
-  const roles=this.authService.getUserRole();
-  return this.authService.currentUser$.pipe(
-    map(user => {
-      if (user && expectedRole.includes(roles!)) {
-        return true;
-      } else {
-        this.router.navigate(['/login']);
-        return false;
-      }
-    })
-  );
-}
+// canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+//   const expectedRole = route.data['role'] as Array<string> ;
+//   const roles=this.authService.getUserRole();
+//   return this.authService.currentUser$.pipe(
+//     map(user => {
+//       if (user && expectedRole.includes('roles')) {
+//         return true;
+//       } else {
+//         this.router.navigate(['/login']);
+//         return false;
+//       }
+//     })
+//   );
+// }
 
 }

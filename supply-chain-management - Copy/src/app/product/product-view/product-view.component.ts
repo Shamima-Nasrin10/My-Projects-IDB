@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
@@ -17,39 +16,36 @@ export class ProductViewComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    const productId = this.route.snapshot.paramMap.get('id');
 
-    const idParam = this.route.snapshot.paramMap.get('id');
+    if (productId) {
+      // Directly use the productId as a string
+      this.productService.getProductById(productId).subscribe({
+        next: (product: ProductModel) => {
+          this.product = product;
+        },
+        error: (error) => {
+          console.error('Error fetching product details:', error);
+          this.errorMessage = 'Error loading product details. Please try again.';
+          this.handleInvalidProductId(productId);
+        }
+      });
+    } else {
+      // Handle the case where the 'id' parameter is missing
+      console.error('Product ID parameter is missing');
+      this.handleInvalidProductId(productId!);
+    }
+  }
 
-if (idParam !== null) {
-  const productId = +idParam; // Convert to number
-
-  if (isNaN(productId)) {
-    // Handle invalid ID (NaN) case
-    console.error('Invalid product ID:', idParam);
+  handleInvalidProductId(productId: string): void {
+    console.error('Invalid product ID:', productId);
     this.router.navigate(['/products']); // Redirect or show an error message
-  } else {
-    // Valid productId, proceed with your logic
-    this.productService.getProductById(productId).subscribe({
-      next: (product: ProductModel) => {
-        this.product = product;
-      },
-      error: (error) => {
-        console.error('Error fetching product details:', error);
-      }
-    });
-  }
-} else {
-  // Handle the case where the 'id' parameter is missing
-  console.error('Product ID parameter is missing');
-  this.router.navigate(['/products']); // Redirect or show an error message
-}
-
   }
 
-  loadProductDetails(productId: number): void {
+  loadProductDetails(productId: string): void {
     this.productService.getProductById(productId).subscribe({
       next: (product) => {
         this.product = product;
@@ -61,4 +57,3 @@ if (idParam !== null) {
     });
   }
 }
-

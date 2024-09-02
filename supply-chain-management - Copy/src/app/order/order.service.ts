@@ -17,7 +17,7 @@ export class OrderService {
   }
 
   // Get order by ID
-  getOrderById(id: number): Observable<OrderModel> {
+  getOrderById(id: string): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<OrderModel>(url);
   }
@@ -42,7 +42,7 @@ export class OrderService {
   }
 
   // Approve an order
-  approveOrder(id: number): Observable<OrderModel> {
+  approveOrder(id: string): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.patch<OrderModel>(url, { status: 'Approved' }, {
       headers: new HttpHeaders({
@@ -52,7 +52,7 @@ export class OrderService {
   }
 
   // Reject an order
-  rejectOrder(id: number): Observable<OrderModel> {
+  rejectOrder(id: string): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.patch<OrderModel>(url, { status: 'Rejected' }, {
       headers: new HttpHeaders({
@@ -62,7 +62,7 @@ export class OrderService {
   }
 
   // Update the manufacturing stage of an order
-  updateManufacturingStage(id: number, manufacturingStage: string): Observable<OrderModel> {
+  updateManufacturingStage(id: string, manufacturingStage: string): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.patch<OrderModel>(url, { manufacturingStage }, {
       headers: new HttpHeaders({
@@ -72,7 +72,7 @@ export class OrderService {
   }
 
   // Delete an order
-  deleteOrder(id: number): Observable<void> {
+  deleteOrder(id: string): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
   }

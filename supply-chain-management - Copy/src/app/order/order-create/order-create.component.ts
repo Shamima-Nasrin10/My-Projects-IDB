@@ -1,13 +1,12 @@
-// order-create.component.ts
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../authentication/auth.service';
-import { OrderService } from '../order.service';
-import { ProductService } from '../../product/product.service';
 import { OrderModel } from '../model/order.model';
 import { UserModel } from '../../access/userModel/user.model';
 import { ProductModel } from '../../product/model/product.model';
 import { OrderStage } from '../model/enum/enums';
+import { AuthService } from '../../authentication/auth.service';
+import { OrderService } from '../order.service';
+import { ProductService } from '../../product/product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-create',
@@ -15,8 +14,7 @@ import { OrderStage } from '../model/enum/enums';
   styleUrls: ['./order-create.component.css']
 })
 export class OrderCreateComponent implements OnInit {
-  orderForm!: FormGroup;
-  currentUser: UserModel | null = null;
+  order: OrderModel = new OrderModel();
   products: ProductModel[] = [];
   errorMessage: string = '';
   selectedProduct: ProductModel | null = null;
@@ -25,31 +23,18 @@ export class OrderCreateComponent implements OnInit {
     private authService: AuthService,
     private orderService: OrderService,
     private productService: ProductService,
-    private fb: FormBuilder
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getUserProfileFromStorage();
+    this.order.userId = this.authService.getUserProfileFromStorage()?.id!;
+    this.order.userName = this.authService.getUserProfileFromStorage()?.name!;
+    this.order.orderDate = new Date();
 
-    if (!this.currentUser || this.currentUser.role !== 'user') {
+    if (!this.order.userId || !this.order.userName) {
       this.errorMessage = 'You must be logged in as a user to place an order.';
       return;
     }
-
-    // Initialize the order form
-    this.orderForm = this.fb.group({
-      userId: [this.currentUser.id, Validators.required],
-      userName: [this.currentUser.name, Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Only allow numbers
-      address: ['', Validators.required],
-      product: [null, Validators.required],
-      unitPrice: [{ value: 0, disabled: true }], // Disabled input for unit price
-      availableStock: [{ value: 0, disabled: true }], // Disabled input for available stock
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      totalPrice: [{ value: 0, disabled: true }],
-      orderDate: [new Date(), Validators.required],
-      requiredDeliveryDate: [null]
-    });
 
     // Fetch available products
     this.productService.getProducts().subscribe({
@@ -62,55 +47,44 @@ export class OrderCreateComponent implements OnInit {
       }
     });
 
-    // Set unit price and available stock when a product is selected
-    this.orderForm.get('product')?.valueChanges.subscribe((product: ProductModel) => {
-      this.selectedProduct = product;
-      this.orderForm.patchValue({
-        unitPrice: product?.price || 0,
-        availableStock: product?.stock || 0,
+    // Check if there's a specific product selected from the route
+    const productId = this.route.snapshot.params['productId'];
+    if (productId) {
+      this.productService.getProductById(productId).subscribe({
+        next: (product) => {
+          this.selectedProduct = product;
+          this.updateProductDetails(product);
+        },
+        error: (err) => {
+          console.error('Error fetching product:', err);
+          this.errorMessage = 'Failed to load product details. Please try again later.';
+        }
       });
-      this.calculateTotalPrice();
-    });
+    }
+  }
 
-    // Calculate total price when quantity changes
-    this.orderForm.get('quantity')?.valueChanges.subscribe(() => this.calculateTotalPrice());
+  updateProductDetails(product: ProductModel): void {
+    this.order.product = product;
+    this.order.unitPrice= product.price;
+    this.order.stock = product.stock;
+    this.calculateTotalPrice();
   }
 
   calculateTotalPrice(): void {
-    const selectedProduct = this.orderForm.get('product')?.value as ProductModel;
-    const quantity = this.orderForm.get('quantity')?.value;
-    const totalPrice = selectedProduct ? selectedProduct.price * quantity : 0;
-    this.orderForm.patchValue({ totalPrice });
+    const quantity = this.order.quantity || 0;
+    this.order.totalPrice = (this.order.product?.price || 0) * quantity;
   }
 
   placeOrder(): void {
-    if (this.orderForm.valid) {
-      const order: OrderModel = {
-        ...this.orderForm.value,
-        totalPrice: this.orderForm.get('totalPrice')?.value,
-        status: OrderStage.PENDING // Default status on order creation
-      };
+    if (this.validateOrder()) {
+      this.order.status = OrderStage.PENDING; // Default status on order creation
+      console.log("Order to be placed:", this.order);
 
-      console.log("Order to be placed:", order);
-
-      this.orderService.placeOrder(order).subscribe({
+      this.orderService.placeOrder(this.order).subscribe({
         next: (res) => {
           console.log('Order placed successfully:', res);
           this.errorMessage = '';
-          // Optionally reset the form or redirect
-          this.orderForm.reset({
-            userId: this.currentUser?.id,
-            userName: this.currentUser?.name,
-            phoneNumber: '',
-            address: '',
-            product: null,
-            unitPrice: 0,
-            availableStock: 0,
-            quantity: 1,
-            totalPrice: 0,
-            orderDate: new Date(),
-            requiredDeliveryDate: null
-          });
+          this.resetForm();
         },
         error: (err) => {
           console.error('Error placing order:', err);
@@ -120,5 +94,20 @@ export class OrderCreateComponent implements OnInit {
     } else {
       this.errorMessage = 'Please fill out all required fields correctly.';
     }
+  }
+
+  validateOrder(): boolean {
+    if (!this.order.userId || !this.order.userName || !this.order.phoneNumber || !this.order.address || !this.order.product || !this.order.quantity) {
+      return false;
+    }
+    return true;
+  }
+
+  resetForm(): void {
+    this.order = new OrderModel();
+    this.order.userId = this.authService.getUserProfileFromStorage()?.id!;
+    this.order.userName = this.authService.getUserProfileFromStorage()?.name!;
+    this.order.orderDate = new Date();
+    this.selectedProduct = null;
   }
 }

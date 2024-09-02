@@ -27,6 +27,7 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
+      console.log("credentials "+credentials)
       this.authService.login(credentials).subscribe({
         next: (res) => {
           console.log('User logged in successfully:', res);
@@ -34,8 +35,10 @@ export class LoginComponent {
 
           const role = this.authService.getUserRole();
           if (role === 'admin') {
+            console.log("Role from Login Page "+role)
             this.router.navigate(['/admin']); // Redirect to admin dashboard or page
-          } else if (role === 'customer') {
+          } else if (role === 'user') {
+            console.log("Role from Login Page "+role)
             this.router.navigate(['/userprofile']); // Redirect to user profile or dashboard
           } else {
             this.errorMessage = 'Your account is pending approval. Please contact an admin.';

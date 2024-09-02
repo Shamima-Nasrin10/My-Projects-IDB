@@ -25,6 +25,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserProfile();
+    console.log("Hello");
   }
 
   loadUserProfile(): void {
@@ -33,6 +34,7 @@ export class UserProfileComponent implements OnInit {
         next: (user) => {
           if (user) {
             this.user = user;
+            console.log("User Profile"+ user);
 
 
           }

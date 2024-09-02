@@ -26,6 +26,8 @@ import { UserProfileComponent } from './access/user-profile/user-profile.compone
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
 import { ProductViewComponent } from './product/product-view/product-view.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
+import { InvoiceComponent } from './invoice/invoice/invoice.component';
+import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { OrderListComponent } from './order/order-list/order-list.component';
     UnauthorizedComponent,
     ProductViewComponent,
     OrderListComponent,
+    InvoiceComponent,
+    PdfGeneratorComponent,
 
   ],
   imports: [
@@ -60,7 +64,7 @@ import { OrderListComponent } from './order/order-list/order-list.component';
     FormsModule,
     RouterModule,
     AppRoutingModule,
-
+  
   ],
   providers: [
     provideClientHydration(),

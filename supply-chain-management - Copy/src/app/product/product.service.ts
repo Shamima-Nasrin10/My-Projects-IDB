@@ -20,7 +20,7 @@ export class ProductService {
   }
 
 
-  getProductById(id: number): Observable<ProductModel> {
+  getProductById(id: string): Observable<ProductModel> {
     return this.http.get<ProductModel>(`${this.baseUrl}/${id}`);
   }
 
@@ -29,15 +29,15 @@ export class ProductService {
   }
 
 
-  updateProduct(id: number, product: ProductModel): Observable<ProductModel> {
+  updateProduct(id: string, product: ProductModel): Observable<ProductModel> {
     return this.http.put<ProductModel>(`${this.baseUrl}/${id}`, product);
   }
 
-  deleteProduct(id: number): Observable<void> {
+  deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  updateProductStock(productId: number, newStock: number): Observable<ProductModel> {
+  updateProductStock(productId: string, newStock: number): Observable<ProductModel> {
     return this.http.patch<ProductModel>(`${this.baseUrl}/${productId}`, { stock: newStock }).pipe(
       tap((updatedProduct) => {
         this.stockUpdated.emit(updatedProduct); // Emit event on stock update

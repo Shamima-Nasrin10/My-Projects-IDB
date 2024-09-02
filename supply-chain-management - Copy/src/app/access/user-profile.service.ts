@@ -16,7 +16,9 @@ export class UserprofileService {
   ) { }
 
   getUserProfile(): Observable<UserModel | null> {
+    console.log("Storage "+this.authService.getUserProfileFromStorage());
     return of(this.authService.getUserProfileFromStorage());
+
   }
 
   updateUserProfile(user: UserModel): Observable<UserModel> {
