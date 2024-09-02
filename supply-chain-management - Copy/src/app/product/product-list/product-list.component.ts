@@ -56,7 +56,16 @@ export class ProductListComponent implements OnInit {
   }
 
   addProduct(): void {
-    // Redirect to the product creation page
     this.router.navigate(['/product-create']);
+  }
+
+  listenForStockUpdates(): void {
+    // Listen for stock updates
+    this.productService.stockUpdated.subscribe(updatedProduct => {
+      const index = this.products.findIndex(p => p.id === updatedProduct.id);
+      if (index !== -1) {
+        this.products[index].stock = updatedProduct.stock;
+      }
+    });
   }
 }

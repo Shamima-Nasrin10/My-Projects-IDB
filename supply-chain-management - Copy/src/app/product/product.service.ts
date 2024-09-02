@@ -1,8 +1,8 @@
 
 
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ProductModel } from './model/product.model';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { ProductModel } from './model/product.model';
 })
 export class ProductService {
   private baseUrl = 'http://localhost:3000/products'; 
+  stockUpdated: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
 
   constructor(private http: HttpClient) { }
 
@@ -37,6 +38,10 @@ export class ProductService {
   }
 
   updateProductStock(productId: number, newStock: number): Observable<ProductModel> {
-    return this.http.patch<ProductModel>(`${this.baseUrl}/${productId}`, { stock: newStock });
+    return this.http.patch<ProductModel>(`${this.baseUrl}/${productId}`, { stock: newStock }).pipe(
+      tap((updatedProduct) => {
+        this.stockUpdated.emit(updatedProduct); // Emit event on stock update
+      })
+    );
   }
 }
