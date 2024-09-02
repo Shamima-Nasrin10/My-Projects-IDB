@@ -4,6 +4,8 @@ import { OrderModel } from '../model/order.model';
 import { OrderService } from '../order.service';
 import { OrderStage, ManufacturingStage } from '../model/enum/enums';
 import { AuthService } from '../../authentication/auth.service';
+import { ProductService } from '../../product/product.service';
+import { ProductModel } from '../../product/model/product.model';
 
 @Component({
   selector: 'app-order-list',
@@ -18,7 +20,8 @@ export class OrderListComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private authService:AuthService
+    private authService:AuthService,
+    private productService:ProductService
 
   ) {}
 
@@ -56,18 +59,32 @@ export class OrderListComponent implements OnInit {
 
   approveOrder(order: OrderModel): void {
     if (this.isAdmin) {
-      this.orderService.approveOrder(order.id).subscribe({
-        next: (updatedOrder) => {
-          order.status = updatedOrder.status;
-          // Optionally show a success message
-        },
-        error: (err) => {
-          console.error('Error approving order:', err);
-          // Handle error: show error message to the user
-        }
-      });
+      const product = order.product as ProductModel;
+      const newStock = product.stock - order.quantity;
+
+      if (newStock >= 0) {
+        // Update the product stock
+        this.productService.updateProductStock(product.id, newStock).subscribe({
+          next: () => {
+            // Approve the order after stock update
+            this.orderService.approveOrder(order.id).subscribe({
+              next: (updatedOrder) => {
+                order.status = updatedOrder.status;
+                console.log('Order approved and stock updated:', updatedOrder);
+              },
+              error: (err) => {
+                console.error('Error approving order:', err);
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Error updating product stock:', err);
+          }
+        });
+      } else {
+        console.warn('Not enough stock to approve the order.');
+      }
     } else {
-      // Show a message indicating the user does not have permission to approve orders
       console.warn('Only admins can approve orders.');
     }
   }
