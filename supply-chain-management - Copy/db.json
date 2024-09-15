@@ -80,22 +80,20 @@
   ],
   "suppliers": [
     {
-      "id": "1",
-      "name": "Supplier A",
-      "email": "email@supplierA.com",
-      "phone": "123456789"
+      "id": 1,
+      "companyName": "ABC Raw Materials Ltd.",
+      "contactPerson": "John Doe",
+      "email": "john.doe@abcrawmaterials.com",
+      "cellNo": "+1234567890",
+      "address": "123 Industrial Park, Cityville"
     },
     {
-      "id": "2",
-      "name": "Supplier B",
-      "email": "email@supplierB.com",
-      "phone": "987654321"
-    },
-    {
-      "id": "3",
-      "name": "Supplier C",
-      "email": "email@supplierC.com",
-      "phone": "987654322"
+      "id": 2,
+      "companyName": "XYZ Supplies Inc.",
+      "contactPerson": "Jane Smith",
+      "email": "jane.smith@xyzsupplies.com",
+      "cellNo": "+0987654321",
+      "address": "456 Commerce Street, Townsville"
     }
   ],
   "orders": [

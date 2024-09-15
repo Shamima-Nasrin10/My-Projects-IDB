@@ -1,8 +1,10 @@
 export class SupplierModel{
 
-    id!: number
-    name!: string
-    email!: string
-    phone!: string
+  id?: number;
+  companyName!: string;
+  contactPerson!: string;
+  email!: string;
+  cellNo!: string;
+  address!: string;
 
 }
