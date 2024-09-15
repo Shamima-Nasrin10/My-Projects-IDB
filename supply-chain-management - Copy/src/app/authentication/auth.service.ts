@@ -13,6 +13,8 @@ export class AuthService {
   private baseUrl: string = "http://localhost:3000/users";
   private currentUserSubject: BehaviorSubject<UserModel | null>;
   public currentUser$!: Observable<UserModel | null>;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -69,7 +71,7 @@ export class AuthService {
               const token = btoa(`${user.email}:${user.password}`);
               this.storeToken(token);
               this.setCurrentUser(user);
-             
+
 
               this.currentUserSubject.next(user);
               return { token, user } as AuthResponse;

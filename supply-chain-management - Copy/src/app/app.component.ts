@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "./authentication/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'supply-chain-management';
+  constructor(public authService: AuthService) {
+  }
 }

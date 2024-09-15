@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { RawMaterialCreateComponent } from './raw-materials/raw-material-create/raw-material-create.component';
-import { RawMaterialListComponent } from './raw-materials/raw-material-list/raw-material-list.component';
-import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.component';
-import { SupplierCreateComponent } from './suppliers/supplier-create/supplier-create.component';
+import { RawMaterialCreateComponent } from './inventory/raw-materials/raw-material-create/raw-material-create.component';
+import { RawMaterialListComponent } from './inventory/raw-materials/raw-material-list/raw-material-list.component';
+import { SupplierListComponent } from './inventory/suppliers/supplier-list/supplier-list.component';
+import { SupplierCreateComponent } from './inventory/suppliers/supplier-create/supplier-create.component';
 import { HeaderComponent } from './template/header/header.component';
 import { SidebarComponent } from './template/sidebar/sidebar.component';
 import { FooterComponent } from './template/footer/footer.component';
@@ -64,7 +64,7 @@ import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.com
     FormsModule,
     RouterModule,
     AppRoutingModule,
-  
+
   ],
   providers: [
     provideClientHydration(),
