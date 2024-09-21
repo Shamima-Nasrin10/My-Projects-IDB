@@ -21,10 +21,7 @@ export class RawMaterialListComponent implements OnInit {
   constructor(
     private rawmaterialService: RawMaterialService,
     private supplierService: SupplierService,
-    private router: Router,
-    private alertService: AlertService
   ) { }
-
 
   ngOnInit(): void {
     this.loadRawMaterials();
@@ -32,43 +29,25 @@ export class RawMaterialListComponent implements OnInit {
   }
 
   loadRawMaterials(): void {
-    this.rawmaterialService.getRawMaterials().subscribe({
+    this.rawmaterialService.getAllRawMaterials().subscribe({
       next: response => {
         this.rawmaterials = response.map(rawmaterial => Object.assign(new RawMaterial(), rawmaterial));
       },
       error: error => {
-
+        console.error('Error loading raw materials:', error);
       }
     });
   }
 
   fetchSuppliers(): void {
     // Assuming you have a SupplierService to fetch suppliers
-    this.rawmaterialService.getSuppliers().subscribe(data => {
+    this.supplierService.getSuppliers().subscribe(data => {
       this.suppliers = data;
     });
   }
 
-  // deleteRawMaterial(id?: number) {
-
-  //   if (id === undefined || id === null) {
-  //     this.alertService.error('Raw Material ID is required.');
-  //     return;
-  //   }
-
-  //   this.rawmaterialService.deleteRawMaterial(id).subscribe({
-  //     next: response => {
-  //       this.alertService.success('Raw Material deleted successfully!');
-  //       this.loadRawMaterials();
-  //     },
-  //     error: error => {
-  //       this.alertService.error('Could not delete raw material');
-  //     }
-  //   })
-
-
   deleteRawMaterial(id: number): void {
-    this.rawmaterialService.deleteRawMaterial(id).subscribe({
+    this.rawmaterialService.deleteRawMaterialById(id).subscribe({
       next: () => {
         // Optionally, provide user feedback or reload the list
         this.rawmaterials = this.rawmaterials.filter(material => material.id !== id);

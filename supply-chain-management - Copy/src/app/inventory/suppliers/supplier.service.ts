@@ -8,13 +8,13 @@ import { SupplierModel } from './model/supplier.model';
 })
 export class SupplierService{
 
- private apiUrl = 'http://localhost:3000/suppliers';
+ private apiUrl = 'http://localhost:8080/api/supplier';
 
   constructor(private http: HttpClient) { }
   
 
   getSuppliers(): Observable<SupplierModel[]> {
-    return this.http.get<SupplierModel[]>(this.apiUrl);
+    return this.http.get<SupplierModel[]>(this.apiUrl + '/list');
   }
 
   getSupplier(id: number): Observable<SupplierModel> {
@@ -22,7 +22,7 @@ export class SupplierService{
   }
 
   addSupplier(supplier: SupplierModel): Observable<SupplierModel> {
-    return this.http.post<SupplierModel>(this.apiUrl, supplier);
+    return this.http.post<SupplierModel>(this.apiUrl + '/save', supplier);
   }
 
   updateSupplier(id: number, supplier: SupplierModel): Observable<SupplierModel> {

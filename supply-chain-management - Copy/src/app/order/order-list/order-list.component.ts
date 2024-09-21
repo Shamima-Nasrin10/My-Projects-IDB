@@ -6,6 +6,7 @@ import { OrderStage, ManufacturingStage } from '../model/enum/enums';
 import { AuthService } from '../../authentication/auth.service';
 import { ProductService } from '../../product/product.service';
 import { ProductModel } from '../../product/model/product.model';
+import { Role } from '../../access/userModel/user.model';
 
 @Component({
   selector: 'app-order-list',
@@ -32,7 +33,7 @@ export class OrderListComponent implements OnInit {
 
   checkAdminRole(): void {
     const currentUser = this.authService.getUserProfileFromStorage();
-    if (currentUser && currentUser.role === 'admin') {
+    if (currentUser && currentUser.role === Role.ADMIN) {
       this.isAdmin = true;
     } else {
       this.isAdmin = false;

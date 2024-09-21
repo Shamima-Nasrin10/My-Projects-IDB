@@ -3,7 +3,7 @@
 </div>
 
 <div class="main-wrapper">
-<ng-container *ngIf="authService.isAuthenticated$ | async">
+<ng-container *ngIf="authService.userRole$ | async">
   <app-header></app-header>
 
   <app-sidebar></app-sidebar>
@@ -15,7 +15,7 @@
   </div>
 
 </ng-container>
-  <ng-container *ngIf="!(authService.isAuthenticated$ | async)">
+  <ng-container *ngIf="!(authService.userRole$ | async)">
     <router-outlet></router-outlet>
   </ng-container>
 

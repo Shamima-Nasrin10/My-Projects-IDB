@@ -15,7 +15,6 @@ import { SidebarComponent } from './template/sidebar/sidebar.component';
 import { FooterComponent } from './template/footer/footer.component';
 import { NotificationComponent } from './notification/notification/notification.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { AdminComponent } from './user/admin/admin.component';
 import { LoginComponent } from './access/login/login/login.component';
 import { LogoutComponent } from './access/logout/logout/logout.component';
 import { RegistrationComponent } from './access/registration/registration/registration.component';
@@ -42,7 +41,6 @@ import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.com
     FooterComponent,
     NotificationComponent,
     OrderCreateComponent,
-    AdminComponent,
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
@@ -54,8 +52,7 @@ import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.com
     ProductViewComponent,
     OrderListComponent,
     InvoiceComponent,
-    PdfGeneratorComponent,
-
+    PdfGeneratorComponent
   ],
   imports: [
     BrowserModule,

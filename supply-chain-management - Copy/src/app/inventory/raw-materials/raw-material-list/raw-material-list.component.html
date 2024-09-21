@@ -20,7 +20,8 @@
                 <th>Quantity</th>
                 <th>Unit</th>
                 <th>Supplier</th>
-                <th>Unit Price</th>
+                <th>Price</th>
+                <th>Image</th>
                 <th class="text-center col-md-1">Action</th>
               </tr>
             </thead>
@@ -30,8 +31,9 @@
                 <td>{{ rawmaterial.name || '-' }}</td>
                 <td>{{ rawmaterial.quantity || '-' }}</td>
                 <td>{{ rawmaterial.unit || '-' }}</td>
-                <td>{{ rawmaterial.supplier.name || '-' }}</td>
-                <td>{{ rawmaterial.unitPrice || '-' }}</td>
+                <td>{{ rawmaterial.supplier.companyName || '-' }}</td>
+                <td>{{ rawmaterial.price || '-' }}</td>
+                <td>{{ rawmaterial.image || '-' }}</td>
                 <td>
                   <div class="form-button-action">
                     <button [routerLink]="['/update', rawmaterial.id]" class="btn btn-link btn-primary btn-sm me-2"

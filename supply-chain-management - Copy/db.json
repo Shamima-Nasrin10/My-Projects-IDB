@@ -1,54 +1,12 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "admin",
-      "email": "admin@example.com",
-      "password": "admin123",
-      "role": "admin"
-    },
-    {
-      "id": "2",
-      "name": "customer1",
-      "email": "customer1@example.com",
-      "password": "customer123",
-      "role": "user"
-    },
-    {
-      "id": "4b39",
-      "name": "Anika Sultana",
-      "email": "anika@gmail.com",
-      "password": "123456",
-      "role": "customer"
-    },
-    {
-      "id": "103e",
-      "name": "Rifa Tasfia",
-      "email": "rifa@gmail.com",
-      "password": "rifa123",
-      "role": "user"
-    },
-    {
-      "id": "f3aa",
-      "name": "Adiba",
-      "email": "adiba@gmail.com",
-      "password": "adiba1234",
-      "role": "customer"
-    },
-    {
-      "id": "8b66",
-      "name": "Shamima",
-      "email": "fine@gmail.com",
-      "password": "123456",
-      "role": "admin"
-    },
-    {
-      "id": "51ff",
-      "name": "anika",
-      "email": "aru@gmail.com",
-      "password": "123456",
-      "role": "user"
-    }
+      "name":"Admin",
+      "email":"nasrin05shamima@gmail.com",
+      "password":"12345678",
+      "cell":"01521499594",
+      "role":"ADMIN"
+      }
   ],
   "rawMaterials": [
     {

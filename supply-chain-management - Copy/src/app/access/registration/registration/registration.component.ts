@@ -28,39 +28,39 @@ export class RegistrationComponent {
   get f(){return this.regForm.controls;}
 
   onSubmit(): void {
-    if (this.regForm.valid) {
-      const user: UserModel = this.regForm.value;
+    // if (this.regForm.valid) {
+    //   const user: UserModel = this.regForm.value;
 
-      // Check if email already exists
-      this.authService.checkEmailExists(user.email).subscribe({
-        next: (exists) => {
-          if (exists) {
-            this.errorMessage = 'Email is already registered. Please log in.';
-            //this.router.navigate(['/login']); // Redirect to login page if email exists
-          } else {
-            user.role = 'Pending'; // Set default role to 'pending'
-            this.authService.registration(user).subscribe({
-              next: (res) => {
-                console.log('User registered successfully:', res);
-                // Redirect to login page with a message
-                this.errorMessage = 'Registration successful. Please wait for admin approval before logging in.';
-                this.router.navigate(['/login']);
-              },
-              error: (err) => {
-                console.error('Error registering user:', err);
-                this.errorMessage = 'Registration failed. Please try again later.';
-              }
-            });
-          }
-        },
-        error: (error) => {
-          console.error('Error checking email:', error);
-          this.errorMessage = 'Unable to check email. Please try again later.';
-        }
-      });
-    } else {
-      this.errorMessage = 'Complete all mandatory fields.';
-    }
+    //   // Check if email already exists
+    //   this.authService.checkEmailExists(user.email).subscribe({
+    //     next: (exists) => {
+    //       if (exists) {
+    //         this.errorMessage = 'Email is already registered. Please log in.';
+    //         //this.router.navigate(['/login']); // Redirect to login page if email exists
+    //       } else {
+    //         user.role = 'Pending'; // Set default role to 'pending'
+    //         this.authService.registration(user).subscribe({
+    //           next: (res) => {
+    //             console.log('User registered successfully:', res);
+    //             // Redirect to login page with a message
+    //             this.errorMessage = 'Registration successful. Please wait for admin approval before logging in.';
+    //             this.router.navigate(['/login']);
+    //           },
+    //           error: (err) => {
+    //             console.error('Error registering user:', err);
+    //             this.errorMessage = 'Registration failed. Please try again later.';
+    //           }
+    //         });
+    //       }
+    //     },
+    //     error: (error) => {
+    //       console.error('Error checking email:', error);
+    //       this.errorMessage = 'Unable to check email. Please try again later.';
+    //     }
+    //   });
+    // } else {
+    //   this.errorMessage = 'Complete all mandatory fields.';
+    // }
   }
 
 }

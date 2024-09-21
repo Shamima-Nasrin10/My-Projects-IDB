@@ -35,7 +35,7 @@ export class ProductListComponent implements OnInit {
   checkAdmin(): void {
     
     const userRole = this.authService.getUserRole();
-    this.isAdmin = userRole === 'admin';
+    this.isAdmin = userRole === 'ADMIN';
   }
 
   editProduct(product: ProductModel): void {

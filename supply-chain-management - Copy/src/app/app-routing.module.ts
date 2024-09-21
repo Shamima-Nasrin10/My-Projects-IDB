@@ -9,7 +9,6 @@ import { OrderCreateComponent } from './order/order-create/order-create.componen
 import { RegistrationComponent } from './access/registration/registration/registration.component';
 import {LoginComponent} from "./access/login/login/login.component";
 import {LogoutComponent} from "./access/logout/logout/logout.component";
-import { AdminComponent } from './user/admin/admin.component';
 import { AuthGuard } from './access/auth.guard';
 import { RoleGuard } from './access/role.guard';
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
@@ -25,10 +24,7 @@ const routes: Routes = [
     path:"registration", component:RegistrationComponent
   },
   {
-    path:'admin', component:AdminComponent, canActivate: [AuthGuard,RoleGuard], data:{expectedRole:'admin'}
-  },
-  {
-    path:'unathorized', component:UnauthorizedComponent
+    path:'unathorized', component:UnauthorizedComponent,
   },
   {
     path:"login", component:LoginComponent
@@ -41,7 +37,9 @@ const routes: Routes = [
   },
   {
     path: 'products',
-    component: ProductListComponent
+    component: ProductListComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {roles: ['ADMIN', 'USER']}
   },
   {
     path: 'products/view/:id',
@@ -51,22 +49,26 @@ const routes: Routes = [
     path: 'product-create',
     component: ProductCreateComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: 'admin' }
+    data: {roles: ['ADMIN']}
   },
   {
     path: 'products/update/:id',
     component: ProductUpdateComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: 'admin' }
+    data: {roles: ['ADMIN']}
   },
   {
-    path:"rawMaterial",component:RawMaterialCreateComponent
+    path:"rawMaterial",
+    component:RawMaterialCreateComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {roles: ['ADMIN']}
   },
   {
-    path:"update/:id", component:RawMaterialCreateComponent
+    path:"update/:id", component:RawMaterialCreateComponent, canActivate: [AuthGuard, RoleGuard],
+    data: {roles: ['ADMIN']}
   },
   {
-    path:"rawMaterialList", component:RawMaterialListComponent
+    path:"rawMaterialList", component:RawMaterialListComponent,
   },
   {
     path:"addSupplier", component:SupplierCreateComponent

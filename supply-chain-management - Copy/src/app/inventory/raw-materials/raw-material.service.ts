@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawMaterial } from './model/raw-material.model';
 import { map, Observable } from 'rxjs';
@@ -10,38 +10,49 @@ import { SupplierModel } from '../suppliers/model/supplier.model';
 export class RawMaterialService {
 
 
-  private apiUrl = 'http://localhost:3000/rawMaterials';
-  private suppliersUrl = 'http://localhost:3000/suppliers';
+  private apiUrl = 'http://localhost:8080/api/rawmaterial';
+  private suppliersUrl = 'http://localhost:8080/api/supplier';
+
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) { }
 
-  getRawMaterials(): Observable<RawMaterial[]> {
-    return this.http.get<RawMaterial[]>(this.apiUrl);
+  getAllRawMaterials(): Observable<RawMaterial[]> {
+    return this.http.get<RawMaterial[]>(`${this.apiUrl}/list`);
   }
 
-  getRawMaterial(id: number): Observable<RawMaterial> {
+  saveRawMaterial(rawMaterial: RawMaterial, imageFile?: File| null): Observable<RawMaterial> {
+    const formData = new FormData();
+    formData.append('rawMaterial', JSON.stringify(rawMaterial));
+    if (imageFile) {
+      formData.append('imageFile', imageFile);
+    }
+    return this.http.post<RawMaterial>(`${this.apiUrl}/save`, formData);
+  }
+
+  deleteRawMaterialById(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${id}`);
+  }
+
+  findRawMaterialById(id: number): Observable<RawMaterial> {
     return this.http.get<RawMaterial>(`${this.apiUrl}/${id}`);
   }
 
-  addRawMaterial(rawMaterial: RawMaterial): Observable<RawMaterial> {
-    return this.http.post<RawMaterial>(this.apiUrl, rawMaterial);
+  updateRawMaterial(id: number, rawMaterial: RawMaterial, imageFile?: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('rawMaterial', JSON.stringify(rawMaterial));
+    if (imageFile) {
+      formData.append('imageFile', imageFile);
+    }
+    return this.http.put<any>(`${this.apiUrl}/update/${id}`, formData);
   }
 
-  updateRawMaterial(id: number, rawMaterial: RawMaterial): Observable<RawMaterial> {
-    return this.http.put<RawMaterial>(`${this.apiUrl}/${id}`, rawMaterial);
+  findRawMaterialsBySupplierName(supplierName: string): Observable<RawMaterial[]> {
+    const params = new HttpParams().set('supplierName', supplierName);
+    return this.http.get<RawMaterial[]>(`${this.apiUrl}/r/searchrawmaterial`, { params });
   }
 
-  deleteRawMaterial(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-  getSuppliers(): Observable<SupplierModel[]> {
-    return this.http.get<SupplierModel[]>(this.suppliersUrl);
-  }
-
-  getRawMaterialByName(name: string): Observable<RawMaterial | undefined> {
-    return this.http.get<RawMaterial[]>(`${this.apiUrl}?name=${name}`).pipe(
-      map(rawMaterials => rawMaterials.length > 0 ? rawMaterials[0] : undefined)
-    );
-  }
 
 }
