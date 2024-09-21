@@ -41,7 +41,7 @@ export class RawMaterialListComponent implements OnInit {
 
   fetchSuppliers(): void {
     // Assuming you have a SupplierService to fetch suppliers
-    this.supplierService.getSuppliers().subscribe(data => {
+    this.supplierService.getAllRawMaterialSuppliers().subscribe(data => {
       this.suppliers = data;
     });
   }

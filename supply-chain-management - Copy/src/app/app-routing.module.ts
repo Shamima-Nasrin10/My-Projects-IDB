@@ -18,6 +18,7 @@ import { ProductUpdateComponent } from './product/product-update/product-update.
 import { ProductViewComponent } from './product/product-view/product-view.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
+import { SupplierListComponent } from './inventory/suppliers/supplier-list/supplier-list.component';
 
 const routes: Routes = [
   {
@@ -68,10 +69,16 @@ const routes: Routes = [
     data: {roles: ['ADMIN']}
   },
   {
-    path:"rawMaterialList", component:RawMaterialListComponent,
+    path:"rawMaterialList", component:RawMaterialListComponent, canActivate: [AuthGuard, RoleGuard],
+    data: {roles: ['ADMIN']}
   },
   {
-    path:"addSupplier", component:SupplierCreateComponent
+    path:"supplier/create", component:SupplierCreateComponent, canActivate: [AuthGuard, RoleGuard],
+    data: {roles: ['ADMIN']}
+  },
+  {
+    path:"supplier/list", component:SupplierListComponent, canActivate: [AuthGuard, RoleGuard],
+    data: {roles: ['ADMIN']}
   },
   {
     path:"notification", component:NotificationComponent

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SupplierModel } from '../model/supplier.model';
 import { SupplierService } from '../supplier.service';
 
@@ -10,55 +10,96 @@ import { SupplierService } from '../supplier.service';
 })
 export class SupplierCreateComponent implements OnInit {
 
-  supplier: SupplierModel = new SupplierModel();
+  supplier: SupplierModel = {
+    id: 0,
+    companyName: '',
+    contactPerson: '',
+    email: '',
+    cellNo: '',
+    address: ''
+  }; 
   supplierId?: number;
 
   constructor(
     private supplierService: SupplierService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    // Get the supplier ID from the route if available
-    this.supplierId = this.route.snapshot.params['id'];
+   
+    this.supplierId = +this.route.snapshot.params['id']; 
     
-    // If an ID exists, fetch the supplier data to edit
     if (this.supplierId) {
-      this.supplierService.getSupplier(this.supplierId).subscribe({
-        next: response => {
-          this.supplier = response;
+      
+      this.loadSupplier(this.supplierId);
+    }
+  }
+
+  
+  private loadSupplier(id: number): void {
+    this.supplierService.getRawMaterialSupplierById(id).subscribe({
+      next: (response: SupplierModel) => { 
+        this.supplier = response;
+      },
+      error: (error) => {
+        console.error('Error loading supplier', error);
+        alert('Error loading supplier data');
+      }
+    });
+  }
+
+ 
+  onSubmit(): void {
+    if (this.supplierId) {
+      this.updateSupplier();
+    } else {
+      this.addSupplier();
+    }
+  }
+
+ 
+  private addSupplier(): void {
+    this.supplierService.saveRawMaterialSupplier(this.supplier).subscribe({
+      next: () => {
+        alert('Supplier saved successfully');
+        this.resetForm();
+        this.router.navigate(['/suppliers']); 
+      },
+      error: (error) => {
+        console.error('Error saving supplier', error);
+        alert('Failed to save supplier');
+      }
+    });
+  }
+
+  
+  private updateSupplier(): void {
+    if (this.supplierId) {
+      this.supplierService.updateRawMaterialSupplier(this.supplier).subscribe({
+        next: () => {
+          alert('Supplier updated successfully');
+          this.resetForm();
+          this.router.navigate(['/suppliers']); 
         },
-        error: error => {
-          console.log(error);
+        error: (error) => {
+          console.error('Error updating supplier', error);
+          alert('Failed to update supplier');
         }
       });
     }
   }
 
-  onSubmit(): void {
-    if (this.supplierId) {
-      // Update existing supplier
-      this.supplierService.updateSupplier(this.supplierId, this.supplier).subscribe({
-        next: response => {
-          this.supplier = new SupplierModel();
-          alert('Supplier update successful');
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
-    } else {
-      // Add new supplier
-      this.supplierService.addSupplier(this.supplier).subscribe({
-        next: response => {
-          this.supplier = new SupplierModel();
-          alert('Supplier save successful');
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
-    }
+  
+  private resetForm(): void {
+    this.supplier = {
+      id: 0,
+      companyName: '',
+      contactPerson: '',
+      email: '',
+      cellNo: '',
+      address: ''
+    };
   }
 
 }

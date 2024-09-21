@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SupplierModel } from './model/supplier.model';
@@ -8,28 +8,43 @@ import { SupplierModel } from './model/supplier.model';
 })
 export class SupplierService{
 
- private apiUrl = 'http://localhost:8080/api/supplier';
+  private apiUrl = 'http://localhost:8080/api/supplier';  
 
   constructor(private http: HttpClient) { }
+
   
-
-  getSuppliers(): Observable<SupplierModel[]> {
-    return this.http.get<SupplierModel[]>(this.apiUrl + '/list');
+  private getHttpOptions() {
+    const token = localStorage.getItem('token');
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  
+      })
+    };
   }
 
-  getSupplier(id: number): Observable<SupplierModel> {
-    return this.http.get<SupplierModel>(`${this.apiUrl}/${id}`);
+ 
+  getAllRawMaterialSuppliers(): Observable<SupplierModel[]> {
+    return this.http.get<SupplierModel[]>(`${this.apiUrl}/list`);
   }
 
-  addSupplier(supplier: SupplierModel): Observable<SupplierModel> {
-    return this.http.post<SupplierModel>(this.apiUrl + '/save', supplier);
+ 
+  saveRawMaterialSupplier(supplier: SupplierModel): Observable<SupplierModel> {
+    return this.http.post<SupplierModel>(`${this.apiUrl}/save`, supplier, this.getHttpOptions());
   }
 
-  updateSupplier(id: number, supplier: SupplierModel): Observable<SupplierModel> {
-    return this.http.put<SupplierModel>(`${this.apiUrl}/${id}`, supplier);
+  
+  deleteRawMaterialSupplier(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`, this.getHttpOptions());
   }
 
-  deleteSupplier(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  
+  getRawMaterialSupplierById(id: number): Observable<SupplierModel> {
+    return this.http.get<SupplierModel>(`${this.apiUrl}/${id}`, this.getHttpOptions());
+  }
+
+  
+  updateRawMaterialSupplier(supplier: SupplierModel): Observable<SupplierModel> {
+    return this.http.put<SupplierModel>(`${this.apiUrl}/update/${supplier.id}`, supplier, this.getHttpOptions());
   }
 }

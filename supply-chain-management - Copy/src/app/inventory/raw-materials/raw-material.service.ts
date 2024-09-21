@@ -16,7 +16,7 @@ export class RawMaterialService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${'token'}`
     }),
 
   };

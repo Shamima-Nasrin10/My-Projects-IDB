@@ -26,7 +26,7 @@ export class RawMaterialCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.supplierService.getSuppliers().subscribe({
+    this.supplierService.getAllRawMaterialSuppliers().subscribe({
       next: response => {
         this.suppliers = response;
       },
