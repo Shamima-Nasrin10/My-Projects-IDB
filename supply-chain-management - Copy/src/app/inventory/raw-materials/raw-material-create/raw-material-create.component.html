@@ -24,8 +24,8 @@
     </div>
     <div class="form-group">
       <label for="supplier">Supplier</label>
-      <select class="form-control" id="supplier" [(ngModel)]="rawMaterial.supplier" name="supplier">
-        <option *ngFor="let supplier of suppliers" [value]="supplier">{{ supplier.companyName }}</option>
+      <select class="form-control" id="supplier" [(ngModel)]="rawMaterial.supplier.id" name="supplier">
+        <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.companyName }}</option>
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

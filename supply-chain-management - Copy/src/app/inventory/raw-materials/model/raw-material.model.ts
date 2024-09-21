@@ -8,7 +8,7 @@ export class RawMaterial{
   quantity!: number;
   unit!: Unit;
   image!: string;
-  supplier!: SupplierModel;
+  supplier: SupplierModel = new SupplierModel();
 
 }
 

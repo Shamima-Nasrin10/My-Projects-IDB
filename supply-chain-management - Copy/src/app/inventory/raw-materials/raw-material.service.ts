@@ -14,7 +14,11 @@ export class RawMaterialService {
   private suppliersUrl = 'http://localhost:8080/api/supplier';
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }),
+
   };
 
   constructor(private http: HttpClient) { }
@@ -23,12 +27,15 @@ export class RawMaterialService {
     return this.http.get<RawMaterial[]>(`${this.apiUrl}/list`);
   }
 
-  saveRawMaterial(rawMaterial: RawMaterial, imageFile?: File| null): Observable<RawMaterial> {
+  saveRawMaterial(rawMaterial: RawMaterial, imageFile?: File | null): Observable<RawMaterial> {
     const formData = new FormData();
-    formData.append('rawMaterial', JSON.stringify(rawMaterial));
+    formData.append('rawMaterial', new Blob([JSON.stringify(rawMaterial)], {type: 'application/json'}));
+
     if (imageFile) {
       formData.append('imageFile', imageFile);
     }
+    console.log(rawMaterial)
+    console.log(formData)
     return this.http.post<RawMaterial>(`${this.apiUrl}/save`, formData);
   }
 
