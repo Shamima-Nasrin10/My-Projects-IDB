@@ -81,10 +81,6 @@ const routes: Routes = [
     data: {roles: ['ADMIN']}
   },
   {
-    path:"supplier/update/:id", component:SupplierCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: {roles: ['ADMIN']}
-  },
-  {
     path:"notification", component:NotificationComponent
   },
   {

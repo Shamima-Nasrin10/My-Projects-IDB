@@ -82,7 +82,7 @@ export class AuthService {
 
   isTokenExpired(token: string): boolean {
     const decodedToken = this.decodeToken(token);
-    const expiry = decodedToken.exp * 1000; 
+    const expiry = decodedToken.exp * 1000; // Convert expiry to milliseconds
     return Date.now() > expiry;
   }
 
@@ -91,21 +91,21 @@ export class AuthService {
     if (token && !this.isTokenExpired(token)) {
       return true;
     }
-    this.logout();
+    this.logout(); // Automatically log out if token is expired
     return false;
   }
 
   logout(): void {
     this.removeFromLocalStorage('authToken');
     this.removeFromLocalStorage('userRole');
-    this.userRoleSubject.next(null); 
+    this.userRoleSubject.next(null); // Clear role in BehaviorSubject
     this.router.navigate(['/login']);
   }
 
   saveToLocalStorage(key: string, data: any) {
     if (typeof window !== 'undefined' && window.localStorage) {
       if (typeof data === 'string') {
-        localStorage.setItem(key, data); 
+        localStorage.setItem(key, data); // No need to stringify plain strings
       } else {
         localStorage.setItem(key, JSON.stringify(data));
       }
@@ -116,9 +116,9 @@ export class AuthService {
     if (typeof window !== 'undefined' && window.localStorage) {
       const data = localStorage.getItem(key);
       try {
-        return JSON.parse(data!); 
+        return JSON.parse(data!); // If it's JSON, parse it
       } catch {
-        return data; 
+        return data; // If it's a plain string, return it as is
       }
     }
     return null;

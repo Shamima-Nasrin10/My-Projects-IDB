@@ -8,20 +8,20 @@ import { SupplierModel } from './model/supplier.model';
 })
 export class SupplierService{
 
-  apiUrl:String = 'http://localhost:8080/api/supplier';  
+  private apiUrl = 'http://localhost:8080/api/supplier';  
 
   constructor(private http: HttpClient) { }
 
   
-  // private getHttpOptions() {
-  //   const token = localStorage.getItem('token');
-  //   return {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${token}`  
-  //     })
-  //   };
-  // }
+  private getHttpOptions() {
+    const token = localStorage.getItem('token');
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  
+      })
+    };
+  }
 
  
   getAllRawMaterialSuppliers(): Observable<SupplierModel[]> {
@@ -30,21 +30,21 @@ export class SupplierService{
 
  
   saveRawMaterialSupplier(supplier: SupplierModel): Observable<SupplierModel> {
-    return this.http.post<SupplierModel>(`${this.apiUrl}/save`, supplier);
+    return this.http.post<SupplierModel>(`${this.apiUrl}/save`, supplier, this.getHttpOptions());
   }
 
   
   deleteRawMaterialSupplier(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`, this.getHttpOptions());
   }
 
   
   getRawMaterialSupplierById(id: number): Observable<SupplierModel> {
-    return this.http.get<SupplierModel>(`${this.apiUrl}/${id}`);
+    return this.http.get<SupplierModel>(`${this.apiUrl}/${id}`, this.getHttpOptions());
   }
 
   
-  updateRawMaterialSupplier(supplier: SupplierModel): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update/${supplier.id}`, supplier);
+  updateRawMaterialSupplier(supplier: SupplierModel): Observable<SupplierModel> {
+    return this.http.put<SupplierModel>(`${this.apiUrl}/update/${supplier.id}`, supplier, this.getHttpOptions());
   }
 }
