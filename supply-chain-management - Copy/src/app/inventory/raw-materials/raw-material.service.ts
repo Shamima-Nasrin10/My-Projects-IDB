@@ -27,16 +27,24 @@ export class RawMaterialService {
     return this.http.get<RawMaterial[]>(`${this.apiUrl}/list`);
   }
 
-  saveRawMaterial(rawMaterial: RawMaterial, imageFile?: File | null): Observable<RawMaterial> {
+  saveRawMaterial(rawMaterial: RawMaterial, imageFile?: File): Observable<RawMaterial> {
     const formData = new FormData();
     formData.append('rawMaterial', new Blob([JSON.stringify(rawMaterial)], {type: 'application/json'}));
 
     if (imageFile) {
       formData.append('imageFile', imageFile);
     }
-    console.log(rawMaterial)
-    console.log(formData)
     return this.http.post<RawMaterial>(`${this.apiUrl}/save`, formData);
+  }
+
+  updateRawMaterial(rawMaterial: RawMaterial, imageFile?: File): Observable<RawMaterial> {
+    const formData = new FormData();
+    formData.append('rawMaterial', new Blob([JSON.stringify(rawMaterial)], {type: 'application/json'}));
+    
+    if (imageFile) {
+      formData.append('imageFile', imageFile);
+    }
+    return this.http.put<any>(`${this.apiUrl}/update`, formData);
   }
 
   deleteRawMaterialById(id: number): Observable<any> {
@@ -45,15 +53,6 @@ export class RawMaterialService {
 
   findRawMaterialById(id: number): Observable<RawMaterial> {
     return this.http.get<RawMaterial>(`${this.apiUrl}/${id}`);
-  }
-
-  updateRawMaterial(id: number, rawMaterial: RawMaterial, imageFile?: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('rawMaterial', JSON.stringify(rawMaterial));
-    if (imageFile) {
-      formData.append('imageFile', imageFile);
-    }
-    return this.http.put<any>(`${this.apiUrl}/update/${id}`, formData);
   }
 
   findRawMaterialsBySupplierName(supplierName: string): Observable<RawMaterial[]> {

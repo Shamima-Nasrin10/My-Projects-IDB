@@ -33,15 +33,18 @@
                 <td>{{ rawmaterial.unit || '-' }}</td>
                 <td>{{ rawmaterial.supplier.companyName || '-' }}</td>
                 <td>{{ rawmaterial.price || '-' }}</td>
-                <td>{{ rawmaterial.image || '-' }}</td>
+                <td>
+                  <img src="http://localhost:8080/images/rawmaterial/{{ rawmaterial.image }}" alt="Image" height="auto"
+                    width="50px">
+                </td>
                 <td>
                   <div class="form-button-action">
                     <button [routerLink]="['/update', rawmaterial.id]" class="btn btn-link btn-primary btn-sm me-2"
                       title="Edit" type="button">
                       <i class="fa fa-edit"></i>
                     </button>
-                    <button (click)="deleteRawMaterial(rawmaterial.id)" class="btn btn-link btn-danger btn-sm" title="Delete"
-                      type="button">
+                    <button (click)="deleteRawMaterial(rawmaterial.id)" class="btn btn-link btn-danger btn-sm"
+                      title="Delete" type="button">
                       <i class="fa fa-times"></i>
                     </button>
                   </div>

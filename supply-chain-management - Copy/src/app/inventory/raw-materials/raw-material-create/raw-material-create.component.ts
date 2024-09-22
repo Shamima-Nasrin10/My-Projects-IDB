@@ -3,7 +3,7 @@ import { RawMaterial, Unit } from '../model/raw-material.model';
 import { SupplierModel } from '../../suppliers/model/supplier.model';
 import { SupplierService } from '../../suppliers/supplier.service';
 import { RawMaterialService } from '../raw-material.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-raw-material-create',
@@ -17,12 +17,13 @@ export class RawMaterialCreateComponent implements OnInit {
   units = Object.values(Unit);
   rawMaterialId?: number;
   existingRawMaterial?: string;
-  imageFile: File | null = null;
+  imageFile?: File;
 
   constructor(
     private supplierService: SupplierService,
     private rawMaterialService: RawMaterialService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -49,87 +50,30 @@ export class RawMaterialCreateComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    if (this.rawMaterialId) {
-      if (this.imageFile) {
-        this.rawMaterialService.updateRawMaterial(this.rawMaterialId, this.rawMaterial, this.imageFile).subscribe({
-          next: response => {
-            this.rawMaterial = new RawMaterial();
-            alert('Update Successful');
-          },
-          error: error => {
-            console.log(error);
-          }
-        });
-      } else {
-        this.rawMaterialService.updateRawMaterial(this.rawMaterialId, this.rawMaterial).subscribe({
-          next: response => {
-            this.rawMaterial = new RawMaterial();
-            alert('Update Successful');
-          },
-          error: error => {
-            console.log(error);
-          }
-        });
-      }
-    } else {
-      this.rawMaterialService.findRawMaterialsBySupplierName(this.rawMaterial.supplier?.companyName).subscribe({
-        next: existingRawMaterials => {
-          if (existingRawMaterials && existingRawMaterials.length > 0) {
-            const existingRawMaterial = existingRawMaterials[0];
-            existingRawMaterial.quantity += this.rawMaterial.quantity;
-            if (this.imageFile) {
-              this.rawMaterialService.updateRawMaterial(existingRawMaterial.id, existingRawMaterial, this.imageFile).subscribe({
-                next: response => {
-                  this.rawMaterial = new RawMaterial();
-                  alert('Quantity updated successfully');
-                },
-                error: error => {
-                  console.log(error);
-                }
-              });
-            } else {
-              this.rawMaterialService.updateRawMaterial(existingRawMaterial.id, existingRawMaterial).subscribe({
-                next: response => {
-                  this.rawMaterial = new RawMaterial();
-                  alert('Quantity updated successfully');
-                },
-                error: error => {
-                  console.log(error);
-                }
-              });
-            }
-          } else {
-            if (this.imageFile) {
-              this.rawMaterialService.saveRawMaterial(this.rawMaterial, this.imageFile).subscribe({
-                next: response => {
-                  this.rawMaterial = new RawMaterial();
-                  alert('Save successful');
-                },
-                error: error => {
-                  console.log(error);
-                }
-              });
-            } else {
-              this.rawMaterialService.saveRawMaterial(this.rawMaterial, this.imageFile).subscribe({
-                next: response => {
-                  this.rawMaterial = new RawMaterial();
-                  alert('Save successful');
-                },
-                error: error => {
-                  console.log(error);
-                }
-              });
-            }
-          }
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
+  onImagePicked(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.imageFile = input.files[0];
     }
   }
-  
+
+  onSubmit() {
+    const rawMaterialObservable = this.rawMaterialId
+      ? this.rawMaterialService.updateRawMaterial(this.rawMaterial, this.imageFile)
+      : this.rawMaterialService.saveRawMaterial(this.rawMaterial, this.imageFile);
+
+    rawMaterialObservable.subscribe({
+      next: response => {
+        this.rawMaterial = new RawMaterial();
+        this.router.navigate(['/rawMaterialList']);
+      },
+      error: error => {
+        alert('Error printed on console');
+        console.log(error);
+      }
+    });
+  }
+
 
   onImageChange(event: any) {
     this.imageFile = event.target.files[0];
