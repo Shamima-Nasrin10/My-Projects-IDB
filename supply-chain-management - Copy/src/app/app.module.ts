@@ -3,7 +3,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { RawMaterialCreateComponent } from './inventory/raw-materials/raw-material-create/raw-material-create.component';
@@ -27,6 +27,9 @@ import { ProductViewComponent } from './product/product-view/product-view.compon
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
 import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.component';
+import { AuthInterceptor } from './authentication/auth-interceptor';
+import { RawMaterialCategoryCreateComponent } from './inventory/raw-material-category/raw-material-category-create/raw-material-category-create.component';
+import { RawMaterialCategoryListComponent } from './inventory/raw-material-category/raw-material-category-list/raw-material-category-list.component';
 
 
 @NgModule({
@@ -52,7 +55,9 @@ import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.com
     ProductViewComponent,
     OrderListComponent,
     InvoiceComponent,
-    PdfGeneratorComponent
+    PdfGeneratorComponent,
+    RawMaterialCategoryCreateComponent,
+    RawMaterialCategoryListComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +71,10 @@ import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.com
   providers: [
     provideClientHydration(),
     provideHttpClient(
-      withFetch()
-    )
-
+      withFetch(),
+      withInterceptorsFromDi()
+    ),
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

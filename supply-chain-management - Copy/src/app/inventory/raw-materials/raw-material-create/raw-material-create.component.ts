@@ -4,6 +4,9 @@ import { SupplierModel } from '../../suppliers/model/supplier.model';
 import { SupplierService } from '../../suppliers/supplier.service';
 import { RawMaterialService } from '../raw-material.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifyUtil } from '../../../util/notify.util';
+import { RawMaterialCategory } from '../../raw-material-category/model/raw-material-category.model';
+import { RawMaterialCategoryService } from '../../raw-material-category/raw-material-category.service';
 
 @Component({
   selector: 'app-raw-material-create',
@@ -13,41 +16,76 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RawMaterialCreateComponent implements OnInit {
 
   rawMaterial: RawMaterial = new RawMaterial();
-  suppliers?: SupplierModel[];
-  units = Object.values(Unit);
-  rawMaterialId?: number;
-  existingRawMaterial?: string;
   imageFile?: File;
+
+  categories: RawMaterialCategory[] = [];
+  suppliers: SupplierModel[] = [];
+  units = Object.values(Unit);
+
+  rawMaterialId?: number;
 
   constructor(
     private supplierService: SupplierService,
     private rawMaterialService: RawMaterialService,
+    private rawMaterialCategoryService: RawMaterialCategoryService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.supplierService.getAllRawMaterialSuppliers().subscribe({
-      next: response => {
-        this.suppliers = response;
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
+    this.loadRawMaterialSuppliers();
+    this.loadRawMaterialCategories();
 
     this.rawMaterialId = this.route.snapshot.params['id'];
-
     if (this.rawMaterialId) {
-      this.rawMaterialService.findRawMaterialById(this.rawMaterialId).subscribe({
-        next: response => {
-          this.rawMaterial = response;
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
+      this.loadRawMaterial(this.rawMaterialId);
     }
+  }
+
+  private loadRawMaterialSuppliers() {
+    this.supplierService.getAllRawMaterialSuppliers().subscribe({
+      next: apiResponse => {
+        if (apiResponse && apiResponse.success) {
+          this.suppliers = apiResponse.data['rawMaterialSuppliers'];
+        } else {
+          NotifyUtil.error(apiResponse);
+        }
+      },
+      error: apiResponse => {
+        NotifyUtil.error(apiResponse);
+      }
+    });
+  }
+
+  private loadRawMaterialCategories(): void {
+    this.rawMaterialCategoryService.getAllRawMaterialCategories().subscribe({
+      next: apiResponse => {
+        if (apiResponse && apiResponse.success) {
+          this.categories = apiResponse.data['categories'];
+        } else {
+          NotifyUtil.error(apiResponse);
+        }
+      },
+      error: (apiResponse) => {
+        NotifyUtil.error(apiResponse);
+      }
+    });
+  }
+
+
+  private loadRawMaterial(id: number) {
+    this.rawMaterialService.findRawMaterialById(id).subscribe({
+      next: apiResponse => {
+        if (apiResponse && apiResponse.success) {
+          this.rawMaterial = apiResponse.data['rawMaterial'];
+        } else {
+          NotifyUtil.error(apiResponse);
+        }
+      },
+      error: error => {
+        NotifyUtil.error(error);
+      }
+    });
   }
 
   onImagePicked(event: Event): void {
@@ -63,13 +101,16 @@ export class RawMaterialCreateComponent implements OnInit {
       : this.rawMaterialService.saveRawMaterial(this.rawMaterial, this.imageFile);
 
     rawMaterialObservable.subscribe({
-      next: response => {
-        this.rawMaterial = new RawMaterial();
-        this.router.navigate(['/rawMaterialList']);
+      next: apiResponse => {
+        if (apiResponse && apiResponse.success) {
+          NotifyUtil.success(apiResponse);
+          this.router.navigate(['/rawMaterial-list']);
+        } else {
+          NotifyUtil.error(apiResponse);
+        }
       },
       error: error => {
-        alert('Error printed on console');
-        console.log(error);
+        NotifyUtil.error(error);
       }
     });
   }

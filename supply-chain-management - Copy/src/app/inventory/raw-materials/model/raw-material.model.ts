@@ -1,3 +1,4 @@
+import { RawMaterialCategory } from "../../raw-material-category/model/raw-material-category.model";
 import { SupplierModel } from "../../suppliers/model/supplier.model"
 
 export class RawMaterial {
@@ -8,8 +9,8 @@ export class RawMaterial {
   quantity!: number;
   unit!: Unit;
   image!: string;
+  category: RawMaterialCategory = new RawMaterialCategory();
   supplier: SupplierModel = new SupplierModel();
-
 }
 
 export enum Unit {

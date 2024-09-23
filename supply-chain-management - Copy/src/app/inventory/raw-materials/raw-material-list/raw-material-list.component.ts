@@ -7,6 +7,8 @@ import { error } from 'console';
 import { SupplierModel } from '../../suppliers/model/supplier.model';
 import { SupplierService } from '../../suppliers/supplier.service';
 import {AlertService} from "../../../util/alert.service";
+import { ApiResponse } from '../../../util/api.response';
+import { NotifyUtil } from '../../../util/notify.util';
 
 @Component({
   selector: 'app-raw-material-list',
@@ -15,49 +17,47 @@ import {AlertService} from "../../../util/alert.service";
 })
 export class RawMaterialListComponent implements OnInit {
 
-  rawmaterials: RawMaterial[] = [];
-  suppliers?: SupplierModel[];
+  rawMaterials: RawMaterial[] = [];
 
   constructor(
-    private rawmaterialService: RawMaterialService,
-    private supplierService: SupplierService,
+    private rawmaterialService: RawMaterialService
   ) { }
 
   ngOnInit(): void {
     this.loadRawMaterials();
-    this.fetchSuppliers();
   }
 
   loadRawMaterials(): void {
     this.rawmaterialService.getAllRawMaterials().subscribe({
       next: response => {
-        this.rawmaterials = response.map(rawmaterial => Object.assign(new RawMaterial(), rawmaterial));
+        if (response && response.success) {
+          this.rawMaterials = response.data['rawMaterials'];
+        } else {
+          NotifyUtil.error(response);
+        }
       },
       error: error => {
-        console.error('Error loading raw materials:', error);
+        NotifyUtil.error(error);
       }
-    });
-  }
-
-  fetchSuppliers(): void {
-    // Assuming you have a SupplierService to fetch suppliers
-    this.supplierService.getAllRawMaterialSuppliers().subscribe(data => {
-      this.suppliers = data;
     });
   }
 
   deleteRawMaterial(id: number): void {
-    this.rawmaterialService.deleteRawMaterialById(id).subscribe({
-      next: () => {
-        // Optionally, provide user feedback or reload the list
-        this.rawmaterials = this.rawmaterials.filter(material => material.id !== id);
-        alert('Raw Material deleted successfully');
-      },
-      error: (error) => {
-        console.error('Error deleting raw material:', error);
-        alert('Failed to delete raw material');
-      }
-    });
+    if (confirm('Are you sure you want to delete this raw material?')) {
+      this.rawmaterialService.deleteRawMaterialById(id).subscribe({
+        next: (response: ApiResponse) => {
+          if (response && response.success) {
+            NotifyUtil.success(response);
+          } else {
+            NotifyUtil.error(response);
+          }
+          this.loadRawMaterials(); 
+        },
+        error: (error) => {
+          NotifyUtil.error(error);
+        }
+      });
+    }
   }
 
 }

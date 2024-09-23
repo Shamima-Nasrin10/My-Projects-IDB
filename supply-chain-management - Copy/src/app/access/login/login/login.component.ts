@@ -35,7 +35,7 @@ export class LoginComponent {
           console.log(role);
           if (role === 'ADMIN') {
             console.log("Role from Login Page "+role)
-            this.router.navigate(['/rawMaterialList']); 
+            window.location.href = 'rawMaterial-list';
           } else if (role === 'USER') {
             console.log("Role from Login Page "+role)
             this.router.navigate(['/userprofile']); 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { SupplierModel } from '../model/supplier.model';
 import { SupplierService } from '../supplier.service';
+import { ApiResponse } from '../../../util/api.response';
+import { NotifyUtil } from '../../../util/notify.util';
 
 @Component({
   selector: 'app-supplier-list',
@@ -10,7 +12,6 @@ import { SupplierService } from '../supplier.service';
 export class SupplierListComponent {
 
   suppliers: SupplierModel[] = []; 
-  errorMessage: string = '';
 
   constructor(private supplierService: SupplierService) { }
 
@@ -21,12 +22,15 @@ export class SupplierListComponent {
  
   private loadSuppliers(): void {
     this.supplierService.getAllRawMaterialSuppliers().subscribe({
-      next: (response: SupplierModel[]) => {
-        this.suppliers = response; 
+      next: (response: ApiResponse) => {
+        if (response && response.success) {
+          this.suppliers = response.data['rawMaterialSuppliers'];
+        } else {
+          NotifyUtil.error(response);
+        }
       },
       error: (error) => {
-        console.error('Error fetching supplier list', error);
-        this.errorMessage = 'Failed to load supplier list';
+        NotifyUtil.error(error);
       }
     });
   }
@@ -35,13 +39,16 @@ export class SupplierListComponent {
   deleteSupplier(id: number): void {
     if (confirm('Are you sure you want to delete this supplier?')) {
       this.supplierService.deleteRawMaterialSupplier(id).subscribe({
-        next: () => {
-          alert('Supplier deleted successfully');
+        next: (response: ApiResponse) => {
+          if (response && response.success) {
+            NotifyUtil.success(response);
+          } else {
+            NotifyUtil.error(response);
+          }
           this.loadSuppliers(); 
         },
         error: (error) => {
-          console.error('Error deleting supplier', error);
-          this.errorMessage = 'Failed to delete supplier';
+          NotifyUtil.error(error);
         }
       });
     }
