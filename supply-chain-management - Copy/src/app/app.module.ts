@@ -30,6 +30,8 @@ import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.com
 import { AuthInterceptor } from './authentication/auth-interceptor';
 import { RawMaterialCategoryCreateComponent } from './inventory/raw-material-category/raw-material-category-create/raw-material-category-create.component';
 import { RawMaterialCategoryListComponent } from './inventory/raw-material-category/raw-material-category-list/raw-material-category-list.component';
+import { WarehouseComponent } from './warehouse/warehouse/warehouse.component';
+import { InventoryCreateComponent } from './inventory/inventory/inventory-create/inventory-create.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { RawMaterialCategoryListComponent } from './inventory/raw-material-categ
     InvoiceComponent,
     PdfGeneratorComponent,
     RawMaterialCategoryCreateComponent,
-    RawMaterialCategoryListComponent
+    RawMaterialCategoryListComponent,
+    WarehouseComponent,
+    InventoryCreateComponent
   ],
   imports: [
     BrowserModule,
