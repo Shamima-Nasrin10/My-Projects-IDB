@@ -1,1 +1,103 @@
-<p>warehouse works!</p>
+
+
+<!--<div class="container">-->
+<!--  <h2>Warehouse Management</h2>-->
+
+<!--  &lt;!&ndash; Warehouse Create/Edit Form &ndash;&gt;-->
+<!--  <form (ngSubmit)="onSubmit()">-->
+<!--    <div class="form-group">-->
+<!--      <label for="name">Warehouse Name</label>-->
+<!--      <input-->
+<!--        type="text"-->
+<!--        id="name"-->
+<!--        class="form-control"-->
+<!--        [(ngModel)]="warehouse.name"-->
+<!--        name="name"-->
+<!--        required-->
+<!--        maxlength="50"-->
+<!--      />-->
+<!--    </div>-->
+
+<!--    <div class="form-group">-->
+<!--      <label for="location">Location</label>-->
+<!--      <input-->
+<!--        type="text"-->
+<!--        id="location"-->
+<!--        class="form-control"-->
+<!--        [(ngModel)]="warehouse.location"-->
+<!--        name="location"-->
+<!--        required-->
+<!--      />-->
+<!--    </div>-->
+
+<!--    <button type="submit" class="btn btn-primary">-->
+<!--      {{ warehouseId ? 'Update' : 'Create' }} Warehouse-->
+<!--    </button>-->
+<!--  </form>-->
+
+<!--  <hr />-->
+
+<!--  &lt;!&ndash; Inventories Section &ndash;&gt;-->
+<!--  <div *ngIf="warehouseId">-->
+<!--    <h3>Manage Inventories</h3>-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; Add Inventory Form &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <form (ngSubmit)="addInventory()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;        <label for="inventoryName">Inventory Name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="text" id="inventoryName" [(ngModel)]="inventory.name" name="inventoryName" required />&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;        <label for="inventoryQuantity">Quantity</label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="number" id="inventoryQuantity" [(ngModel)]="inventory.quantity" name="inventoryQuantity" required />&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <button type="submit" class="btn btn-secondary">Add Inventory</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </form>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; List of Inventories &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <h4>Existing Inventories</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;    <ul class="list-group">&ndash;&gt;-->
+<!--&lt;!&ndash;      <li class="list-group-item" *ngFor="let inv of inventories">&ndash;&gt;-->
+<!--&lt;!&ndash;        {{ inv.name }} (Qty: {{ inv.quantity }})&ndash;&gt;-->
+<!--&lt;!&ndash;      </li>&ndash;&gt;-->
+<!--&lt;!&ndash;    </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <hr />&ndash;&gt;-->
+
+<!--  &lt;!&ndash; Warehouses List &ndash;&gt;-->
+<!--  <h3>List of Warehouses</h3>-->
+
+<!--  <div *ngIf="warehouses.length === 0">-->
+<!--    <p>No warehouses available.</p>-->
+<!--  </div>-->
+
+<!--  <table class="table table-striped">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>ID</th>-->
+<!--      <th>Name</th>-->
+<!--      <th>Location</th>-->
+<!--      <th>Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr *ngFor="let warehouse of warehouses">-->
+<!--      <td>{{ warehouse.id }}</td>-->
+<!--      <td>{{ warehouse.name }}</td>-->
+<!--      <td>{{ warehouse.location }}</td>-->
+<!--      <td>-->
+<!--&lt;!&ndash;        <button class="btn btn-primary" (click)="router.navigate(['/warehouse', warehouse.id])">&ndash;&gt;-->
+<!--&lt;!&ndash;          Edit&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button class="btn btn-danger" (click)="deleteWarehouse(warehouse.id)">&ndash;&gt;-->
+<!--&lt;!&ndash;          Delete&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+

@@ -14,7 +14,7 @@ export class RegistrationService {
   ) { }
 
 registerUser(user: UserModel): Observable<UserModel>{
-  user.role='Pending';
+  // user.role='Pending';
   return this.http.post<UserModel>(this.baseUrl, user);
 }
 
