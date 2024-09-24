@@ -4,9 +4,9 @@ export class ProductModel {
   name!: string;
   unitPrice!: number;
   stock!: number;
-  batch?: string;  // Optional field
-  inventoryId!: number;  // Refers to the inventory to which this product belongs
-  unit!: Unit;  // Enum field
+  batch?: string;
+  inventoryId!: number;
+  unit!: Unit;
 
 }
 
