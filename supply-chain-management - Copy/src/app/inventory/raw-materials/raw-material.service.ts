@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawMaterial } from './model/raw-material.model';
-import { map, Observable } from 'rxjs';
-import { SupplierModel } from '../suppliers/model/supplier.model';
+import { Observable } from 'rxjs';
 import { ApiResponse } from '../../util/api.response';
 
 @Injectable({
@@ -12,7 +11,6 @@ export class RawMaterialService {
 
 
   private apiUrl = 'http://localhost:8080/api/rawmaterial';
-  private suppliersUrl = 'http://localhost:8080/api/supplier';
 
   constructor(private http: HttpClient) { }
 
@@ -33,7 +31,7 @@ export class RawMaterialService {
   updateRawMaterial(rawMaterial: RawMaterial, imageFile?: File): Observable<ApiResponse> {
     const formData = new FormData();
     formData.append('rawMaterial', new Blob([JSON.stringify(rawMaterial)], {type: 'application/json'}));
-    
+
     if (imageFile) {
       formData.append('imageFile', imageFile);
     }

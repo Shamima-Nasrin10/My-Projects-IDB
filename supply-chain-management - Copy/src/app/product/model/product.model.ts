@@ -1,12 +1,20 @@
 
+export class ProductModel {
+  id!: number;
+  name!: string;
+  unitPrice!: number;
+  stock!: number;
+  batch?: string;  // Optional field
+  inventoryId!: number;  // Refers to the inventory to which this product belongs
+  unit!: Unit;  // Enum field
 
-export interface ProductModel {
-    id: string;
-    name: string;
-    photo: string;
-    price: number;
-    stock: number;
-    features: string[];
-    benefits: string[];
-  }
-  
+}
+
+export enum Unit {
+  METER = 'METER',
+  PIECE = 'PIECE',
+  FEET = 'FEET',
+  INCH = 'INCH',
+  KG = 'KG',
+  GRAM = 'GRAM'
+}
