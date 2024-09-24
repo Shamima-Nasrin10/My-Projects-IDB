@@ -47,6 +47,7 @@ export class RawMaterialCreateComponent implements OnInit {
       next: apiResponse => {
         if (apiResponse && apiResponse.success) {
           this.suppliers = apiResponse.data['rawMaterialSuppliers'];
+          
         } else {
           NotifyUtil.error(apiResponse);
         }
@@ -62,6 +63,7 @@ export class RawMaterialCreateComponent implements OnInit {
       next: apiResponse => {
         if (apiResponse && apiResponse.success) {
           this.categories = apiResponse.data['categories'];
+          
         } else {
           NotifyUtil.error(apiResponse);
         }
