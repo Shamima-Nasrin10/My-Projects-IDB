@@ -39,7 +39,7 @@ export class InventoryService {
     return this.http.delete<ApiResponse>(`${this.apiUrl}/delete/${id}`);
   }
 
- 
+
   getProductsByInventoryId(inventoryId: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/${inventoryId}/products`);
   }
