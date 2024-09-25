@@ -45,6 +45,7 @@
               "src/assets/css/dataTables.bootstrap4.min.css",
               "src/assets/plugins/fontawesome/css/fontawesome.min.css",
               "src/assets/plugins/fontawesome/css/all.min.css",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/assets/css/style.css"
             ],
             "scripts": [

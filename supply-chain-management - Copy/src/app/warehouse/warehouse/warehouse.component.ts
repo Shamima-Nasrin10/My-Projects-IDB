@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NotifyUtil } from '../../util/notify.util';
 import {ApiResponse} from "../../util/api.response";
 import {WareHouse} from "./warehouse.model";
@@ -12,7 +12,7 @@ import {InventoryService} from "../../inventory/inventory/inventory.service";
   templateUrl: './warehouse.component.html',
   styleUrl: './warehouse.component.css'
 })
-export class WarehouseComponent {
+export class WarehouseComponent implements OnInit{
 
   warehouse: WareHouse = new WareHouse();
   warehouses: WareHouse[] = [];
@@ -20,29 +20,28 @@ export class WarehouseComponent {
   inventory: Inventory = new Inventory();
   warehouseId?: number;
 
+  dynamicClasses = {
+    'dynamic-background': true,
+    'dynamic-border': true
+  };
+
   constructor(
     private warehouseService: WarehouseService,
-    private inventoryService: InventoryService,  // Inject InventoryService
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.warehouseId = this.route.snapshot.params['id'];
-
-    if (this.warehouseId) {
-      this.loadWarehouse(this.warehouseId);
-      this.loadInventories(this.warehouseId);  // Load inventories for this warehouse
-    }
-
-    this.loadWarehouses();  // Always load all warehouses
+    this.loadWarehouses();
   }
 
-  private loadWarehouse(id: number): void {
+  public loadWarehouse(id: number): void {
     this.warehouseService.findWarehouseById(id).subscribe({
       next: (response: ApiResponse) => {
+        console.log('API Response:', response);
         if (response && response.success) {
           this.warehouse = response.data['warehouse'];
+          console.log('Warehouse Loaded:', this.warehouse);
         } else {
           NotifyUtil.error(response);
         }
@@ -72,7 +71,7 @@ export class WarehouseComponent {
     this.warehouseService.getInventoriesByWarehouseId(warehouseId).subscribe({
       next: (response: ApiResponse) => {
         if (response && response.success) {
-          this.inventories = response.data['inventories'];  // Load existing inventories
+          this.inventories = response.data['inventories'];
         } else {
           NotifyUtil.error(response);
         }
@@ -93,7 +92,6 @@ export class WarehouseComponent {
         if (response && response.success) {
           this.resetWarehouseForm();
           NotifyUtil.success(response);
-          this.loadWarehouses();  // Reload the list after saving or updating
         } else {
           NotifyUtil.error(response);
         }
@@ -104,9 +102,11 @@ export class WarehouseComponent {
     });
   }
 
-  private resetWarehouseForm(): void {
-    this.warehouse = new WareHouse();  // Reset the form
-    this.router.navigate(['/warehouses']);  // Optional: Redirect after save/update
+
+  public resetWarehouseForm(): void {
+    this.warehouse = new WareHouse();
+    this.loadWarehouses();
+    //this.router.navigate(['/warehouse']);
   }
 
   deleteWarehouse(id: number): void {
@@ -114,8 +114,8 @@ export class WarehouseComponent {
       this.warehouseService.deleteWarehouseById(id).subscribe({
         next: (response: ApiResponse) => {
           if (response && response.success) {
+            this.resetWarehouseForm();
             NotifyUtil.success(response);
-            this.loadWarehouses();  // Reload the list after deletion
           } else {
             NotifyUtil.error(response);
           }
@@ -125,10 +125,6 @@ export class WarehouseComponent {
         }
       });
     }
-  }
-
-  private resetInventoryForm(): void {
-    this.inventory = new Inventory();
   }
 
 }

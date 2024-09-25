@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { OrderModel } from './model/order.model'; 
+import { OrderModel } from './model/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,6 @@ export class OrderService {
     return this.http.get<OrderModel[]>(this.apiUrl);
   }
 
-  // Get order by ID
   getOrderById(id: string): Observable<OrderModel> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<OrderModel>(url);

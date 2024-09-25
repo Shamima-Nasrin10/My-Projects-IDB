@@ -1,41 +1,41 @@
 
-<div class="container" *ngIf="product">
-    <h2 class="text-center">{{ product.name }}</h2>
-    <div class="text-center">
-      <img [src]="product.photo" alt="{{ product.name }}" style="width: 200px;">
-    </div>
-  
-    <table class="table table-bordered mt-4">
-      <tbody>
-        <tr>
-          <th scope="row">Price</th>
-          <td>{{ product.price }}</td>
-        </tr>
-        <tr>
-          <th scope="row">Stock</th>
-          <td>{{ product.stock }}</td>
-        </tr>
-        <tr>
-          <th scope="row">Features</th>
-          <td>
-            <ul>
-              <li *ngFor="let feature of product.features">{{ feature }}</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Benefits</th>
-          <td>
-            <ul>
-              <li *ngFor="let benefit of product.benefits">{{ benefit }}</li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-  
+<!--<div class="container" *ngIf="product">-->
+<!--    <h2 class="text-center">{{ product.name }}</h2>-->
+<!--    <div class="text-center">-->
+<!--      <img [src]="product.photo" alt="{{ product.name }}" style="width: 200px;">-->
+<!--    </div>-->
+<!--  -->
+<!--    <table class="table table-bordered mt-4">-->
+<!--      <tbody>-->
+<!--        <tr>-->
+<!--          <th scope="row">Price</th>-->
+<!--          <td>{{ product.price }}</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th scope="row">Stock</th>-->
+<!--          <td>{{ product.stock }}</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th scope="row">Features</th>-->
+<!--          <td>-->
+<!--            <ul>-->
+<!--              <li *ngFor="let feature of product.features">{{ feature }}</li>-->
+<!--            </ul>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th scope="row">Benefits</th>-->
+<!--          <td>-->
+<!--            <ul>-->
+<!--              <li *ngFor="let benefit of product.benefits">{{ benefit }}</li>-->
+<!--            </ul>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--  -->
+<!--  <div *ngIf="errorMessage" class="alert alert-danger">-->
+<!--    {{ errorMessage }}-->
+<!--  </div>-->
+<!-- -->
