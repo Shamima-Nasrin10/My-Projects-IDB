@@ -20,8 +20,8 @@ import { OrderListComponent } from './order/order-list/order-list.component';
 import { SupplierListComponent } from './inventory/suppliers/supplier-list/supplier-list.component';
 import { RawMaterialCategoryCreateComponent } from './inventory/raw-material-category/raw-material-category-create/raw-material-category-create.component';
 import { RawMaterialCategoryListComponent } from './inventory/raw-material-category/raw-material-category-list/raw-material-category-list.component';
-import path from "node:path";
 import {WarehouseComponent} from "./warehouse/warehouse/warehouse.component";
+import {InventoryCreateComponent} from "./inventory/inventory/inventory-create/inventory-create.component";
 
 const routes: Routes = [
   {
@@ -41,6 +41,10 @@ const routes: Routes = [
   },
   {
     path:"warehouse", component: WarehouseComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path:"inventory", component: InventoryCreateComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },
   {
