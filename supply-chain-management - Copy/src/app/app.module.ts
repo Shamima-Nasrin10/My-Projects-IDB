@@ -18,12 +18,8 @@ import { OrderCreateComponent } from './order/order-create/order-create.componen
 import { LoginComponent } from './access/login/login/login.component';
 import { LogoutComponent } from './access/logout/logout/logout.component';
 import { RegistrationComponent } from './access/registration/registration/registration.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductCreateComponent } from './product/product-create/product-create.component';
-import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
-import { ProductViewComponent } from './product/product-view/product-view.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { InvoiceComponent } from './invoice/invoice/invoice.component';
 import { PdfGeneratorComponent } from './invoice/pdf-generator/pdf-generator.component';
@@ -32,6 +28,7 @@ import { RawMaterialCategoryCreateComponent } from './inventory/raw-material-cat
 import { RawMaterialCategoryListComponent } from './inventory/raw-material-category/raw-material-category-list/raw-material-category-list.component';
 import { WarehouseComponent } from './warehouse/warehouse/warehouse.component';
 import { InventoryCreateComponent } from './inventory/inventory/inventory-create/inventory-create.component';
+import { ProductComponent } from './product/product/product.component';
 
 
 @NgModule({
@@ -49,19 +46,16 @@ import { InventoryCreateComponent } from './inventory/inventory/inventory-create
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
-    ProductListComponent,
-    ProductCreateComponent,
-    ProductUpdateComponent,
     UserProfileComponent,
     UnauthorizedComponent,
-    ProductViewComponent,
     OrderListComponent,
     InvoiceComponent,
     PdfGeneratorComponent,
     RawMaterialCategoryCreateComponent,
     RawMaterialCategoryListComponent,
     WarehouseComponent,
-    InventoryCreateComponent
+    InventoryCreateComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

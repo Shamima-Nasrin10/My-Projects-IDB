@@ -19,7 +19,6 @@ export class InventoryCreateComponent implements OnInit{
   inventory: Inventory = new Inventory();
   warehouses: WareHouse[] = [];
   products: Product[] = [];
-  inventoryId?: number;
 
   constructor(
     private inventoryService: InventoryService,
@@ -103,7 +102,7 @@ export class InventoryCreateComponent implements OnInit{
       return;
     }
     // Decide whether to update or create based on the presence of inventoryId
-    const inventoryObservable = this.inventoryId
+    const inventoryObservable = this.inventory.id
       ? this.inventoryService.updateInventory(this.inventory)
       : this.inventoryService.saveInventory(this.inventory);
 
@@ -125,10 +124,7 @@ export class InventoryCreateComponent implements OnInit{
   public resetInventoryForm(): void {
     // Reset the form for new inventory entry
     this.inventory = new Inventory();
-    this.inventory.warehouse = new WareHouse();
     this.loadInventories();
-    this.products = [];
-    this.inventoryId = undefined;
   }
 
   public deleteInventory(id: number): void {

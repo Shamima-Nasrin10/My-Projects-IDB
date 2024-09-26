@@ -44,7 +44,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">
-      {{ inventoryId ? 'Update Inventory' : 'Create Inventory' }}
+      {{ this.inventory.id ? 'Update Inventory' : 'Create Inventory' }}
     </button>
     <button type="button" class="btn btn-secondary" (click)="resetInventoryForm()">Clear</button>
   </form>

@@ -1,0 +1,94 @@
+<div class="container">
+  <h2>Product Management</h2>
+
+  <form (ngSubmit)="onSubmit()" *ngIf="product" #productForm="ngForm">
+    <input type="hidden" class="form-control" [(ngModel)]="product.id" name="id">
+
+    <div class="form-group">
+      <label for="name">Product Name:</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        [(ngModel)]="product.name"
+        name="name"
+        (change)="getByNameAndUnitPrice()">
+    </div>
+
+    <div class="form-group">
+      <label for="unitPrice">Unit Price:</label>
+      <input
+        type="number"
+        id="unitPrice"
+        class="form-control"
+        [(ngModel)]="product.unitPrice"
+        name="unitPrice"
+        (change)="getByNameAndUnitPrice()">
+    </div>
+
+    <div class="form-group">
+      <label for="batch">Batch:</label>
+      <input
+        type="text"
+        id="batch"
+        class="form-control"
+        [(ngModel)]="product.batch"
+        name="batch">
+    </div>
+
+    <!-- Stock is editable -->
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input
+        type="number"
+        id="stock"
+        class="form-control"
+        [(ngModel)]="product.stock"
+        name="stock"
+        placeholder="Enter stock quantity"
+        required>
+    </div>
+
+    <!-- Unit Enum Field -->
+    <!--<div class="form-group">
+      <label for="unit">Unit:</label>
+      <select
+        id="unit"
+        class="form-control"
+        [(ngModel)]="product.unit"
+        name="unit"
+        readonly>
+        <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+      </select>
+    </div>-->
+
+    <!-- Inventory Selection -->
+    <div class="form-group">
+      <label for="inventory">Select Inventory:</label>
+      <select
+        id="inventory"
+        class="form-control"
+        [(ngModel)]="this.product.inventory.id"
+        name="inventory"
+        required>
+        <option *ngFor="let inventory of inventories" [value]="inventory.id">
+          {{ inventory.name }} - {{ inventory.capacity }} units
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      {{ product.id ? 'Update Product' : 'Create Product' }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="resetProductForm()">Clear</button>
+  </form>
+
+  <h3 class="mt-4">Product List</h3>
+  <ul class="list-group">
+    <li *ngFor="let prod of products" class="list-group-item">
+      {{ prod.name }} - {{ prod.unitPrice | currency }} - Stock: {{ prod.stock }}
+      <button class="btn btn-warning btn-sm float-right" (click)="editProduct(prod.id)">Edit</button>
+      <button class="btn btn-danger btn-sm float-right mr-2" (click)="deleteProduct(prod.id)">Delete</button>
+    </li>
+  </ul>
+</div>

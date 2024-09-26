@@ -11,10 +11,6 @@ import { LogoutComponent } from "./access/logout/logout/logout.component";
 import { AuthGuard } from './access/auth.guard';
 import { RoleGuard } from './access/role.guard';
 import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
-import { ProductCreateComponent } from './product/product-create/product-create.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductUpdateComponent } from './product/product-update/product-update.component';
-import { ProductViewComponent } from './product/product-view/product-view.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { SupplierListComponent } from './inventory/suppliers/supplier-list/supplier-list.component';
@@ -22,6 +18,7 @@ import { RawMaterialCategoryCreateComponent } from './inventory/raw-material-cat
 import { RawMaterialCategoryListComponent } from './inventory/raw-material-category/raw-material-category-list/raw-material-category-list.component';
 import {WarehouseComponent} from "./warehouse/warehouse/warehouse.component";
 import {InventoryCreateComponent} from "./inventory/inventory/inventory-create/inventory-create.component";
+import {ProductComponent} from "./product/product/product.component";
 
 const routes: Routes = [
   {
@@ -84,26 +81,10 @@ const routes: Routes = [
     data: { roles: ['ADMIN'] }
   },
   {
-    path: 'products',
-    component: ProductListComponent,
+    path: 'product',
+    component: ProductComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN', 'USER'] }
-  },
-  {
-    path: 'products/view/:id',
-    component: ProductViewComponent
-  },
-  {
-    path: 'product-create',
-    component: ProductCreateComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  {
-    path: 'products/update/:id',
-    component: ProductUpdateComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
   },
   {
     path: "notification", component: NotificationComponent

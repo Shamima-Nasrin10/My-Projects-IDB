@@ -1,7 +1,7 @@
 <div class="container">
   <div class="card mt-4">
     <div class="card-header">
-      <h4>{{ warehouseId ? 'Edit Warehouse' : 'Add Warehouse' }}</h4>
+      <h4>{{ this.warehouse.id ? 'Edit Warehouse' : 'Add Warehouse' }}</h4>
     </div>
     <div class="card-body">
       <form (ngSubmit)="onSubmit()">
@@ -14,7 +14,7 @@
           <input type="text" id="location" class="form-control" [(ngModel)]="warehouse.location" name="location"
                  required>
         </div>
-        <button type="submit" class="btn btn-primary">{{ warehouseId ? 'Update Warehouse' : 'Save Warehouse' }}</button>
+        <button type="submit" class="btn btn-primary">{{ this.warehouse.id ? 'Update Warehouse' : 'Save Warehouse' }}</button>
         <button type="button" class="btn btn-secondary" (click)="resetWarehouseForm()">Reset</button>
       </form>
     </div>

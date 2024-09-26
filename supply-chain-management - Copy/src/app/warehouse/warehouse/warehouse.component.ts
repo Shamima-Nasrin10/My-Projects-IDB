@@ -18,12 +18,6 @@ export class WarehouseComponent implements OnInit{
   warehouses: WareHouse[] = [];
   inventories: Inventory[] = [];
   inventory: Inventory = new Inventory();
-  warehouseId?: number;
-
-  dynamicClasses = {
-    'dynamic-background': true,
-    'dynamic-border': true
-  };
 
   constructor(
     private warehouseService: WarehouseService,
@@ -42,7 +36,6 @@ export class WarehouseComponent implements OnInit{
         console.log('API Response:', response);
         if (response && response.success) {
           this.warehouse = response.data['warehouse'];
-          console.log('Warehouse Loaded:', this.warehouse);
         } else {
           NotifyUtil.error(response);
         }
@@ -85,7 +78,7 @@ export class WarehouseComponent implements OnInit{
   }
 
   onSubmit(): void {
-    const warehouseObservable = this.warehouseId
+    const warehouseObservable = this.warehouse.id
       ? this.warehouseService.updateWarehouse(this.warehouse)
       : this.warehouseService.saveWarehouse(this.warehouse);
 

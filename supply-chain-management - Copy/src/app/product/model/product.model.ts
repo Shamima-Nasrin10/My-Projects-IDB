@@ -6,7 +6,7 @@ export class Product {
   unitPrice!: number;
   stock!: number;
   batch!: string;
-  inventoryId: Inventory=new Inventory();
+  inventory: Inventory = new Inventory();
   unit!: Unit;
 
 }

@@ -1,6 +1,6 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Product } from './model/product.model';
 import {ApiResponse} from "../util/api.response";
@@ -13,10 +13,16 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
+  getByNameAndUnitPrice(name: string, unitPrice: number): Observable<ApiResponse> {
+    const params = new HttpParams()
+      .set('name', name)
+      .set('unitPrice', unitPrice);
+    return this.http.get<ApiResponse>(`${this.apiUrl}/getByNameAndUnitPrice`, { params });
+  }
+
   saveProduct(product: Product): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${this.apiUrl}/save`, product);
   }
-
 
   getAllProducts(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/list`);
