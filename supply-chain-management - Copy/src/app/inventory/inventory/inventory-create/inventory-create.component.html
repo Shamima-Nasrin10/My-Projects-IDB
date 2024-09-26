@@ -1,18 +1,18 @@
 <div class="container">
   <h2>Inventory Management</h2>
 
-  <form (ngSubmit)="saveInventory()" #inventoryForm="ngForm">
-
+  <!-- Inventory Form -->
+  <form (ngSubmit)="onSubmit()" #inventoryForm="ngForm">
     <div class="form-group">
       <label for="name">Inventory Name:</label>
       <input
         type="text"
         id="name"
         class="form-control"
-        required
         [(ngModel)]="inventory.name"
         name="name"
-        placeholder="Enter inventory name">
+        placeholder="Enter inventory name"
+        required>
     </div>
 
     <div class="form-group">
@@ -21,66 +21,63 @@
         type="number"
         id="capacity"
         class="form-control"
-        required
         [(ngModel)]="inventory.capacity"
         name="capacity"
-        placeholder="Enter capacity">
+        placeholder="Enter inventory capacity"
+        required>
     </div>
 
+    <!-- Warehouse Selection -->
     <div class="form-group">
-      <label for="category">Category:</label>
+      <label for="warehouse">Select Warehouse:</label>
       <select
-        id="category"
+        id="warehouse"
         class="form-control"
-        required
-        [(ngModel)]="inventory.category"
-        name="category">
-        <option [value]="InventoryCategory.PRODUCT">Product</option>
-        <option [value]="InventoryCategory.RAW_MATERIAL">Raw Material</option>
+        [(ngModel)]="inventory.warehouse.id"
+        name="warehouse"
+        required>
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.name }} - {{ warehouse.location }}
+        </option>
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="warehouse">Warehouse ID:</label>
-      <input
-        type="number"
-        id="warehouse"
-        class="form-control"
-        required
-        [(ngModel)]="inventory.warehouse.id"
-        name="warehouse"
-        placeholder="Enter warehouse ID">
-    </div>
-
-    <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update Inventory' : 'Create Inventory' }}</button>
-    <button type="button" class="btn btn-secondary" (click)="clearForm()">Clear</button>
+    <button type="submit" class="btn btn-primary">
+      {{ inventoryId ? 'Update Inventory' : 'Create Inventory' }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="resetInventoryForm()">Clear</button>
   </form>
 
-
-  <h3>Inventory List</h3>
+  <h3 class="mt-4">Inventory List</h3>
   <ul class="list-group">
     <li
-      *ngFor="let inventory of inventories"
+      *ngFor="let inv of inventories"
       class="list-group-item"
-      (click)="onSelectInventory(inventory.id)">
-      <span>{{ inventory.name }} - Capacity: {{ inventory.capacity }}</span>
-      <button class="btn btn-warning btn-sm float-right" (click)="editInventory(inventory); $event.stopPropagation()">Edit</button>
-      <button class="btn btn-danger btn-sm float-right mr-2" (click)="deleteInventory(inventory.id); $event.stopPropagation()">Delete</button>
+      (click)="onSelectInventory(inv.id)">
+      <div>
+        <strong>{{ inv.name }}</strong> - {{ inv.capacity }} units
+        <br>
+        <small>Warehouse: {{ inv.warehouse?.name }}</small>
+      </div>
+      <button
+        class="btn btn-warning btn-sm float-right"
+        (click)="editInventory(inv); $event.stopPropagation()">
+        Edit
+      </button>
+      <button
+        class="btn btn-danger btn-sm float-right mr-2"
+        (click)="deleteInventory(inv.id); $event.stopPropagation()">
+        Delete
+      </button>
     </li>
   </ul>
-
 
   <div *ngIf="products.length > 0" class="mt-4">
     <h3>Products in Selected Inventory</h3>
     <ul class="list-group">
       <li *ngFor="let product of products" class="list-group-item">
-        {{ product.name }} - Stock: {{ product.stock }} - Unit Price: {{ product.unitPrice }}
+        {{ product.name }} - Stock: {{ product.stock }} - Unit Price: {{ product.unitPrice | currency }}
       </li>
     </ul>
   </div>
-
-  <div *ngIf="products.length === 0 && selectedInventoryId" class="mt-4">
-    <p>No products found for the selected inventory.</p>
-  </div>
 </div>
-
