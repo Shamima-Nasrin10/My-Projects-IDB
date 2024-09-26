@@ -29,9 +29,9 @@ export class InventoryService {
   }
 
 
-  updateInventory(inventory: Inventory, warehouseId: number): Observable<ApiResponse> {
+  updateInventory(id:number, inventory: Inventory, warehouseId: number): Observable<ApiResponse> {
     const params = new HttpParams().set('warehouseId', warehouseId.toString());
-    return this.http.put<ApiResponse>(`${this.apiUrl}/update`, inventory, { params });
+    return this.http.put<ApiResponse>(`${this.apiUrl}/update/${id}`, inventory, { params });
   }
 
 

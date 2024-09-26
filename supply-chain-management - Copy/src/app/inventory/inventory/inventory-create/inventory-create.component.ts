@@ -93,7 +93,7 @@ export class InventoryCreateComponent implements OnInit{
     }
 
     const inventoryObservable = this.inventoryId
-      ? this.inventoryService.updateInventory(this.inventory, this.inventory.warehouse.id)
+      ? this.inventoryService.updateInventory(this.inventory.id, this.inventory, this.inventory.warehouse.id)
       : this.inventoryService.saveInventory(this.inventory, this.inventory.warehouse.id);
 
     inventoryObservable.subscribe({
@@ -113,7 +113,7 @@ export class InventoryCreateComponent implements OnInit{
 
   public resetInventoryForm(): void {
     this.inventory = new Inventory();
-    this.inventory.warehouse = new WareHouse();  // Initialize warehouse again when resetting the form
+    this.inventory.warehouse = new WareHouse();
     this.loadInventories();
     this.products = [];
     this.inventoryId = undefined;
@@ -143,7 +143,7 @@ export class InventoryCreateComponent implements OnInit{
     this.inventoryId = inventory.id;
 
     if (!this.inventory.warehouse) {
-      this.inventory.warehouse = new WareHouse();  // Ensure the warehouse is initialized
+      this.inventory.warehouse = new WareHouse();
     }
 
     this.loadProductsByInventoryId(inventory.id);
@@ -155,7 +155,7 @@ export class InventoryCreateComponent implements OnInit{
         if (response.success) {
           this.inventory = response.data['inventory'];
           this.inventoryId = inventoryId;
-          this.loadProductsByInventoryId(inventoryId); // Load products for the selected inventory
+          this.loadProductsByInventoryId(inventoryId);
         } else {
           NotifyUtil.error(response.message);
         }
