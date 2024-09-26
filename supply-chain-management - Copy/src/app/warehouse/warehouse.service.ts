@@ -34,10 +34,6 @@ export class WarehouseService {
     return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
   }
 
-  getInventoriesByWarehouseId(warehouseId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/${warehouseId}/inventories`);
-  }
-
   getProductsByInventoryId(inventoryId: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/inventories/${inventoryId}/products`);
   }

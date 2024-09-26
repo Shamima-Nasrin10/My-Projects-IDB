@@ -13,9 +13,8 @@ export class InventoryService {
   constructor(private http: HttpClient) {}
 
 
-  saveInventory(inventory: Inventory, warehouseId: number): Observable<ApiResponse> {
-    const params = new HttpParams().set('warehouseId', warehouseId.toString());
-    return this.http.post<ApiResponse>(`${this.apiUrl}/save`, inventory, { params });
+  saveInventory(inventory: Inventory): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${this.apiUrl}/save`, inventory);
   }
 
 
@@ -29,9 +28,8 @@ export class InventoryService {
   }
 
 
-  updateInventory(id:number, inventory: Inventory, warehouseId: number): Observable<ApiResponse> {
-    const params = new HttpParams().set('warehouseId', warehouseId.toString());
-    return this.http.put<ApiResponse>(`${this.apiUrl}/update/${id}`, inventory, { params });
+  updateInventory(inventory: Inventory): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}/update`, inventory);
   }
 
 
@@ -39,8 +37,7 @@ export class InventoryService {
     return this.http.delete<ApiResponse>(`${this.apiUrl}/delete/${id}`);
   }
 
-
-  getProductsByInventoryId(inventoryId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/${inventoryId}/products`);
+  getInventoriesByWarehouseId(warehouseId: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/getInventoriesByWarehouseId?warehouseId=${warehouseId}`);
   }
 }

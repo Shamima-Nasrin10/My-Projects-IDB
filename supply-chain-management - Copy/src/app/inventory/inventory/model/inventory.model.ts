@@ -6,8 +6,7 @@ export class Inventory {
   id!: number;
   name!: string;
   capacity!: number;
-  products!: Product[];
-  warehouse!:WareHouse;
+  warehouse: WareHouse = new WareHouse();
   createdDate!: Date;
   lastUpdatedDate!: Date;
   category!: InventoryCategory;

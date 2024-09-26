@@ -3,6 +3,7 @@
 
   <!-- Inventory Form -->
   <form (ngSubmit)="onSubmit()" #inventoryForm="ngForm">
+    <input type="hidden" class="form-control" [(ngModel)]="inventory.id" name="id">
     <div class="form-group">
       <label for="name">Inventory Name:</label>
       <input
@@ -52,21 +53,25 @@
   <ul class="list-group">
     <li
       *ngFor="let inv of inventories"
-      class="list-group-item"
-      (click)="onSelectInventory(inv.id)">
+      class="list-group-item">
       <div>
         <strong>{{ inv.name }}</strong> - {{ inv.capacity }} units
         <br>
-        <small>Warehouse: {{ inv.warehouse?.name }}</small>
+        <small>Warehouse: {{ inv.warehouse.name }}</small>
       </div>
       <button
         class="btn btn-warning btn-sm float-right"
-        (click)="editInventory(inv); $event.stopPropagation()">
+        (click)="loadProductsByInventoryId(inv.id);">
+        View Products
+      </button>
+      <button
+        class="btn btn-warning btn-sm float-right"
+        (click)="loadInventory(inv.id);">
         Edit
       </button>
       <button
         class="btn btn-danger btn-sm float-right mr-2"
-        (click)="deleteInventory(inv.id); $event.stopPropagation()">
+        (click)="deleteInventory(inv.id);">
         Delete
       </button>
     </li>

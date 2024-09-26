@@ -1,11 +1,12 @@
+import {Inventory} from "../../inventory/inventory/model/inventory.model";
 
 export class Product {
   id!: number;
   name!: string;
   unitPrice!: number;
   stock!: number;
-  batch?: string;
-  inventoryId!: number;
+  batch!: string;
+  inventoryId: Inventory=new Inventory();
   unit!: Unit;
 
 }

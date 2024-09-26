@@ -40,6 +40,7 @@
           <td>{{ warehouse.name }}</td>
           <td>{{ warehouse.location }}</td>
           <td>
+            <button class="btn btn-info btn-sm" (click)="loadInventories(warehouse.id)">View Inventory</button>
             <button class="btn btn-info btn-sm" (click)="loadWarehouse(warehouse.id)">Edit</button>
             <button class="btn btn-danger btn-sm" (click)="deleteWarehouse(warehouse.id)">Delete</button>
           </td>
@@ -49,7 +50,7 @@
     </div>
   </div>
 
-  <div class="card mt-4" *ngIf="warehouseId">
+  <div class="card mt-4" *ngIf="inventories.length > 0">
     <div class="card-header">
       <h4>Inventory List for {{ warehouse.name }}</h4>
     </div>

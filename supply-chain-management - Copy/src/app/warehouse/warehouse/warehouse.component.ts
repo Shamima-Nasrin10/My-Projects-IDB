@@ -27,6 +27,7 @@ export class WarehouseComponent implements OnInit{
 
   constructor(
     private warehouseService: WarehouseService,
+    private inventoryService: InventoryService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -57,6 +58,7 @@ export class WarehouseComponent implements OnInit{
       next: (response: ApiResponse) => {
         if (response && response.success) {
           this.warehouses = response.data['warehouses'];
+          console.log(this.warehouses)
         } else {
           NotifyUtil.error(response);
         }
@@ -67,8 +69,8 @@ export class WarehouseComponent implements OnInit{
     });
   }
 
-  private loadInventories(warehouseId: number): void {
-    this.warehouseService.getInventoriesByWarehouseId(warehouseId).subscribe({
+  protected loadInventories(warehouseId: number): void {
+    this.inventoryService.getInventoriesByWarehouseId(warehouseId).subscribe({
       next: (response: ApiResponse) => {
         if (response && response.success) {
           this.inventories = response.data['inventories'];

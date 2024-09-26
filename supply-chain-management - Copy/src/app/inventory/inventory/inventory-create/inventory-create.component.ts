@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Inventory} from "../model/inventory.model";
 import {WareHouse} from "../../../warehouse/warehouse/warehouse.model";
 import {WarehouseService} from "../../../warehouse/warehouse.service";
+import {ProductService} from "../../../product/product.service";
 
 @Component({
   selector: 'app-inventory-create',
@@ -19,24 +20,16 @@ export class InventoryCreateComponent implements OnInit{
   warehouses: WareHouse[] = [];
   products: Product[] = [];
   inventoryId?: number;
-  selectedWarehouseId!: number;
-
-  dynamicClasses = {
-    'dynamic-background': true,
-    'dynamic-border': true
-  };
 
   constructor(
     private inventoryService: InventoryService,
     private warehouseService: WarehouseService,
+    private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    // Ensure that inventory.warehouse is initialized as an empty WareHouse object
-    this.inventory.warehouse = new WareHouse();
-
     this.loadInventories();
     this.loadWarehouses();
   }
@@ -46,8 +39,25 @@ export class InventoryCreateComponent implements OnInit{
       next: (response: ApiResponse) => {
         if (response.success) {
           this.inventories = response.data['inventories'];
+          console.log(response)
         } else {
           NotifyUtil.error(response.message);
+        }
+      },
+      error: (error) => {
+        NotifyUtil.error(error);
+      }
+    });
+  }
+
+  public loadInventory(id: number): void {
+    this.inventoryService.getInventoryById(id).subscribe({
+      next: (response: ApiResponse) => {
+        console.log('API Response:', response);
+        if (response && response.success) {
+          this.inventory = response.data['inventory'];
+        } else {
+          NotifyUtil.error(response);
         }
       },
       error: (error) => {
@@ -72,7 +82,7 @@ export class InventoryCreateComponent implements OnInit{
   }
 
   public loadProductsByInventoryId(inventoryId: number): void {
-    this.inventoryService.getProductsByInventoryId(inventoryId).subscribe({
+    this.productService.getProductsByInventoryId(inventoryId).subscribe({
       next: (response: ApiResponse) => {
         if (response.success) {
           this.products = response.data['products'];
@@ -87,14 +97,15 @@ export class InventoryCreateComponent implements OnInit{
   }
 
   public onSubmit(): void {
+    // Ensure the warehouse ID is selected before saving or updating
     if (!this.inventory.warehouse || !this.inventory.warehouse.id) {
       NotifyUtil.error('Please select a warehouse before saving the inventory.');
       return;
     }
-
+    // Decide whether to update or create based on the presence of inventoryId
     const inventoryObservable = this.inventoryId
-      ? this.inventoryService.updateInventory(this.inventory.id, this.inventory, this.inventory.warehouse.id)
-      : this.inventoryService.saveInventory(this.inventory, this.inventory.warehouse.id);
+      ? this.inventoryService.updateInventory(this.inventory)
+      : this.inventoryService.saveInventory(this.inventory);
 
     inventoryObservable.subscribe({
       next: (response: ApiResponse) => {
@@ -112,12 +123,12 @@ export class InventoryCreateComponent implements OnInit{
   }
 
   public resetInventoryForm(): void {
+    // Reset the form for new inventory entry
     this.inventory = new Inventory();
     this.inventory.warehouse = new WareHouse();
     this.loadInventories();
     this.products = [];
     this.inventoryId = undefined;
-    this.selectedWarehouseId = 0;
   }
 
   public deleteInventory(id: number): void {
@@ -136,33 +147,5 @@ export class InventoryCreateComponent implements OnInit{
         }
       });
     }
-  }
-
-  public editInventory(inventory: Inventory): void {
-    this.inventory = { ...inventory };
-    this.inventoryId = inventory.id;
-
-    if (!this.inventory.warehouse) {
-      this.inventory.warehouse = new WareHouse();
-    }
-
-    this.loadProductsByInventoryId(inventory.id);
-  }
-
-  public onSelectInventory(inventoryId: number): void {
-    this.inventoryService.getInventoryById(inventoryId).subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.inventory = response.data['inventory'];
-          this.inventoryId = inventoryId;
-          this.loadProductsByInventoryId(inventoryId);
-        } else {
-          NotifyUtil.error(response.message);
-        }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
   }
 }
