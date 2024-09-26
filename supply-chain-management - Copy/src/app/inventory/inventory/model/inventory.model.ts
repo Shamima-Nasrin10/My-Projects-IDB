@@ -8,6 +8,8 @@ export class Inventory {
   capacity!: number;
   products!: Product[];
   warehouse!:WareHouse;
+  createdDate!: Date;
+  lastUpdatedDate!: Date;
   category!: InventoryCategory;
 }
 
