@@ -141,7 +141,7 @@ export class ProductComponent implements OnInit {
       this.productService.deleteProductById(id).subscribe({
         next: (response: ApiResponse) => {
           if (response.success) {
-            this.resetProductForm(); 
+            this.resetProductForm();
             NotifyUtil.success(response);
           } else {
             NotifyUtil.error(response.message);
