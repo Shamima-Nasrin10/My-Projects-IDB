@@ -99,7 +99,7 @@ export class ProductComponent implements OnInit {
   }
 
   public resetFieldsForNewProduct(): void {
-    this.product.batch = '';
+    this.product.batch = ''; 
     this.product.stock = 0;
   }
 
@@ -132,8 +132,9 @@ export class ProductComponent implements OnInit {
   }
 
   public resetProductForm(): void {
+    // Reset the form for new product entry
     this.product = new Product();
-    this.loadProducts();
+    this.loadProducts(); // Reload products
   }
 
   public deleteProduct(id: number): void {
@@ -141,7 +142,7 @@ export class ProductComponent implements OnInit {
       this.productService.deleteProductById(id).subscribe({
         next: (response: ApiResponse) => {
           if (response.success) {
-            this.resetProductForm(); 
+            this.resetProductForm(); // Optionally reset form after deletion
             NotifyUtil.success(response);
           } else {
             NotifyUtil.error(response.message);
