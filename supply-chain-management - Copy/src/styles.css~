@@ -20,8 +20,8 @@ html, body {
 
 /* Ensure custom modal container is properly centered */
 .custom-dialog-container {
-  max-width: 90%; /* Prevent the modal from going off-screen */
-  max-height: 90%; /* Make it scrollable if content overflows */
+  max-width: 100%; /* Prevent the modal from going off-screen */
+  max-height: 100%; /* Make it scrollable if content overflows */
   width: 400px; /* Adjust the width */
   padding: 16px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow */
