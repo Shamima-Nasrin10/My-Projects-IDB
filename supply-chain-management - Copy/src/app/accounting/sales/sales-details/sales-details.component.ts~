@@ -13,7 +13,7 @@ export class SalesDetailsComponent implements OnInit{
 
   salesDetails: SalesDetails[] = [];
   groupedSalesDetails: Record<number, SalesDetails[]> = {};
-
+  groupedKeys: string[] = [];
 
   constructor(private salesDetailsService: SalesDetailsService) {}
 
@@ -42,6 +42,7 @@ export class SalesDetailsComponent implements OnInit{
       next: (response: ApiResponse) => {
         if (response.success) {
           this.groupedSalesDetails = response.data['groupedSalesDetails'] as Record<number, SalesDetails[]>;
+          this.groupedKeys = Object.keys(this.groupedSalesDetails);
         } else {
           NotifyUtil.error(response.message);
         }
