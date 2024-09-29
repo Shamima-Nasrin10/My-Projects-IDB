@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-dialog-container {
+  z-index: 1050 !important; /* Ensure it's higher than the sidebar */
+}
+
+.mat-dialog-backdrop {
+  z-index: 1040 !important; /* Backdrop should be just below the modal */
+}
+.custom-dialog-container {
+  z-index: 1050; /* Ensure modal is on top */
+  position: fixed;
+  top: 50%;  /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Perfect centering */
+}
+

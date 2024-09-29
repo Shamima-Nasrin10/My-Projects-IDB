@@ -19,6 +19,7 @@ import { RawMaterialCategoryListComponent } from './inventory/raw-material-categ
 import {WarehouseComponent} from "./warehouse/warehouse/warehouse.component";
 import {InventoryCreateComponent} from "./inventory/inventory/inventory-create/inventory-create.component";
 import {ProductComponent} from "./product/product/product.component";
+import {RetailerComponent} from "./product/retailer/retailer/retailer.component";
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   },
   {
     path: "rawMaterialCategory-list", component: RawMaterialCategoryListComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: "retailer", component: RetailerComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },
   {
