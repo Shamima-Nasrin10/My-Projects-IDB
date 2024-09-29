@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiResponse} from "../../util/api.response";
 import {Observable} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Inventory} from "./model/inventory.model";
 
 @Injectable({

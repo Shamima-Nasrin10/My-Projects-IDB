@@ -64,7 +64,7 @@ export class RetailerComponent implements OnInit{
     retailerObservable.subscribe({
       next: (response: ApiResponse) => {
         if (response.success) {
-          this.loadRetailers(); // Reload the list after success
+          this.loadRetailers();
           NotifyUtil.success(response);
         } else {
           NotifyUtil.error(response.message);

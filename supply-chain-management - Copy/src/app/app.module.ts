@@ -40,6 +40,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
+import { SalesDetailsComponent } from './accounting/sales/sales-details/sales-details.component';
+import { SalesCreateComponent } from './accounting/sales/sales-create/sales-create.component';
+import { SalesUpdateComponent } from './accounting/sales/sales-update/sales-update.component';
+import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.component'
 
 
 @NgModule({
@@ -68,7 +72,11 @@ import {MatCardModule} from "@angular/material/card";
     InventoryCreateComponent,
     ProductComponent,
     RetailerComponent,
-    RetailerDialogComponent
+    RetailerDialogComponent,
+    SalesDetailsComponent,
+    SalesCreateComponent,
+    SalesUpdateComponent,
+    SalesViewComponent,
   ],
   imports: [
     BrowserModule,
