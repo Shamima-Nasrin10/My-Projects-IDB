@@ -29,6 +29,7 @@ import { RawMaterialCategoryListComponent } from './inventory/raw-material-categ
 import { WarehouseComponent } from './warehouse/warehouse/warehouse.component';
 import { InventoryCreateComponent } from './inventory/inventory/inventory-create/inventory-create.component';
 import { ProductComponent } from './product/product/product.component';
+import { RetailerComponent } from './product/retailer/retailer/retailer.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ProductComponent } from './product/product/product.component';
     RawMaterialCategoryListComponent,
     WarehouseComponent,
     InventoryCreateComponent,
-    ProductComponent
+    ProductComponent,
+    RetailerComponent
   ],
   imports: [
     BrowserModule,
