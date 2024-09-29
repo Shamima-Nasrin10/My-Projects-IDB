@@ -36,7 +36,7 @@
       <h4>Grouped Sales Details</h4>
     </div>
     <div class="card-body">
-      <div *ngFor="let salesDetailGroup of Object.values(groupedSalesDetails); let i = index">
+      <div *ngFor="let salesDetailGroup of groupedSalesDetails | keyvalue; let i = index">
         <h5>Sales ID: {{ i + 1 }}</h5>
         <table class="table table-bordered">
           <thead>
@@ -50,7 +50,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let salesDetail of salesDetailGroup; let j = index">
+          <tr *ngFor="let salesDetail of salesDetailGroup.value; let j = index">
             <td>{{ j + 1 }}</td>
             <td>{{ salesDetail.product.name }}</td>
             <td>{{ salesDetail.quantity }}</td>

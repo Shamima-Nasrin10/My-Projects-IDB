@@ -14,11 +14,8 @@ export class SalesDetailsService {
   constructor(private http: HttpClient) {}
 
 
-  // getAllSalesDetails(): Observable<SalesDetails> {
-  //   return this.http.get<SalesDetails>(`${this.apiUrl}/list`);
-  // }
-  getAllSalesDetails(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/list`);
+  getAllSalesDetails(): Observable<SalesDetails> {
+    return this.http.get<SalesDetails>(`${this.apiUrl}/list`);
   }
 
   getSalesDetailsGrouped(): Observable<ApiResponse> {

@@ -11,7 +11,7 @@ import {ApiResponse} from "../../../util/api.response";
 })
 export class SalesDetailsComponent implements OnInit{
 
-  salesDetails: SalesDetails[] = [];
+  salesDetails: any;
   groupedSalesDetails: Record<number, SalesDetails[]> = {};
 
 
@@ -22,19 +22,40 @@ export class SalesDetailsComponent implements OnInit{
     this.loadGroupedSalesDetails();
   }
 
-  public loadSalesDetails(): void {
+  // public loadSalesDetails(): void {
+  //   this.salesDetailsService.getAllSalesDetails().subscribe({
+  //     next: (response: ApiResponse) => {
+  //       if (response.success) {
+  //         this.salesDetails = response.data['salesDetails'];
+  //         console.log(this.salesDetails+"***********************************")
+  //         if (this.salesDetails === null || this.salesDetails.length === 0) {
+  //           NotifyUtil.error('No sales details found');
+  //         }
+  //       } else {
+  //         NotifyUtil.error(response.message);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Error loading sales details:', error);
+  //       NotifyUtil.error(error);
+  //     }
+  //   });
+  // }
+
+
+  public loadSalesDetails(){
     this.salesDetailsService.getAllSalesDetails().subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.salesDetails = response.data['salesDetails'];
-        } else {
-          NotifyUtil.error(response.message);
-        }
+      next:res=>{
+        this.salesDetails=res;
+        console.log(this.salesDetails+"*******************************");
       },
-      error: (error) => {
-        NotifyUtil.error(error);
+      error: err => {
+        console.error('Error loading sales details:', err);
       }
+
     });
+
+
   }
 
   public loadGroupedSalesDetails(): void {

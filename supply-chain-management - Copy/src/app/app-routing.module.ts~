@@ -21,7 +21,6 @@ import {InventoryCreateComponent} from "./inventory/inventory/inventory-create/i
 import {ProductComponent} from "./product/product/product.component";
 import {RetailerComponent} from "./product/retailer/retailer/retailer.component";
 import {SalesCreateComponent} from "./accounting/sales/sales-create/sales-create.component";
-import {SalesDetailsComponent} from "./accounting/sales/sales-details/sales-details.component";
 
 const routes: Routes = [
   {
@@ -95,10 +94,6 @@ const routes: Routes = [
   },
   {
     path:'sales-create', component: SalesCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
-  },
-  {
-    path:'sales-details', component: SalesDetailsComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },
   {

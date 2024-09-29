@@ -4,7 +4,7 @@ import {SalesDetails} from "./salesdetails.model";
 
 export class Sales{
   id!: number;
-  retailer!: Retailer;
+  retailer!: Retailer[];
   salesdate!: Date;
   totalprice!: number;
   quantity!: number;
