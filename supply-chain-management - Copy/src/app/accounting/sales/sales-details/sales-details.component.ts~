@@ -27,6 +27,7 @@ export class SalesDetailsComponent implements OnInit{
       next: (response: ApiResponse) => {
         if (response.success) {
           this.salesDetails = response.data['salesDetails'];
+          console.log(this.salesDetails+"***********************************")
           if (this.salesDetails === null || this.salesDetails.length === 0) {
             NotifyUtil.error('No sales details found');
           }
