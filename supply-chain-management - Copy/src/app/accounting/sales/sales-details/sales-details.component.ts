@@ -11,8 +11,8 @@ import {ApiResponse} from "../../../util/api.response";
 })
 export class SalesDetailsComponent implements OnInit{
 
-  salesDetails: any;
-  groupedSalesDetails: Record<number, SalesDetails[]> = {};
+  salesDetails: SalesDetails[]=[];
+  groupedSalesDetails: Map<number, SalesDetails[]> = new Map();
 
 
   constructor(private salesDetailsService: SalesDetailsService) {}
@@ -22,47 +22,49 @@ export class SalesDetailsComponent implements OnInit{
     this.loadGroupedSalesDetails();
   }
 
-  // public loadSalesDetails(): void {
+  public loadSalesDetails(): void {
+    this.salesDetailsService.getAllSalesDetails().subscribe({
+      next: (response: ApiResponse) => {
+        if (response.success) {
+          this.salesDetails = response.data['salesDetails'];
+          console.log(this.salesDetails+"***********************************")
+          if (this.salesDetails === null || this.salesDetails.length === 0) {
+            NotifyUtil.error('No sales details found');
+          }
+        } else {
+          NotifyUtil.error(response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading sales details:', error);
+        NotifyUtil.error(error);
+      }
+    });
+  }
+
+
+  // public loadSalesDetails(){
   //   this.salesDetailsService.getAllSalesDetails().subscribe({
-  //     next: (response: ApiResponse) => {
-  //       if (response.success) {
-  //         this.salesDetails = response.data['salesDetails'];
-  //         console.log(this.salesDetails+"***********************************")
-  //         if (this.salesDetails === null || this.salesDetails.length === 0) {
-  //           NotifyUtil.error('No sales details found');
-  //         }
-  //       } else {
-  //         NotifyUtil.error(response.message);
-  //       }
+  //     next:res=>{
+  //       this.salesDetails=res;
+  //       console.log(this.salesDetails+"*******************************");
   //     },
-  //     error: (error) => {
-  //       console.error('Error loading sales details:', error);
-  //       NotifyUtil.error(error);
+  //     error: err => {
+  //       console.error('Error loading sales details:', err);
   //     }
+  //
   //   });
   // }
-
-
-  public loadSalesDetails(){
-    this.salesDetailsService.getAllSalesDetails().subscribe({
-      next:res=>{
-        this.salesDetails=res;
-        console.log(this.salesDetails+"*******************************");
-      },
-      error: err => {
-        console.error('Error loading sales details:', err);
-      }
-
-    });
-
-
-  }
 
   public loadGroupedSalesDetails(): void {
     this.salesDetailsService.getSalesDetailsGrouped().subscribe({
       next: (response: ApiResponse) => {
         if (response.success) {
-          this.groupedSalesDetails = response.data['groupedSalesDetails'] as Record<number, SalesDetails[]>;
+          // Convert Record<number, SalesDetails[]> to Map<number, SalesDetails[]>
+          const groupedSalesObject = response.data['groupedSalesDetails'] as Record<number, SalesDetails[]>;
+          this.groupedSalesDetails = new Map<number, SalesDetails[]>(
+            Object.entries(groupedSalesObject).map(([key, value]) => [Number(key), value])
+          );
         } else {
           NotifyUtil.error(response.message);
         }
@@ -72,6 +74,7 @@ export class SalesDetailsComponent implements OnInit{
       }
     });
   }
+
 
   protected readonly Object = Object;
 }
