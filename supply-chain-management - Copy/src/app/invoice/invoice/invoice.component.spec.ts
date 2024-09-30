@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PdfGeneratorComponent } from './pdf-generator.component';
+import { InvoiceComponent } from './invoice.component';
 
-describe('PdfGeneratorComponent', () => {
-  let component: PdfGeneratorComponent;
-  let fixture: ComponentFixture<PdfGeneratorComponent>;
+describe('InvoiceComponent', () => {
+  let component: InvoiceComponent;
+  let fixture: ComponentFixture<InvoiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PdfGeneratorComponent]
+      declarations: [InvoiceComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PdfGeneratorComponent);
+    fixture = TestBed.createComponent(InvoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

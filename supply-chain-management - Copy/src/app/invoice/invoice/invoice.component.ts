@@ -1,29 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderModel } from '../../order/model/order.model';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ProductService } from '../../product/product.service';
-import { OrderService } from '../../order/order.service';
-import { ActivatedRoute, Router } from '@angular/router';
-
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.css'] // Fixed typo: changed 'styleUrl' to 'styleUrls'
+  styleUrl: './invoice.component.css'
 })
-export class InvoiceComponent implements OnInit {
-  orders: any;
+export class InvoiceComponent implements OnInit{
+
+  sale: any;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const orderData = params['orders'];
-      if (orderData) {
-     console.log('Order data:', this.orders);
+      const saleData = params['sale'];
+      if (saleData) {
+        this.sale = JSON.parse(saleData);
+        console.log('Sale data:', this.sale);
       } else {
-        console.error('No order data found');
+        console.error('No sale data found');
       }
     });
   }
+
 }
