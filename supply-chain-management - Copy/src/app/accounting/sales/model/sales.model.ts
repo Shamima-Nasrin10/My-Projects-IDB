@@ -10,5 +10,4 @@ export class Sales{
   quantity!: number;
   discount!: number;
   product!: Product[];
-  salesDetails!: SalesDetails;
 }

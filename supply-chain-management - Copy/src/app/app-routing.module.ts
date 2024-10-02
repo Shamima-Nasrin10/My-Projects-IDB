@@ -22,6 +22,8 @@ import {ProductComponent} from "./product/product/product.component";
 import {RetailerComponent} from "./product/retailer/retailer/retailer.component";
 import {SalesCreateComponent} from "./accounting/sales/sales-create/sales-create.component";
 import {SalesDetailsComponent} from "./accounting/sales/sales-details/sales-details.component";
+import {ProcuremetDetailsComponent} from "./accounting/procurement/procuremet-details/procuremet-details.component";
+import {ProcurementCreateComponent} from "./accounting/procurement/procurement-create/procurement-create.component";
 
 const routes: Routes = [
   {
@@ -97,8 +99,17 @@ const routes: Routes = [
     path:'sales-create', component: SalesCreateComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },
+
   {
     path:'sales-details', component: SalesDetailsComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path:'procurement-details', component: ProcuremetDetailsComponent, canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path:'procurement-create', component: ProcurementCreateComponent, canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['ADMIN'] }
   },
   {

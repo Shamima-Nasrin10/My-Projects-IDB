@@ -1,0 +1,64 @@
+<div class="container">
+  <!-- Procurement Details Section -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>Procurement Details</h4>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Procurement ID</th>
+          <th>Raw Material Name</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let procurementDetail of procurementDetails; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ procurementDetail.procurement?.id }}</td>
+          <td>{{ procurementDetail.rawMaterial.name }}</td>
+          <td>{{ procurementDetail.quantity }}</td>
+          <td>{{ procurementDetail.unitPrice }}</td>
+          <td>{{ procurementDetail.totalPrice }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Grouped Procurement Details Section -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>Grouped Procurement Details</h4>
+    </div>
+    <div class="card-body">
+      <div *ngFor="let procurementDetailGroup of groupedProcurementDetails | keyvalue; let i = index">
+        <h5>Procurement ID: {{ procurementDetailGroup.key }}</h5>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Raw Material Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let procurementDetail of procurementDetailGroup.value; let j = index">
+            <td>{{ j + 1 }}</td>
+            <td>{{ procurementDetail.rawMaterial.name }}</td>
+            <td>{{ procurementDetail.quantity }}</td>
+            <td>{{ procurementDetail.unitPrice }}</td>
+            <td>{{ procurementDetail.totalPrice }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

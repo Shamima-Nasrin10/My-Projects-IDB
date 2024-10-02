@@ -42,7 +42,9 @@ import { SalesDetailsComponent } from './accounting/sales/sales-details/sales-de
 import { SalesCreateComponent } from './accounting/sales/sales-create/sales-create.component';
 import { SalesUpdateComponent } from './accounting/sales/sales-update/sales-update.component';
 import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.component';
-import { InvoiceComponent } from './invoice/invoice/invoice.component'
+import { InvoiceComponent } from './invoice/invoice/invoice.component';
+import { ProcurementCreateComponent } from './accounting/procurement/procurement-create/procurement-create.component';
+import { ProcuremetDetailsComponent } from './accounting/procurement/procuremet-details/procuremet-details.component';
 
 
 @NgModule({
@@ -75,6 +77,8 @@ import { InvoiceComponent } from './invoice/invoice/invoice.component'
     SalesUpdateComponent,
     SalesViewComponent,
     InvoiceComponent,
+    ProcurementCreateComponent,
+    ProcuremetDetailsComponent
   ],
   imports: [
     BrowserModule,
