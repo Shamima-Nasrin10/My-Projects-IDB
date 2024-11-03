@@ -11,10 +11,10 @@ import { InventoryDetailComponent } from './inventory/inventory-detail/inventory
 import { OrderComponent } from './order/order/order.component';
 import { ProductComponent } from './product/product/product.component';
 import { CustomerComponent } from './customer/customer/customer.component';
-import { LoginComponent } from './pages/login/login/login.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UserComponent } from './pages/user/user.component';
+import {LoginComponent} from "./pages/login/login/login.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +24,6 @@ import { UserComponent } from './pages/user/user.component';
     OrderComponent,
     ProductComponent,
     CustomerComponent,
-    LoginComponent,
     LayoutComponent,
     DashboardComponent,
     UserComponent
@@ -34,7 +33,8 @@ import { UserComponent } from './pages/user/user.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    LoginComponent
   ],
   providers: [
     provideClientHydration(),
