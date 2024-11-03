@@ -11,6 +11,10 @@ import { InventoryDetailComponent } from './inventory/inventory-detail/inventory
 import { OrderComponent } from './order/order/order.component';
 import { ProductComponent } from './product/product/product.component';
 import { CustomerComponent } from './customer/customer/customer.component';
+import { LoginComponent } from './pages/login/login/login.component';
+import { LayoutComponent } from './pages/layout/layout.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { CustomerComponent } from './customer/customer/customer.component';
     InventoryDetailComponent,
     OrderComponent,
     ProductComponent,
-    CustomerComponent
+    CustomerComponent,
+    LoginComponent,
+    LayoutComponent,
+    DashboardComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +41,7 @@ import { CustomerComponent } from './customer/customer/customer.component';
     provideHttpClient(
       withFetch()
     )
-    
+
   ],
   bootstrap: [AppComponent]
 })
