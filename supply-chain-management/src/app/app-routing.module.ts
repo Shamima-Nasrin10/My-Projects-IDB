@@ -6,12 +6,12 @@ import {LoginComponent} from "./login/login.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
-  {
-    path: '', redirectTo: '/login', pathMatch: 'full'
-  },
-  {
-    path: 'login', component: LoginComponent
-  },
+  // {
+  //   path: '', redirectTo: '/login', pathMatch: 'full'
+  // },
+  // {
+  //   path: 'login', component: LoginComponent
+  // },
   {
     path: 'dashboard', component: DashboardComponent
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'inventory', component: InventoryListComponent},
   {path: 'inventoryDetail/:id', component: InventoryDetailComponent},
 
-  {path: '**', redirectTo: '/login', pathMatch: 'full' }
+  // {path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

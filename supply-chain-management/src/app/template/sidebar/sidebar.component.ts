@@ -6,17 +6,26 @@ import { Component } from '@angular/core';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  private openSubMenus: Set<string> = new Set();
+  // State variables for each collapsible section
+  isHomeCollapsed = false;
+  isDashboardCollapsed = true;
+  isOrdersCollapsed = true;
+  isAccountCollapsed = true;
 
-  toggleSubMenu(item: string): void {
-    if (this.openSubMenus.has(item)) {
-      this.openSubMenus.delete(item);
-    } else {
-      this.openSubMenus.add(item);
-    }
+  // Toggle functions for each section
+  toggleHome() {
+    this.isHomeCollapsed = !this.isHomeCollapsed;
   }
 
-  isSubMenuOpen(item: string): boolean {
-    return this.openSubMenus.has(item);
+  toggleDashboard() {
+    this.isDashboardCollapsed = !this.isDashboardCollapsed;
+  }
+
+  toggleOrders() {
+    this.isOrdersCollapsed = !this.isOrdersCollapsed;
+  }
+
+  toggleAccount() {
+    this.isAccountCollapsed = !this.isAccountCollapsed;
   }
 }
