@@ -2,10 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {InventoryListComponent} from './inventory/inventory-list/inventory-list.component';
 import {InventoryDetailComponent} from './inventory/inventory-detail/inventory-detail.component';
-import {LoginComponent} from "./pages/login/login/login.component";
-import {LayoutComponent} from "./pages/layout/layout.component";
-import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-import {UserComponent} from "./pages/user/user.component";
+import {LoginComponent} from "./login/login.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -15,22 +13,13 @@ const routes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path:'', component:LayoutComponent,
-    children: [
-      {
-        path:'dashboard', component:DashboardComponent,
-        title: 'Dashboard'
-      },
-      {
-        path:'user', component:UserComponent,
-        title: 'User'
-      }
-    ]
+    path: 'dashboard', component: DashboardComponent
   },
   //{path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'inventory', component: InventoryListComponent},
-  {path: 'inventoryDetail/:id', component: InventoryDetailComponent}
-  // {path: '**', redirectTo: '/login', pathMatch: 'full' }
+  {path: 'inventoryDetail/:id', component: InventoryDetailComponent},
+
+  {path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

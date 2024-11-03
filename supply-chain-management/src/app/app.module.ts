@@ -11,10 +11,16 @@ import { InventoryDetailComponent } from './inventory/inventory-detail/inventory
 import { OrderComponent } from './order/order/order.component';
 import { ProductComponent } from './product/product/product.component';
 import { CustomerComponent } from './customer/customer/customer.component';
-import { LayoutComponent } from './pages/layout/layout.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { UserComponent } from './pages/user/user.component';
-import {LoginComponent} from "./pages/login/login/login.component";
+import { UserComponent } from './user/user.component';
+import {LoginComponent} from "./login/login.component";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {MatButtonModule} from "@angular/material/button";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavContainer, MatSidenavContent, MatSidenavModule} from "@angular/material/sidenav";
+import {MatListItem, MatNavList} from "@angular/material/list";
+import {MatIcon} from "@angular/material/icon";
+import { SidebarComponent } from './template/sidebar/sidebar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +30,9 @@ import {LoginComponent} from "./pages/login/login/login.component";
     OrderComponent,
     ProductComponent,
     CustomerComponent,
-    LayoutComponent,
+    UserComponent,
+    SidebarComponent,
     DashboardComponent,
-    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -34,13 +40,22 @@ import {LoginComponent} from "./pages/login/login/login.component";
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
-    LoginComponent
+    LoginComponent,
+    MatSidenavModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavContent,
+    MatSidenavContainer,
+    MatNavList,
+    MatListItem,
+    MatIcon
   ],
   providers: [
     provideClientHydration(),
     provideHttpClient(
       withFetch()
-    )
+    ),
+    provideAnimationsAsync()
 
   ],
   bootstrap: [AppComponent]
