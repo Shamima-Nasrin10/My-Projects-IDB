@@ -21,6 +21,7 @@ import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatIcon} from "@angular/material/icon";
 import { SidebarComponent } from './template/sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     UserComponent,
     SidebarComponent,
     DashboardComponent,
+    InventoryComponent,
   ],
   imports: [
     BrowserModule,
