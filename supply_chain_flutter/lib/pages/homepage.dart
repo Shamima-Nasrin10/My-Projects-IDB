@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               label: 'Procurement',
               routeName: '/procurementList',
               gradient: LinearGradient(
-                colors: [Colors.blueAccent, Colors.lightBlueAccent],
+                colors: [Colors.blueAccent, Colors.indigo],
               ),
             ),
             _buildDashboardCard(
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               label: 'Raw Materials List',
               routeName: '/rawMatList',
               gradient: LinearGradient(
-                colors: [Colors.greenAccent, Colors.blueGrey],
+                colors: [Colors.blueGrey, Colors.indigo],
               ),
             ),
             _buildDashboardCard(
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               label: 'Product',
               routeName: '/productList',
               gradient: LinearGradient(
-                colors: [Colors.blueAccent, Colors.lightBlue],
+                colors: [Colors.blueAccent, Colors.teal],
               ),
             ),
             _buildDashboardCard(
@@ -119,6 +119,15 @@ class _HomePageState extends State<HomePage> {
               routeName: '/prodProductList',
               gradient: LinearGradient(
                 colors: [Colors.blueGrey, Colors.cyan],
+              ),
+            ),
+            _buildDashboardCard(
+              context,
+              icon: Icons.warehouse,
+              label: 'Warehouse',
+              routeName: '/warehouseList',
+              gradient: LinearGradient(
+                colors: [Colors.deepPurple, Colors.cyan],
               ),
             ),
           ],
