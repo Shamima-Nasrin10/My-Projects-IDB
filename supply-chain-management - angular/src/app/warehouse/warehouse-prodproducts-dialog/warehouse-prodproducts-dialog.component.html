@@ -7,6 +7,7 @@
       <th>Product Name</th>
       <th>Batch Number</th>
       <th>Manufacturing Date</th>
+      <th>Stock</th>
     </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
         <span class="date">{{ product.completionDate | date: 'yyyy-MM-dd' : '+0600' }}</span>
         <span class="time">{{ product.completionDate | date: 'HH:mm' : '+0600' }}</span>
       </td>
+      <td>{{ product.quantity }}</td>
     </tr>
     </tbody>
   </table>
