@@ -1,14 +1,21 @@
+import {ProdProduct} from "../../../production/prod-product/prodproduct.model";
 import {Retailer} from "../../../product/retailer/model/retailer.model";
-import {Product} from "../../../product/model/product.model";
-import {SalesDetails} from "./salesdetails.model";
 
-export class Sales{
+export class SalesModel{
   id!: number;
-  retailer!: Retailer[];
-  salesdate!: Date;
-  totalprice!: number;
+  productionProduct!: ProdProduct;
+  productRetailer!: Retailer;
+  salesDate!: Date;
+  unitPrice!: number;
   quantity!: number;
-  discount!: number;
-  product!: Product[];
-  salesDetails!: SalesDetails;
+  totalPrice!: number;
+  status!: SalesStatus;
+
+
 }
+export enum SalesStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED'
+}
+

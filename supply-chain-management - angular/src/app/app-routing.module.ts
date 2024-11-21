@@ -11,13 +11,13 @@ import { RawMaterialCategoryListComponent } from './inventory/raw-material-categ
 import {WarehouseComponent} from "./warehouse/warehouse/warehouse.component";
 import {InventoryCreateComponent} from "./inventory/inventory/inventory-create/inventory-create.component";
 import {ProductComponent} from "./product/product/product.component";
-import {RetailerComponent} from "./product/retailer/retailer/retailer.component";
 import {SalesCreateComponent} from "./accounting/sales/sales-create/sales-create.component";
-import {SalesDetailsComponent} from "./accounting/sales/sales-details/sales-details.component";
 import {ProcurementComponent} from "./accounting/procurement/procurement/procurement.component";
 import {ProcurementListComponent} from "./accounting/procurement/procurement-list/procurement-list.component";
 import {ProdProductCreateComponent} from "./production/prod-product/prod-product-create/prod-product-create.component";
 import {ProdProductListComponent} from "./production/prod-product/prod-product-list/prod-product-list.component";
+import {RetailerListComponent} from "./product/retailer/retailer-list/retailer-list.component";
+import {SalesViewComponent} from "./accounting/sales/sales-view/sales-view.component";
 
 const routes: Routes = [
   // {
@@ -60,9 +60,6 @@ const routes: Routes = [
     path: "rawMaterialCategory-list", component: RawMaterialCategoryListComponent
   },
   {
-    path: "retailer", component: RetailerComponent
-  },
-  {
     path: "supplier", component: SupplierCreateComponent
   },
   {
@@ -73,7 +70,8 @@ const routes: Routes = [
   },
   {
     path:"procurements-create",component:ProcurementComponent
-  },{
+  },
+  {
     path:"procurement-edit/:id",component:ProcurementComponent
   },
   {
@@ -92,7 +90,13 @@ const routes: Routes = [
     path:'sales-create', component: SalesCreateComponent
   },
   {
-    path:'sales-details', component: SalesDetailsComponent
+    path:"sales-edit/:id",component:SalesCreateComponent
+  },
+  {
+    path:"sales-list",component:SalesViewComponent
+  },
+  {
+    path:'retailer-list', component: RetailerListComponent
   },
   {
     path: "notification", component: NotificationComponent
